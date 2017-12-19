@@ -32,5 +32,8 @@
     <Setting Name="V_TransactionHistory" Type="System.String" Scope="User">
       <Value Profile="(Default)">Total Transactions Displayed</Value>
     </Setting>
+    <Setting Name="U_Transaction" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/RiverLink.External/Account/TransactionHistory</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

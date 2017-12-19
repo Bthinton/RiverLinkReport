@@ -142,5 +142,17 @@ namespace RiverLink.Automation.Properties {
                 this["V_TransactionHistory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/RiverLink.External/Account/TransactionHistory")]
+        public string U_Transaction {
+            get {
+                return ((string)(this["U_Transaction"]));
+            }
+            set {
+                this["U_Transaction"] = value;
+            }
+        }
     }
 }

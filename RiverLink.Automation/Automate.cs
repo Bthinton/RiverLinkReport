@@ -89,7 +89,7 @@ namespace RiverLink.Automation
 
         public string GoToLoginPage(string Success)
         {
-            string returnValue = "Fail";
+            string returnValue = "Failed";
 
             try
             {
@@ -122,12 +122,13 @@ namespace RiverLink.Automation
 
             return returnValue;
         }
-        #endregion Navigation
 
-        #region Actions
+            #endregion Navigation
 
-        //logs in to riverlink account
-        public string Login(string Success)
+            #region Actions
+
+            //logs in to riverlink account
+            public string Login(string Success)
         {
             string returnValue = "Failed";
 
@@ -317,63 +318,86 @@ namespace RiverLink.Automation
             return ReturnValue;
         }
 
+
         public List<Transaction> GetTransactionData(out string Success)
         {
-            List<Transaction> ReturnValue = null;
+            List<Transaction> returnValue = null;
             Success = "failed";
 
-            if (IsTransactionHistory(driver))
+            try
             {
-                Success = "Success";
-                StatusMessage = $"Transaction History Loaded";
+                StatusMessage = $"Going To {BaseURL}{Properties.Settings.Default.U_Transaction}...";
                 OnStatusChanged(StatusMessage);
-                StatusMessage = $"Page Verified";
-                OnStatusChanged(StatusMessage);
-            }
-            else
-            {
-                StatusMessage = $"Transaction History Not Loaded";
-                OnStatusChanged(StatusMessage);
-                StatusMessage = $"Page could not be verified";
-                OnStatusChanged(StatusMessage);
-            }
-            string html = driver.PageSource;
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(html);
-            for (int i = 0; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
-            {
-                if (i == 0)
+                driver.Url = $"{BaseURL}{Properties.Settings.Default.U_Login}";
+                Thread.Sleep(ShortWait);
+
+                if (IsTransactionHistory(driver))
                 {
-                    continue;
-                }
-                Transaction t = new Transaction();
-                //string transponderNumber = string.Empty;
-                HtmlDocument rowDoc = new HtmlDocument();
-                rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
-                var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
-                for (int j = 0; j < cells.Count; j++)
-                {
-                    switch (j)
+                    Success = "Success";
+                    StatusMessage = $"Transaction History Loaded";
+                    OnStatusChanged(StatusMessage);
+                    StatusMessage = $"Page Verified";
+                    OnStatusChanged(StatusMessage);
+
+                    if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionTable)))
                     {
-                        case 0:
-                            //Transaction Type
-                            break;
-                        case 1:
-                            //Transaction Date
-                            break;
-                        case 2:
-                            //Transaction Plaza
-                            break;
-                        case 3:
-                            //Transponder ID associated with transaction
-                            break;
-                        case 4:
-                            break;
+                        StatusMessage = $"Transaction Table Verified";
+                        OnStatusChanged(StatusMessage);
+                        string html = driver.PageSource;
+                        HtmlDocument doc = new HtmlDocument();
+                        doc.LoadHtml(html);
+                        for (int i = 0; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
+                        {
+                            if (i == 0)
+                            {
+                                continue;
+                            }
+                            Transaction t = new Transaction();
+                            //string transponderNumber = string.Empty;
+                            HtmlDocument rowDoc = new HtmlDocument();
+                            rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
+                            var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
+                            for (int j = 0; j < cells.Count; j++)
+                            {
+                                switch (j)
+                                {
+                                    case 0:
+                                        //Transaction Type
+                                        break;
+                                    case 1:
+                                        //Transaction Date
+                                        break;
+                                    case 2:
+                                        //Transaction Plaza
+                                        break;
+                                    case 3:
+                                        //Transponder ID associated with transaction
+                                        break;
+                                    case 4:
+                                        break;
+                                }
+                            }
+                        }
                     }
                 }
-            }
 
-            return ReturnValue;
+                else
+                {
+                    StatusMessage = $"Transaction History Not Loaded";
+                    OnStatusChanged(StatusMessage);
+                    StatusMessage = $"Page could not be verified";
+                    OnStatusChanged(StatusMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
+                OnStatusChanged(StatusMessage);
+            }
+            return returnValue;
+
+
         }
 
 
