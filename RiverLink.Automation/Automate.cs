@@ -328,7 +328,7 @@ namespace RiverLink.Automation
             {
                 StatusMessage = $"Going To {BaseURL}{Properties.Settings.Default.U_Transaction}...";
                 OnStatusChanged(StatusMessage);
-                driver.Url = $"{BaseURL}{Properties.Settings.Default.U_Login}";
+                driver.Url = $"{BaseURL}{Properties.Settings.Default.U_Transaction}";
                 Thread.Sleep(ShortWait);
 
                 if (IsTransactionHistory(driver))
