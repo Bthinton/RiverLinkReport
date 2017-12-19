@@ -67,7 +67,8 @@ namespace RiverLink.Automation
                     OnStatusChanged(StatusMessage);
                     StatusMessage = $"Page Verified";
                     OnStatusChanged(StatusMessage);
-                } else
+                }
+                else
                 {
                     StatusMessage = $"Home Page Not Loaded";
                     OnStatusChanged(StatusMessage);
@@ -79,7 +80,7 @@ namespace RiverLink.Automation
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
-                OnStatusChanged(StatusMessage);             
+                OnStatusChanged(StatusMessage);
             }
 
 
@@ -103,7 +104,8 @@ namespace RiverLink.Automation
                     OnStatusChanged(StatusMessage);
                     StatusMessage = $"Page Verified";
                     OnStatusChanged(StatusMessage);
-                } else
+                }
+                else
                 {
                     StatusMessage = $"Login Page Not Loaded";
                     OnStatusChanged(StatusMessage);
@@ -141,7 +143,8 @@ namespace RiverLink.Automation
                     StatusMessage = $"Entering Username...";
                     OnStatusChanged(StatusMessage);
                     driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("Username");
-                } else
+                }
+                else
                 {
                     throw new Exception("Error EditAd: unable to change the Username field.");
                 }
@@ -157,7 +160,8 @@ namespace RiverLink.Automation
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
                     driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
-                } else
+                }
+                else
                 {
                     throw new Exception("Error EditAd: unable to change the Password field.");
                 }
@@ -170,7 +174,8 @@ namespace RiverLink.Automation
 
                     driver.FindElement(By.XPath(Properties.Settings.Default.X_LoginBTN)).Click();
                     System.Threading.Thread.Sleep(3000);
-                } else
+                }
+                else
                 {
                     throw new Exception("Error EditAd: unable to access Login button.");
                 }
@@ -182,7 +187,8 @@ namespace RiverLink.Automation
                     OnStatusChanged(StatusMessage);
                     StatusMessage = $"Page Verified";
                     OnStatusChanged(StatusMessage);
-                } else
+                }
+                else
                 {
                     StatusMessage = $"Overview Page Not Loaded";
                     OnStatusChanged(StatusMessage);
@@ -203,7 +209,7 @@ namespace RiverLink.Automation
         public List<Vehicle> GetVehicleData(out string Success)
         {
             //TODO Get a list of vehicle classes
-            List<Vehicle>  ReturnValue = null;
+            List<Vehicle> ReturnValue = null;
             Success = "failed";
 
             if (IsAccountOverview(driver))
@@ -222,7 +228,7 @@ namespace RiverLink.Automation
                     string html = driver.PageSource;
                     HtmlDocument doc = new HtmlDocument();
                     doc.LoadHtml(html);
-                    for (int i = 0; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable).Count; i++)           
+                    for (int i = 0; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable).Count; i++)
                     {
                         if (i == 0)
                         {
@@ -261,11 +267,11 @@ namespace RiverLink.Automation
                                     break;
                                 //TODO Select the vehicle class object from list of vehicle classes
                                 case 5:
-                                    //VehicleClass c = new VehicleClass();
-                                    //v.VehicleClass = cells[5].InnerHtml;
-                                    //break;
+                                //VehicleClass c = new VehicleClass();
+                                //v.VehicleClass = cells[5].InnerHtml;
+                                //break;
                                 case 6:
-                                    transponderNumber = cells[6].InnerHtml;  
+                                    transponderNumber = cells[6].InnerHtml;
                                     break;
                                 case 7:
                                     Transponder t = new Transponder();
@@ -276,7 +282,8 @@ namespace RiverLink.Automation
                                     if (transponderType == "EZP")
                                     {
                                         t.TransponderType = TransponderTypes.EZPass;
-                                    } else
+                                    }
+                                    else
                                     {
                                         t.TransponderType = TransponderTypes.Sticker;
                                     }
@@ -299,7 +306,8 @@ namespace RiverLink.Automation
                 {
                     throw new Exception("Error EditAd: unable to access Vehicle table button.");
                 }
-            } else
+            }
+            else
             {
                 StatusMessage = $"Overview Page Not Loaded";
                 OnStatusChanged(StatusMessage);
@@ -321,7 +329,8 @@ namespace RiverLink.Automation
                 OnStatusChanged(StatusMessage);
                 StatusMessage = $"Page Verified";
                 OnStatusChanged(StatusMessage);
-            } else
+            }
+            else
             {
                 StatusMessage = $"Transaction History Not Loaded";
                 OnStatusChanged(StatusMessage);

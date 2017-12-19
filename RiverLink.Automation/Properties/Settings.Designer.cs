@@ -121,6 +121,18 @@ namespace RiverLink.Automation.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_databound2_groupPlaceholderContainer\"]//tr")]
+        public string X_TransactionTable {
+            get {
+                return ((string)(this["X_TransactionTable"]));
+            }
+            set {
+                this["X_TransactionTable"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Total Transactions Displayed")]
         public string V_TransactionHistory {
             get {
@@ -128,18 +140,6 @@ namespace RiverLink.Automation.Properties {
             }
             set {
                 this["V_TransactionHistory"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_databound2_groupPlaceholderContainer\"]/tbody")]
-        public string X_TransactionTable {
-            get {
-                return ((string)(this["X_TransactionTable"]));
-            }
-            set {
-                this["X_TransactionTable"] = value;
             }
         }
     }

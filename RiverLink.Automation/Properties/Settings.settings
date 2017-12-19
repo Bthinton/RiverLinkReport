@@ -26,11 +26,11 @@
     <Setting Name="X_VehicleTable" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_dashBoard_dvVehicles_groupPlaceholderContainer"]//tr</Value>
     </Setting>
+    <Setting Name="X_TransactionTable" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_databound2_groupPlaceholderContainer"]//tr</Value>
+    </Setting>
     <Setting Name="V_TransactionHistory" Type="System.String" Scope="User">
       <Value Profile="(Default)">Total Transactions Displayed</Value>
-    </Setting>
-    <Setting Name="X_TransactionTable" Type="System.String" Scope="User">
-      <Value Profile="(Default)">//*[@id="MainContent_databound2_groupPlaceholderContainer"]/tbody</Value>
     </Setting>
   </Settings>
 </SettingsFile>
