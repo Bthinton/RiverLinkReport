@@ -1,0 +1,44 @@
+***HOME PAGE***
+Button to login page
+//li[@id="menu-item-122"]
+
+
+
+***Login Page***
+Username text input
+//*[@id="txtUserName"]
+
+Password text input
+//*[@id="txtPassword"]
+
+Login Button
+//*[@id="btnLogin"]
+
+
+
+***Account Summary Page***
+Account Active Vehicles(Includes transponder info)
+//*[@id="MainContent_dashBoard_dvVehicles_groupPlaceholderContainer"]//tr
+
+Account Recent Transactions
+//*[@id="MainContent_dashBoard_dvTransactions_groupPlaceholderContainer"]//tr
+
+Account Features Button with drop-down menu(Transaction History)                          NOT SURE IF NEEDED
+//*[@id="liAccountFeatures"]
+
+Transaction History Button inside drop-down menu
+//*[@id="liAccountFeatures"]/ul/li[5]
+
+
+
+***TRANSACTION HISTORY PAGE***
+
+Transaction History table
+//*[@id="MainContent_databound2_groupPlaceholderContainer"]//tr
+
+First Page Transaction History
+//*[@id="MainContent_dpgPagingArea"]/span
+
+***Transaction Next Button***
+//*[@id="MainContent_dpgPagingArea"]/a[contains(Text("Next"))]
+
