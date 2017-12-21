@@ -347,7 +347,7 @@ namespace RiverLink.Automation
                     }
                 } else
                 {
-                    throw new Exception("Error EditAd: unable to access Vehicle table button.");
+                    throw new Exception("Error EditAd: unable to access Vehicle table.");
                 }
             } else
             {
@@ -361,15 +361,12 @@ namespace RiverLink.Automation
 
         public List<Transaction> GetTransactionData(out string Success)
         {
-            
-
-            List<Transaction> returnValue = null;
+            List<Transaction> ReturnValue = null;
             Success = "failed";            
             try
             {
                 if (IsTransactionHistory(driver))
                 {
-
                     Success = "Success";
                     StatusMessage = $"Transaction History Loaded";
                     OnStatusChanged(StatusMessage);
@@ -400,21 +397,59 @@ namespace RiverLink.Automation
                                 {
                                     case 0:
                                         //Transaction Type
+                                        string transactionType = cells[0].InnerHtml;
+                                        if (transactionType == "Toll")
+                                        {
+                                            t.TransactionType = TransactionTypes.Toll;
+                                        }
+                                        else
+                                        {
+                                            t.TransactionType = TransactionTypes.Payment;
+                                        }
                                         break;
                                     case 1:
                                         //Transaction Date
                                         break;
                                     case 2:
                                         //Transaction Plaza
+                                        string plaza = cells[5].InnerHtml;
+                                        if (plaza == "East End Crossing - SB")
+                                        {
+                                            t.Plaza = Plazas.EastEndSB;
+                                        }
+                                        if (plaza == "East End Crossing - NB")
+                                        {
+                                            t.Plaza = Plazas.EastEndNB;
+                                        }
+                                        if (plaza == "Lincoln Bridge - SB")
+                                        {
+                                            t.Plaza = Plazas.LincolnSB;
+                                        }
+                                        if (plaza == "Lincoln Bridge - NB")
+                                        {
+                                            t.Plaza = Plazas.LincolnNB;
+                                        }
+                                        if (plaza == "Kennedy Bridge - SB")
+                                        {
+                                            t.Plaza = Plazas.KennedySB;
+                                        } else
+                                        {
+                                            t.Plaza = Plazas.KennedyNB;
+                                        }
                                         break;
                                     case 3:
                                         //Transponder ID associated with transaction
-                                        transponderNumber = cells[5].InnerHtml;
+                                        transponderNumber = cells[6].InnerHtml;
                                         break;
                                     case 4:
                                         break;
                                 }
                             }
+                            if (ReturnValue == null)
+                            {
+                                ReturnValue = new List<Transaction>();
+                            }
+                            ReturnValue.Add(t);
                         }
                     }
                 } else
@@ -431,7 +466,7 @@ namespace RiverLink.Automation
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
                 OnStatusChanged(StatusMessage);
             }
-            return returnValue;
+            return ReturnValue;
         }
 
 

@@ -10,8 +10,10 @@ namespace RiverLink.Models
     public enum Plazas
     {
         //NB/SB for direction of travel
-        Lincoln,
-        Kennedy,
+        LincolnSB,
+        LincolnNB,
+        KennedySB,
+        KennedyNB,
         EastEndSB,
         EastEndNB
     }
@@ -22,6 +24,11 @@ namespace RiverLink.Models
         Unpaid
     }
 
+    public enum TransactionTypes
+    {
+        Payment,
+        Toll
+    }
 
 
     public class Transaction
@@ -29,19 +36,27 @@ namespace RiverLink.Models
         [Key]
         [Required]
         public Int32 Transaction_Id { get; set; }
+
         [Required]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime TransactionDate { get; set; }
+
         [Required]
         [StringLength(20)]
         public TransactionStatuses TransactionStatus { get; set; }
+
         [Required]
         [StringLength(32)]
         public Plazas Plaza { get; set; }
+
         public virtual Vehicle Vehicle { get; set; }
+
         [MaxLength(20)]
         public virtual Journal Journal { get; set; }
+
         [MaxLength(20)]
         public virtual Transponder Transponder { get; set; }
+
+        public TransactionTypes TransactionType { get; set; }
     }
 }

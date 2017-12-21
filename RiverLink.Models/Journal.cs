@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 
 namespace RiverLink.Models
 {
-    public enum TransactionTypes
-    {
-        Payment,
-        Toll
-    }
+
 
     public class Journal
     {
