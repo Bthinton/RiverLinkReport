@@ -35,5 +35,11 @@
     <Setting Name="U_Transaction" Type="System.String" Scope="User">
       <Value Profile="(Default)">/RiverLink.External/Account/TransactionHistory</Value>
     </Setting>
+    <Setting Name="X_ResultsPerPageBTN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_ddlResultsPerPage"]</Value>
+    </Setting>
+    <Setting Name="X_MaxPerPage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_ddlResultsPerPage"]/option[last()]</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

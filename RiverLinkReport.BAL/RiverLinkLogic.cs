@@ -82,6 +82,10 @@ namespace RiverLinkReport.BAL
 
             List<Vehicle> VehicleList = Worker.GetVehicleData(out Success);
 
+            Success = Worker.GoToTransactionHistory(string.Empty);
+
+            List<Transaction> TransactionList = Worker.GetTransactionData(out Success);
+
             return returnValue;
         }
 

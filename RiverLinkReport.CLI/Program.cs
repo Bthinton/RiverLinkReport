@@ -46,8 +46,7 @@ namespace RiverLinkReport.CLI
                     }
 
                 } while (userInput != 5);
-            }
-            else
+            } else
             {
                 Console.WriteLine(args[0]);
             }
@@ -131,7 +130,6 @@ namespace RiverLinkReport.CLI
             {
                 Console.WriteLine("Login failed");
             }
-
             return returnValue;
         }
 

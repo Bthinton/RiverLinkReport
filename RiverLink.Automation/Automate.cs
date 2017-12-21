@@ -67,8 +67,7 @@ namespace RiverLink.Automation
                     OnStatusChanged(StatusMessage);
                     StatusMessage = $"Page Verified";
                     OnStatusChanged(StatusMessage);
-                }
-                else
+                } else
                 {
                     StatusMessage = $"Home Page Not Loaded";
                     OnStatusChanged(StatusMessage);
@@ -104,8 +103,7 @@ namespace RiverLink.Automation
                     OnStatusChanged(StatusMessage);
                     StatusMessage = $"Page Verified";
                     OnStatusChanged(StatusMessage);
-                }
-                else
+                } else
                 {
                     StatusMessage = $"Login Page Not Loaded";
                     OnStatusChanged(StatusMessage);
@@ -123,12 +121,62 @@ namespace RiverLink.Automation
             return returnValue;
         }
 
-            #endregion Navigation
+        public string GoToTransactionHistory(string success)
+        {
+            string returnValue = "Failed";
 
-            #region Actions
+            try
+            {
+                StatusMessage = $"Going To {BaseURL}{Properties.Settings.Default.U_Transaction}...";
+                OnStatusChanged(StatusMessage);
+                driver.Url = $"{BaseURL}{Properties.Settings.Default.U_Transaction}";
+                Thread.Sleep(ShortWait);
+                if (IsTransactionHistory(driver))
+                {
+                    returnValue = "Success";
+                    StatusMessage = $"Transaction History Loaded";
+                    OnStatusChanged(StatusMessage);
+                    StatusMessage = $"Page Verified";
+                    OnStatusChanged(StatusMessage);
+                } else
+                {
+                    StatusMessage = $"Transaction History Not Loaded";
+                    OnStatusChanged(StatusMessage);
+                    StatusMessage = $"Page could not be verified";
+                    OnStatusChanged(StatusMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
+                OnStatusChanged(StatusMessage);
+            }
 
-            //logs in to riverlink account
-            public string Login(string Success)
+            if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_ResultsPerPageBTN)))
+                {
+                StatusMessage = $"Switching to largest result per page.";
+                OnStatusChanged(StatusMessage);
+
+                driver.FindElement(By.XPath(Properties.Settings.Default.X_ResultsPerPageBTN)).Click();
+                System.Threading.Thread.Sleep(2000);
+                driver.FindElement(By.XPath(Properties.Settings.Default.X_MaxPerPage)).Click();
+
+                StatusMessage = $"Filter option changed.";
+                OnStatusChanged(StatusMessage);
+            } else
+                {
+                    throw new Exception("Error EditAd: unable to access filter button. (Results per page)");
+                }
+            return returnValue;
+        }
+
+        #endregion Navigation
+
+        #region Actions
+
+        //logs in to riverlink account
+        public string Login(string Success)
         {
             string returnValue = "Failed";
 
@@ -144,8 +192,7 @@ namespace RiverLink.Automation
                     StatusMessage = $"Entering Username...";
                     OnStatusChanged(StatusMessage);
                     driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("Username");
-                }
-                else
+                } else
                 {
                     throw new Exception("Error EditAd: unable to change the Username field.");
                 }
@@ -161,8 +208,7 @@ namespace RiverLink.Automation
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
                     driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
-                }
-                else
+                } else
                 {
                     throw new Exception("Error EditAd: unable to change the Password field.");
                 }
@@ -175,8 +221,7 @@ namespace RiverLink.Automation
 
                     driver.FindElement(By.XPath(Properties.Settings.Default.X_LoginBTN)).Click();
                     System.Threading.Thread.Sleep(3000);
-                }
-                else
+                } else
                 {
                     throw new Exception("Error EditAd: unable to access Login button.");
                 }
@@ -188,8 +233,7 @@ namespace RiverLink.Automation
                     OnStatusChanged(StatusMessage);
                     StatusMessage = $"Page Verified";
                     OnStatusChanged(StatusMessage);
-                }
-                else
+                } else
                 {
                     StatusMessage = $"Overview Page Not Loaded";
                     OnStatusChanged(StatusMessage);
@@ -203,7 +247,6 @@ namespace RiverLink.Automation
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
                 OnStatusChanged(StatusMessage);
             }
-
             return returnValue;
         }
 
@@ -302,13 +345,11 @@ namespace RiverLink.Automation
                         }
                         ReturnValue.Add(v);
                     }
-                }
-                else
+                } else
                 {
                     throw new Exception("Error EditAd: unable to access Vehicle table button.");
                 }
-            }
-            else
+            } else
             {
                 StatusMessage = $"Overview Page Not Loaded";
                 OnStatusChanged(StatusMessage);
@@ -318,21 +359,17 @@ namespace RiverLink.Automation
             return ReturnValue;
         }
 
-
         public List<Transaction> GetTransactionData(out string Success)
         {
-            List<Transaction> returnValue = null;
-            Success = "failed";
+            
 
+            List<Transaction> returnValue = null;
+            Success = "failed";            
             try
             {
-                StatusMessage = $"Going To {BaseURL}{Properties.Settings.Default.U_Transaction}...";
-                OnStatusChanged(StatusMessage);
-                driver.Url = $"{BaseURL}{Properties.Settings.Default.U_Transaction}";
-                Thread.Sleep(ShortWait);
-
                 if (IsTransactionHistory(driver))
                 {
+
                     Success = "Success";
                     StatusMessage = $"Transaction History Loaded";
                     OnStatusChanged(StatusMessage);
@@ -353,7 +390,7 @@ namespace RiverLink.Automation
                                 continue;
                             }
                             Transaction t = new Transaction();
-                            //string transponderNumber = string.Empty;
+                            string transponderNumber = string.Empty;
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
@@ -372,6 +409,7 @@ namespace RiverLink.Automation
                                         break;
                                     case 3:
                                         //Transponder ID associated with transaction
+                                        transponderNumber = cells[5].InnerHtml;
                                         break;
                                     case 4:
                                         break;
@@ -379,9 +417,7 @@ namespace RiverLink.Automation
                             }
                         }
                     }
-                }
-
-                else
+                } else
                 {
                     StatusMessage = $"Transaction History Not Loaded";
                     OnStatusChanged(StatusMessage);
@@ -396,8 +432,6 @@ namespace RiverLink.Automation
                 OnStatusChanged(StatusMessage);
             }
             return returnValue;
-
-
         }
 
 
@@ -476,8 +510,7 @@ namespace RiverLink.Automation
             if (driver.PageSource.Contains(Properties.Settings.Default.V_HomePage))
             {
                 return true;
-            }
-            else
+            } else
             {
                 return false;
             }
@@ -489,8 +522,7 @@ namespace RiverLink.Automation
             if (driver.PageSource.Contains(Properties.Settings.Default.V_LoginPage))
             {
                 return true;
-            }
-            else
+            } else
             {
                 return false;
             }
@@ -502,8 +534,7 @@ namespace RiverLink.Automation
             if (driver.PageSource.Contains(Properties.Settings.Default.V_AccountOverview))
             {
                 return true;
-            }
-            else
+            } else
             {
                 return false;
             }
@@ -511,12 +542,11 @@ namespace RiverLink.Automation
 
         private bool IsTransactionHistory(IWebDriver driver)
         {
-            //see if we're on the account page
+            //see if we're on the transaction history page
             if (driver.PageSource.Contains(Properties.Settings.Default.V_TransactionHistory))
             {
                 return true;
-            }
-            else
+            } else
             {
                 return false;
             }
@@ -614,8 +644,7 @@ namespace RiverLink.Automation
             if (IsElementDisplayed(driver, By.XPath(Xpath)))
             {
                 return driver.FindElement(By.XPath(Xpath));
-            }
-            else
+            } else
             {
                 return null;
             }

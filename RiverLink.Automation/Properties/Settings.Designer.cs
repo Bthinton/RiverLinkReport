@@ -154,5 +154,29 @@ namespace RiverLink.Automation.Properties {
                 this["U_Transaction"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_ddlResultsPerPage\"]")]
+        public string X_ResultsPerPageBTN {
+            get {
+                return ((string)(this["X_ResultsPerPageBTN"]));
+            }
+            set {
+                this["X_ResultsPerPageBTN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_ddlResultsPerPage\"]/option[last()]")]
+        public string X_MaxPerPage {
+            get {
+                return ((string)(this["X_MaxPerPage"]));
+            }
+            set {
+                this["X_MaxPerPage"] = value;
+            }
+        }
     }
 }
