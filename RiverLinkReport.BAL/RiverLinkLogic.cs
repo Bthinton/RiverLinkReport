@@ -50,6 +50,13 @@ namespace RiverLinkReport.BAL
 
         public void GetData()
         {
+            string Success = string.Empty;
+
+            List<Vehicle> VehicleList = Worker.GetVehicleData(out Success);
+
+            Success = Worker.GoToTransactionHistory(string.Empty);
+
+            List<Transaction> TransactionList = Worker.GetTransactionData(out Success);
             ///Log in 
             ///Get vehicle data if not gotten
             ///Goto transaction page
@@ -80,11 +87,7 @@ namespace RiverLinkReport.BAL
                 return false;
             }
 
-            List<Vehicle> VehicleList = Worker.GetVehicleData(out Success);
-
-            Success = Worker.GoToTransactionHistory(string.Empty);
-
-            List<Transaction> TransactionList = Worker.GetTransactionData(out Success);
+            GetData();
 
             return returnValue;
         }

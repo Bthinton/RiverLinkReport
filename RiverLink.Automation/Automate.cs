@@ -11,6 +11,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
+//Loop through transaction pages
+//Vehicle/Transaction/Transponder data
+//Use filehelper to output to txt files
+
+
+
+
+
 namespace RiverLink.Automation
 {
     public class Automate
@@ -311,9 +319,8 @@ namespace RiverLink.Automation
                                     break;
                                 //TODO Select the vehicle class object from list of vehicle classes
                                 case 5:
-                                //VehicleClass c = new VehicleClass();
-                                //v.VehicleClass = cells[5].InnerHtml;
-                                //break;
+
+                                    break;
                                 case 6:
                                     transponderNumber = cells[6].InnerHtml;
                                     break;
@@ -388,6 +395,8 @@ namespace RiverLink.Automation
                             }
                             Transaction t = new Transaction();
                             string transponderNumber = string.Empty;
+                            string transactionType = string.Empty;
+                            string transDate = string.Empty;
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
@@ -397,7 +406,7 @@ namespace RiverLink.Automation
                                 {
                                     case 0:
                                         //Transaction Type
-                                        string transactionType = cells[0].InnerHtml;
+                                        transactionType = cells[0].InnerHtml;
                                         if (transactionType == "Toll")
                                         {
                                             t.TransactionType = TransactionTypes.Toll;
@@ -408,9 +417,25 @@ namespace RiverLink.Automation
                                         }
                                         break;
                                     case 1:
-                                        //Transaction Date
+                                        double amount = 0;
+                                        double.TryParse(cells[1].InnerHtml.Replace("$", ""), out amount);
+                                        t.Amount = amount;
                                         break;
                                     case 2:
+                                        //Transaction Date
+                                        transDate = cells[2].InnerHtml;
+                                        DateTime transactionDate = DateTime.Parse(transDate);
+                                        t.TransactionDate = transactionDate;
+                                        break;
+                                    case 3:
+                                        t.TransactionDescription = cells[3].InnerHtml;
+                                        break;
+                                    case 4:
+                                        int lane = 0;
+                                        int.TryParse(cells[4].InnerHtml, out lane);
+                                        t.Lane = lane;
+                                        break;
+                                    case 5:
                                         //Transaction Plaza
                                         string plaza = cells[5].InnerHtml;
                                         if (plaza == "East End Crossing - SB")
@@ -432,17 +457,26 @@ namespace RiverLink.Automation
                                         if (plaza == "Kennedy Bridge - SB")
                                         {
                                             t.Plaza = Plazas.KennedySB;
-                                        } else
+                                        } 
+                                        if (plaza == "Kennedy Bridge - NB")
                                         {
                                             t.Plaza = Plazas.KennedyNB;
-                                        }
+                                        }                                      
                                         break;
-                                    case 3:
+                                    case 6:
                                         //Transponder ID associated with transaction
                                         transponderNumber = cells[6].InnerHtml;
+                                        int number = 0;
+                                        Int32.TryParse(transponderNumber, out number);
+                                        Transponder transponder = new Transponder();
+                                        transponder.Transponder_Id = number;
+                                        t.Transponder = transponder;
                                         break;
-                                    case 4:
+                                    case 7:
+                                        t.PlateNumber = cells[7].InnerHtml;
                                         break;
+
+                                       
                                 }
                             }
                             if (ReturnValue == null)

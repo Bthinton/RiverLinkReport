@@ -58,5 +58,13 @@ namespace RiverLink.Models
         public virtual Transponder Transponder { get; set; }
 
         public TransactionTypes TransactionType { get; set; }
+
+        public virtual Double Amount { get; set; }
+
+        public virtual string TransactionDescription { get; set;}
+
+        public virtual int Lane { get; set; }
+
+        public virtual string PlateNumber { get; set; }
     }
 }
