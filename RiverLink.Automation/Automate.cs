@@ -16,9 +16,6 @@ using System.Web;
 //Use filehelper to output to txt files
 
 
-
-
-
 namespace RiverLink.Automation
 {
     public class Automate
@@ -71,9 +68,9 @@ namespace RiverLink.Automation
                 if (IsHomePage(driver))
                 {
                     returnValue = "Success";
-                    StatusMessage = $"Home Page Loaded";
+                    StatusMessage = $"Home Page Loaded...";
                     OnStatusChanged(StatusMessage);
-                    StatusMessage = $"Page Verified";
+                    StatusMessage = $"Page Verified...";
                     OnStatusChanged(StatusMessage);
                 } else
                 {
@@ -107,9 +104,9 @@ namespace RiverLink.Automation
                 if (IsLoginPage(driver))
                 {
                     returnValue = "Success";
-                    StatusMessage = $"Login Page Loaded";
+                    StatusMessage = $"Login Page Loaded...";
                     OnStatusChanged(StatusMessage);
-                    StatusMessage = $"Page Verified";
+                    StatusMessage = $"Page Verified...";
                     OnStatusChanged(StatusMessage);
                 } else
                 {
@@ -142,9 +139,9 @@ namespace RiverLink.Automation
                 if (IsTransactionHistory(driver))
                 {
                     returnValue = "Success";
-                    StatusMessage = $"Transaction History Loaded";
+                    StatusMessage = $"Transaction History Loaded...";
                     OnStatusChanged(StatusMessage);
-                    StatusMessage = $"Page Verified";
+                    StatusMessage = $"Page Verified...";
                     OnStatusChanged(StatusMessage);
                 } else
                 {
@@ -194,7 +191,6 @@ namespace RiverLink.Automation
                 {
                     StatusMessage = "Selecting Username Field...";
                     OnStatusChanged(StatusMessage);
-
                     driver.FindElement(By.XPath(Properties.Settings.Default.X_UserField)).Clear();
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
@@ -237,15 +233,15 @@ namespace RiverLink.Automation
                 if (IsAccountOverview(driver))
                 {
                     returnValue = "Success";
-                    StatusMessage = $"Overview Page Loaded";
+                    StatusMessage = $"Overview Page Loaded...";
                     OnStatusChanged(StatusMessage);
-                    StatusMessage = $"Page Verified";
+                    StatusMessage = $"Page Verified...";
                     OnStatusChanged(StatusMessage);
                 } else
                 {
-                    StatusMessage = $"Overview Page Not Loaded";
+                    StatusMessage = $"Overview Page Not Loaded...";
                     OnStatusChanged(StatusMessage);
-                    StatusMessage = $"Page could not be verified";
+                    StatusMessage = $"Page could not be verified...";
                     OnStatusChanged(StatusMessage);
                 }
             }
@@ -267,15 +263,15 @@ namespace RiverLink.Automation
             if (IsAccountOverview(driver))
             {
                 Success = "Success";
-                StatusMessage = $"Overview Page Loaded";
+                StatusMessage = $"Overview Page Loaded...";
                 OnStatusChanged(StatusMessage);
-                StatusMessage = $"Page Verified";
+                StatusMessage = $"Page Verified...";
                 OnStatusChanged(StatusMessage);
-                StatusMessage = "Verifying Vehicle Table";
+                StatusMessage = "Verifying Vehicle Table...";
                 OnStatusChanged(StatusMessage);
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_VehicleTable)))
                 {
-                    StatusMessage = "Vehicle Table Verified";
+                    StatusMessage = "Vehicle Table Verified...";
                     OnStatusChanged(StatusMessage);
                     string html = driver.PageSource;
                     HtmlDocument doc = new HtmlDocument();
@@ -358,9 +354,9 @@ namespace RiverLink.Automation
                 }
             } else
             {
-                StatusMessage = $"Overview Page Not Loaded";
+                StatusMessage = $"Overview Page Not Loaded...";
                 OnStatusChanged(StatusMessage);
-                StatusMessage = $"Page could not be verified";
+                StatusMessage = $"Page could not be verified...";
                 OnStatusChanged(StatusMessage);
             }
             return ReturnValue;
@@ -375,14 +371,14 @@ namespace RiverLink.Automation
                 if (IsTransactionHistory(driver))
                 {
                     Success = "Success";
-                    StatusMessage = $"Transaction History Loaded";
+                    StatusMessage = $"Transaction History Loaded...";
                     OnStatusChanged(StatusMessage);
-                    StatusMessage = $"Page Verified";
+                    StatusMessage = $"Page Verified...";
                     OnStatusChanged(StatusMessage);
 
                     if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionTable)))
                     {
-                        StatusMessage = $"Transaction Table Verified";
+                        StatusMessage = $"Transaction Table Verified...";
                         OnStatusChanged(StatusMessage);
                         string html = driver.PageSource;
                         HtmlDocument doc = new HtmlDocument();
@@ -399,7 +395,7 @@ namespace RiverLink.Automation
                             string transDate = string.Empty;
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
-                            var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
+                            var cells = rowDoc.DocumentNode.SelectNodes("//td/span");                           
                             for (int j = 0; j < cells.Count; j++)
                             {
                                 switch (j)
@@ -410,8 +406,7 @@ namespace RiverLink.Automation
                                         if (transactionType == "Toll")
                                         {
                                             t.TransactionType = TransactionTypes.Toll;
-                                        }
-                                        else
+                                        } else
                                         {
                                             t.TransactionType = TransactionTypes.Payment;
                                         }
@@ -474,9 +469,7 @@ namespace RiverLink.Automation
                                         break;
                                     case 7:
                                         t.PlateNumber = cells[7].InnerHtml;
-                                        break;
-
-                                       
+                                        break;                                      
                                 }
                             }
                             if (ReturnValue == null)
@@ -485,6 +478,19 @@ namespace RiverLink.Automation
                             }
                             ReturnValue.Add(t);
                         }
+                        if (IsElementEnabled(driver, By.XPath(Properties.Settings.Default.X_TransactionNextBTN)))
+                        {
+                            StatusMessage = $"Next button verified...";
+                            OnStatusChanged(StatusMessage);
+                            StatusMessage = $"Navigating to next transaction page...";
+                            OnStatusChanged(StatusMessage);
+                            driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionNextBTN)).Click();
+                            GetTransactionData(out string success);
+                        } else
+                        {
+                            StatusMessage = $"Next button could not be found.";
+                            OnStatusChanged(StatusMessage);
+                        }                        
                     }
                 } else
                 {

@@ -41,5 +41,8 @@
     <Setting Name="X_MaxPerPage" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_ddlResultsPerPage"]/option[last()]</Value>
     </Setting>
+    <Setting Name="X_TransactionNextBTN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_dpgPagingArea"]/a[last() - 1]</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

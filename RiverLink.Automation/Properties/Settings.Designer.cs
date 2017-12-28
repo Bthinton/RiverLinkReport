@@ -178,5 +178,29 @@ namespace RiverLink.Automation.Properties {
                 this["X_MaxPerPage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_dpgPagingArea\"]/a[last() - 1]")]
+        public string X_TransactionNextBTN {
+            get {
+                return ((string)(this["X_TransactionNextBTN"]));
+            }
+            set {
+                this["X_TransactionNextBTN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_dpgPagingArea\"]/a[last]")]
+        public string Setting {
+            get {
+                return ((string)(this["Setting"]));
+            }
+            set {
+                this["Setting"] = value;
+            }
+        }
     }
 }
