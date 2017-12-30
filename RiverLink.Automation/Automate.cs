@@ -486,6 +486,7 @@ namespace RiverLink.Automation
                             OnStatusChanged(StatusMessage);
                             driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionNextBTN)).Click();
                             GetTransactionData(out string success);
+                            
                         } else
                         {
                             StatusMessage = $"Next button could not be found.";
