@@ -19,12 +19,14 @@ namespace RiverLink.FileWriter
 
             engine1.WriteFile("Transactions.Txt", Transaction);
 
+
             var engine2 = new FileHelperEngine<Vehicle>();
             engine2.HeaderText = engine2.GetFileHeader();
 
             List<Vehicle> Vehicle = new List<Vehicle>();
 
             engine2.WriteFile("Vehicles.Txt", Vehicle);
+
 
             var engine3 = new FileHelperEngine<Transponder>();
             engine3.HeaderText = engine3.GetFileHeader();

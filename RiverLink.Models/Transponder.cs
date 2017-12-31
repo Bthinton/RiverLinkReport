@@ -27,11 +27,14 @@ namespace RiverLink.Models
         [Required]
         [MaxLength(20)]
         public int Transponder_Id { get; set; }
+
         [Required]
         [Display(Name = "Transponder Type")]
         [StringLength(20)]
         public TransponderTypes TransponderType { get; set; }
+
         public virtual ICollection<Vehicle> Vehicles { get; set; }
+
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }
