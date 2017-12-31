@@ -56,7 +56,7 @@ namespace RiverLinkReport.BAL
 
             Success = Worker.GoToTransactionHistory(string.Empty);
 
-            List<Transaction> TransactionList = Worker.GetTransactionData(out Success);
+            List<Transaction> TransactionList = Worker.GetTransactionData(out Success);            
             ///Log in 
             ///Get vehicle data if not gotten
             ///Goto transaction page

@@ -31,7 +31,7 @@ namespace RiverLink.Models
         Toll
     }
 
-
+    [DelimitedRecord("|")]
     public class Transaction
     {
         [Key]

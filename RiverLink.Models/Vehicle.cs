@@ -14,6 +14,7 @@ namespace RiverLink.Models
         Inactive
     }
 
+    [DelimitedRecord("|")]
     public class Vehicle
     {
         [Key]

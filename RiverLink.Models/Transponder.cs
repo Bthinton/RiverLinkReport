@@ -20,6 +20,7 @@ namespace RiverLink.Models
         Invalid
     }
 
+    [DelimitedRecord("|")]
     public class Transponder
     {
         [Key]
