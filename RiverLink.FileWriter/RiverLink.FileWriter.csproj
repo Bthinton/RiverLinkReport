@@ -53,10 +53,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RiverLink.Automation\RiverLink.Automation.csproj">
-      <Project>{6a994f0d-ebd1-42eb-ac01-f965fb2f4bca}</Project>
-      <Name>RiverLink.Automation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RiverLink.Models\RiverLink.Models.csproj">
       <Project>{3a46761f-12cf-49df-8384-37e515d49d5a}</Project>
       <Name>RiverLink.Models</Name>

@@ -31,10 +31,13 @@ namespace RiverLink.Models
         [Required]
         [Display(Name = "Transponder Type")]
         [StringLength(20)]
+        [FieldHidden]
         public TransponderTypes TransponderType { get; set; }
 
+        [FieldHidden]
         public virtual ICollection<Vehicle> Vehicles { get; set; }
 
+        [FieldHidden]
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

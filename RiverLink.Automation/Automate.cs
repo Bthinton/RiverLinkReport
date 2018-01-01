@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using FileHelpers;
 
 //Loop through transaction pages
 //Vehicle/Transaction/Transponder data
@@ -282,6 +283,8 @@ namespace RiverLink.Automation
                         {
                             continue;
                         }
+                        var engine = new FileHelperEngine<Vehicle>();
+                        engine.HeaderText = engine.GetFileHeader();
                         Vehicle v = new Vehicle();
                         string transponderNumber = string.Empty;
                         HtmlDocument rowDoc = new HtmlDocument();
@@ -315,12 +318,14 @@ namespace RiverLink.Automation
                                     break;
                                 //TODO Select the vehicle class object from list of vehicle classes
                                 case 5:
-
+                                    string VehiclePriceClass = cells[5].InnerHtml;
                                     break;
                                 case 6:
                                     transponderNumber = cells[6].InnerHtml;
                                     break;
                                 case 7:
+                                    var engine2 = new FileHelperEngine<Transponder>();
+                                    engine2.HeaderText = engine2.GetFileHeader();
                                     Transponder t = new Transponder();
                                     int number = 0;
                                     Int32.TryParse(transponderNumber, out number);
@@ -335,8 +340,9 @@ namespace RiverLink.Automation
                                         t.TransponderType = TransponderTypes.Sticker;
                                     }
                                     List<Transponder> tList = new List<Transponder>();
-                                    tList.Add(t);
+                                    tList.Add(t);                                    
                                     v.Transponders = tList;
+                                    engine2.WriteFile("Transponders.Txt", tList);
                                     break;
                                 default:
                                     break;
@@ -347,6 +353,7 @@ namespace RiverLink.Automation
                             ReturnValue = new List<Vehicle>();
                         }
                         ReturnValue.Add(v);
+                        engine.WriteFile("Vehicles.Txt", ReturnValue);
                     }
                 } else
                 {
@@ -389,6 +396,8 @@ namespace RiverLink.Automation
                             {
                                 continue;
                             }
+                            var engine = new FileHelperEngine<Transaction>();
+                            engine.HeaderText = engine.GetFileHeader();
                             Transaction t = new Transaction();
                             string transponderNumber = string.Empty;
                             string transactionType = string.Empty;
@@ -477,21 +486,23 @@ namespace RiverLink.Automation
                                 ReturnValue = new List<Transaction>();
                             }
                             ReturnValue.Add(t);
+                         
+                            engine.WriteFile("Transactions.Txt", ReturnValue);
                         }
-                        if (IsElementEnabled(driver, By.XPath(Properties.Settings.Default.X_TransactionNextBTN)))
-                        {
-                            StatusMessage = $"Next button verified...";
-                            OnStatusChanged(StatusMessage);
-                            StatusMessage = $"Navigating to next transaction page...";
-                            OnStatusChanged(StatusMessage);
-                            driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionNextBTN)).Click();
-                            GetTransactionData(out string success);
+                        //if (IsElementEnabled(driver, By.XPath(Properties.Settings.Default.X_TransactionNextBTN)))
+                        //{
+                        //    StatusMessage = $"Next button verified...";
+                        //    OnStatusChanged(StatusMessage);
+                        //    StatusMessage = $"Navigating to next transaction page...";
+                        //    OnStatusChanged(StatusMessage);
+                        //    driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionNextBTN)).Click();
+                        //    GetTransactionData(out string success);
                             
-                        } else
-                        {
-                            StatusMessage = $"Next button could not be found.";
-                            OnStatusChanged(StatusMessage);
-                        }                        
+                        //} else
+                        //{
+                        //    StatusMessage = $"Next button could not be found.";
+                        //    OnStatusChanged(StatusMessage);
+                        //}                        
                     }
                 } else
                 {
@@ -509,7 +520,6 @@ namespace RiverLink.Automation
             }
             return ReturnValue;
         }
-
 
         //public Dictionary<string, string> GetRowDetail()
         //{

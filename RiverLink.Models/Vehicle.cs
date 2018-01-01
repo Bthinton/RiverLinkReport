@@ -42,12 +42,15 @@ namespace RiverLink.Models
         [Required]
         [MaxLength(20)]
         [Display(Name = "Vehicle Class")]
+        [FieldHidden]
         public virtual VehicleClass VehiclePriceClass { get; set; }
 
         [MaxLength(20)]
+        [FieldHidden]
         public virtual ICollection<Transaction> Transactions { get; set; }
 
         [MaxLength(20)]
+        [FieldHidden]
         public virtual ICollection<Transponder> Transponders { get; set; }
     }
 }

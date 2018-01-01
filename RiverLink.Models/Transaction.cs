@@ -44,24 +44,30 @@ namespace RiverLink.Models
 
         [Required]
         [StringLength(20)]
+        [FieldHidden]
         public TransactionStatuses TransactionStatus { get; set; }
 
         [Required]
         [StringLength(32)]
+        [FieldHidden]
         public Plazas Plaza { get; set; }
 
         [Required]
         [MaxLength(20)]
+        [FieldHidden]
         public virtual Vehicle Vehicle { get; set; }
 
         [MaxLength(20)]
+        [FieldHidden]
         public virtual Journal Journal { get; set; }
 
         [Required]
         [MaxLength(20)]
+        [FieldHidden]
         public virtual Transponder Transponder { get; set; }
 
         [MaxLength(20)]
+        [FieldHidden]
         public TransactionTypes TransactionType { get; set; }
 
         [Required]
