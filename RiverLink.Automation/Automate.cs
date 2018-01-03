@@ -284,7 +284,7 @@ namespace RiverLink.Automation
                             continue;
                         }
                         var engine = new FileHelperEngine<Vehicle>();
-                        engine.HeaderText = engine.GetFileHeader();
+                        var engine2 = new FileHelperEngine<Transponder>();
                         Vehicle v = new Vehicle();
                         string transponderNumber = string.Empty;
                         HtmlDocument rowDoc = new HtmlDocument();
@@ -324,8 +324,6 @@ namespace RiverLink.Automation
                                     transponderNumber = cells[6].InnerHtml;
                                     break;
                                 case 7:
-                                    var engine2 = new FileHelperEngine<Transponder>();
-                                    engine2.HeaderText = engine2.GetFileHeader();
                                     Transponder t = new Transponder();
                                     int number = 0;
                                     Int32.TryParse(transponderNumber, out number);
@@ -342,7 +340,15 @@ namespace RiverLink.Automation
                                     List<Transponder> tList = new List<Transponder>();
                                     tList.Add(t);                                    
                                     v.Transponders = tList;
-                                    engine2.WriteFile("Transponders.Txt", tList);
+                                    if (System.IO.File.Exists("C:/Users/Wurmskull/source/repos/RiverLinkReport/RiverLinkReport.CLI/bin/Debug/Transponders.txt"))
+                                    {
+                                        engine2.AppendToFile("Transponders.Txt", tList);
+                                    }
+                                    else
+                                    {
+                                        engine2.HeaderText = "Transponder_Id";
+                                        engine2.WriteFile("Transponders.Txt", tList);
+                                    }
                                     break;
                                 default:
                                     break;
@@ -353,7 +359,8 @@ namespace RiverLink.Automation
                             ReturnValue = new List<Vehicle>();
                         }
                         ReturnValue.Add(v);
-                        engine.WriteFile("Vehicles.Txt", ReturnValue);
+                        engine.HeaderText = engine.GetFileHeader();
+                        engine.WriteFile("Vehicles.Txt", ReturnValue);                                               
                     }
                 } else
                 {
@@ -371,8 +378,8 @@ namespace RiverLink.Automation
 
         public List<Transaction> GetTransactionData(out string Success)
         {
-            List<Transaction> ReturnValue = null;
-            Success = "failed";            
+            List<Transaction> ReturnValue = null;                 
+            Success = "failed";
             try
             {
                 if (IsTransactionHistory(driver))
@@ -396,8 +403,6 @@ namespace RiverLink.Automation
                             {
                                 continue;
                             }
-                            var engine = new FileHelperEngine<Transaction>();
-                            engine.HeaderText = engine.GetFileHeader();
                             Transaction t = new Transaction();
                             string transponderNumber = string.Empty;
                             string transactionType = string.Empty;
@@ -485,24 +490,36 @@ namespace RiverLink.Automation
                             {
                                 ReturnValue = new List<Transaction>();
                             }
-                            ReturnValue.Add(t);
-                         
+                            ReturnValue.Add(t);                               
+                        }
+
+                        var engine = new FileHelperEngine<Transaction>();
+                        if (System.IO.File.Exists("C:/Users/Wurmskull/source/repos/RiverLinkReport/RiverLinkReport.CLI/bin/Debug/Transactions.txt"))
+                        {
+                            engine.AppendToFile("Transactions.Txt", ReturnValue);
+                        }
+                        else
+                        {
+                            engine.HeaderText = engine.GetFileHeader();
                             engine.WriteFile("Transactions.Txt", ReturnValue);
                         }
-                        //if (IsElementEnabled(driver, By.XPath(Properties.Settings.Default.X_TransactionNextBTN)))
-                        //{
-                        //    StatusMessage = $"Next button verified...";
-                        //    OnStatusChanged(StatusMessage);
-                        //    StatusMessage = $"Navigating to next transaction page...";
-                        //    OnStatusChanged(StatusMessage);
-                        //    driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionNextBTN)).Click();
-                        //    GetTransactionData(out string success);
-                            
-                        //} else
-                        //{
-                        //    StatusMessage = $"Next button could not be found.";
-                        //    OnStatusChanged(StatusMessage);
-                        //}                        
+
+                        int x = driver.FindElements(By.XPath(Properties.Settings.Default.X_TransactionTable)).Count;
+                        if (x >= 1000)
+                        {
+                            StatusMessage = $"Next button verified...";
+                            OnStatusChanged(StatusMessage);
+                            StatusMessage = $"Navigating to next transaction page...";
+                            OnStatusChanged(StatusMessage);
+                            driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionNextBTN)).Click();
+                            GetTransactionData(out string success);
+                        } else
+                        {
+                            StatusMessage = $"Next button could not be found.";
+                            OnStatusChanged(StatusMessage);
+                        }
+
+
                     }
                 } else
                 {
