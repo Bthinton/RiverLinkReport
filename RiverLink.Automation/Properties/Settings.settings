@@ -44,5 +44,8 @@
     <Setting Name="X_TransactionNextBTN" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_dpgPagingArea"]/a[last() - 1]</Value>
     </Setting>
+    <Setting Name="X_TransactionDetailBTN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_databound2_ctrl{0}_btnDisplayDetails_{0}"]</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

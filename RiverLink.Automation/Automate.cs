@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using FileHelpers;
+using System.IO;
 
 //Loop through transaction pages
 //Vehicle/Transaction/Transponder data
@@ -31,6 +32,9 @@ namespace RiverLink.Automation
         private string BaseURL = string.Empty;
         private int ShortWait = 1000;
         private int LongWait = 2000;
+        private static string path = AppDomain.CurrentDomain.BaseDirectory;
+        private static string dataDirectory = $"{path}Data\\";
+        private static string timeStamp = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}";
 
         #endregion Fields
 
@@ -58,6 +62,11 @@ namespace RiverLink.Automation
         #region Navigation
         public string GoToHomePage(string Success)
         {
+            if (! Directory.Exists(dataDirectory))
+            {
+                Directory.CreateDirectory(dataDirectory);
+            }
+
             string returnValue = "Failed";
             try
             {
@@ -340,14 +349,14 @@ namespace RiverLink.Automation
                                     List<Transponder> tList = new List<Transponder>();
                                     tList.Add(t);                                    
                                     v.Transponders = tList;
-                                    if (System.IO.File.Exists("C:/Users/Wurmskull/source/repos/RiverLinkReport/RiverLinkReport.CLI/bin/Debug/Transponders.txt"))
+                                    if (System.IO.File.Exists($"{dataDirectory}Transponders-{timeStamp}.Txt"))
                                     {
-                                        engine2.AppendToFile("Transponders.Txt", tList);
+                                        engine2.AppendToFile($"{dataDirectory}Transponders-{timeStamp}.Txt", tList);
                                     }
                                     else
                                     {
                                         engine2.HeaderText = "Transponder_Id";
-                                        engine2.WriteFile("Transponders.Txt", tList);
+                                        engine2.WriteFile($"{dataDirectory}Transponders-{timeStamp}.Txt", tList);
                                     }
                                     break;
                                 default:
@@ -360,7 +369,7 @@ namespace RiverLink.Automation
                         }
                         ReturnValue.Add(v);
                         engine.HeaderText = engine.GetFileHeader();
-                        engine.WriteFile("Vehicles.Txt", ReturnValue);                                               
+                        engine.WriteFile($"{dataDirectory}Vehicles-{timeStamp}.Txt", ReturnValue);                                               
                     }
                 } else
                 {
@@ -485,6 +494,9 @@ namespace RiverLink.Automation
                                         t.PlateNumber = cells[7].InnerHtml;
                                         break;                                      
                                 }
+                                //Get Detail Journal ID becomes transaction ID for main transactions, create transaction number
+                                //Add related transactions to seperate txt
+                                string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i);
                             }
                             if (ReturnValue == null)
                             {
@@ -494,14 +506,14 @@ namespace RiverLink.Automation
                         }
 
                         var engine = new FileHelperEngine<Transaction>();
-                        if (System.IO.File.Exists("C:/Users/Wurmskull/source/repos/RiverLinkReport/RiverLinkReport.CLI/bin/Debug/Transactions.txt"))
+                        if (System.IO.File.Exists($"{dataDirectory}Transactions-{timeStamp}.Txt"))
                         {
-                            engine.AppendToFile("Transactions.Txt", ReturnValue);
+                            engine.AppendToFile($"{dataDirectory}Transactions-{timeStamp}.Txt", ReturnValue);
                         }
                         else
                         {
                             engine.HeaderText = engine.GetFileHeader();
-                            engine.WriteFile("Transactions.Txt", ReturnValue);
+                            engine.WriteFile($"{dataDirectory}Transactions-{timeStamp}.Txt", ReturnValue);
                         }
 
                         int x = driver.FindElements(By.XPath(Properties.Settings.Default.X_TransactionTable)).Count;
@@ -518,8 +530,6 @@ namespace RiverLink.Automation
                             StatusMessage = $"Next button could not be found.";
                             OnStatusChanged(StatusMessage);
                         }
-
-
                     }
                 } else
                 {

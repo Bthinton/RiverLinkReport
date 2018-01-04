@@ -190,5 +190,17 @@ namespace RiverLink.Automation.Properties {
                 this["X_TransactionNextBTN"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_databound2_ctrl{0}_btnDisplayDetails_{0}\"]")]
+        public string X_TransactionDetailBTN {
+            get {
+                return ((string)(this["X_TransactionDetailBTN"]));
+            }
+            set {
+                this["X_TransactionDetailBTN"] = value;
+            }
+        }
     }
 }

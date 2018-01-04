@@ -59,7 +59,9 @@ namespace RiverLink.Models
 
         [MaxLength(20)]
         [FieldHidden]
-        public virtual Journal Journal { get; set; }
+        public virtual long Journal_Id { get; set; }
+        
+        public virtual long RelatedTransaction_Id { get; set; }
 
         [Required]
         [MaxLength(20)]
