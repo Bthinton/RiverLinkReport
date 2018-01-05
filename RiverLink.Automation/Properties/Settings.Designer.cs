@@ -202,5 +202,29 @@ namespace RiverLink.Automation.Properties {
                 this["X_TransactionDetailBTN"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_lblTransactionNo\"]")]
+        public string X_TransactionIdField {
+            get {
+                return ((string)(this["X_TransactionIdField"]));
+            }
+            set {
+                this["X_TransactionIdField"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_btnCloseTransponderDetails\"]")]
+        public string X_DetailCloseBTN {
+            get {
+                return ((string)(this["X_DetailCloseBTN"]));
+            }
+            set {
+                this["X_DetailCloseBTN"] = value;
+            }
+        }
     }
 }

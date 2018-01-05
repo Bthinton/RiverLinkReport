@@ -36,7 +36,7 @@ namespace RiverLink.Models
     {
         [Key]
         [Required]
-        public Int32 Transaction_Id { get; set; }
+        public string Transaction_Id { get; set; }
 
         [Required]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]

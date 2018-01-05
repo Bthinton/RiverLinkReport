@@ -412,6 +412,7 @@ namespace RiverLink.Automation
                             {
                                 continue;
                             }
+                            string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i - 1);
                             Transaction t = new Transaction();
                             string transponderNumber = string.Empty;
                             string transactionType = string.Empty;
@@ -419,7 +420,7 @@ namespace RiverLink.Automation
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");                           
-                            for (int j = 0; j < cells.Count; j++)
+                            for (int j = 0; j < cells.Count + 1; j++)
                             {
                                 switch (j)
                                 {
@@ -492,11 +493,16 @@ namespace RiverLink.Automation
                                         break;
                                     case 7:
                                         t.PlateNumber = cells[7].InnerHtml;
-                                        break;                                      
+                                        break;
+                                    case 8:
+                                        driver.FindElement(By.XPath(detailBTNX_Path)).Click();
+                                        t.Transaction_Id = driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text;
+                                        driver.Navigate().Back();
+                                        break;
                                 }
                                 //Get Detail Journal ID becomes transaction ID for main transactions, create transaction number
                                 //Add related transactions to seperate txt
-                                string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i);
+                                
                             }
                             if (ReturnValue == null)
                             {

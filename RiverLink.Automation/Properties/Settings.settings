@@ -47,5 +47,11 @@
     <Setting Name="X_TransactionDetailBTN" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_databound2_ctrl{0}_btnDisplayDetails_{0}"]</Value>
     </Setting>
+    <Setting Name="X_TransactionIdField" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_lblTransactionNo"]</Value>
+    </Setting>
+    <Setting Name="X_DetailCloseBTN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_btnCloseTransponderDetails"]</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
