@@ -226,5 +226,41 @@ namespace RiverLink.Automation.Properties {
                 this["X_DetailCloseBTN"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_lblJournalID\"]")]
+        public string X_TransactionJournalId {
+            get {
+                return ((string)(this["X_TransactionJournalId"]));
+            }
+            set {
+                this["X_TransactionJournalId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_lblPostedDate\"]")]
+        public string X_PostedDate {
+            get {
+                return ((string)(this["X_PostedDate"]));
+            }
+            set {
+                this["X_PostedDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_gvRelatedTransactions\"]/tbody/tr[2]/td[2]")]
+        public string X_RelatedJournalId {
+            get {
+                return ((string)(this["X_RelatedJournalId"]));
+            }
+            set {
+                this["X_RelatedJournalId"] = value;
+            }
+        }
     }
 }

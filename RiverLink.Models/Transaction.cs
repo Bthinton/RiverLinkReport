@@ -28,7 +28,8 @@ namespace RiverLink.Models
     public enum TransactionTypes
     {
         Payment,
-        Toll
+        Toll,
+        Discount
     }
 
     [DelimitedRecord("|")]
@@ -36,11 +37,15 @@ namespace RiverLink.Models
     {
         [Key]
         [Required]
-        public string Transaction_Id { get; set; }
+        public long Transaction_Id { get; set; }
 
         [Required]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime TransactionDate { get; set; }
+
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime PostedDate { get; set; }
 
         [Required]
         [StringLength(20)]
@@ -58,10 +63,9 @@ namespace RiverLink.Models
         public virtual Vehicle Vehicle { get; set; }
 
         [MaxLength(20)]
-        [FieldHidden]
         public virtual long Journal_Id { get; set; }
         
-        public virtual long RelatedTransaction_Id { get; set; }
+        public virtual long RelatedJournal_Id { get; set; }
 
         [Required]
         [MaxLength(20)]

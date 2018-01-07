@@ -53,5 +53,14 @@
     <Setting Name="X_DetailCloseBTN" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_btnCloseTransponderDetails"]</Value>
     </Setting>
+    <Setting Name="X_TransactionJournalId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_lblJournalID"]</Value>
+    </Setting>
+    <Setting Name="X_PostedDate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_lblPostedDate"]</Value>
+    </Setting>
+    <Setting Name="X_RelatedJournalId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_gvRelatedTransactions"]/tbody/tr[2]/td[2]</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

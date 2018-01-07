@@ -13,11 +13,6 @@ using System.Web;
 using FileHelpers;
 using System.IO;
 
-//Loop through transaction pages
-//Vehicle/Transaction/Transponder data
-//Use filehelper to output to txt files
-
-
 namespace RiverLink.Automation
 {
     public class Automate
@@ -417,6 +412,10 @@ namespace RiverLink.Automation
                             string transponderNumber = string.Empty;
                             string transactionType = string.Empty;
                             string transDate = string.Empty;
+                            string postedTransDate = string.Empty;
+                            string relatedJournalId = string.Empty;
+                            string transactionId = string.Empty;
+                            string journalId = string.Empty;
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");                           
@@ -430,9 +429,14 @@ namespace RiverLink.Automation
                                         if (transactionType == "Toll")
                                         {
                                             t.TransactionType = TransactionTypes.Toll;
-                                        } else
+                                        }
+                                        if (transactionType == "Payment")
                                         {
                                             t.TransactionType = TransactionTypes.Payment;
+                                        }
+                                        if (transactionType == "Discount")
+                                        {
+                                            t.TransactionType = TransactionTypes.Discount;
                                         }
                                         break;
                                     case 1:
@@ -496,13 +500,31 @@ namespace RiverLink.Automation
                                         break;
                                     case 8:
                                         driver.FindElement(By.XPath(detailBTNX_Path)).Click();
-                                        t.Transaction_Id = driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text;
+
+                                        if (transactionType == "Toll")
+                                        {
+                                            transactionId = driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text;
+                                            long transId = long.Parse(transactionId);
+                                            t.Transaction_Id = transId;
+
+                                            relatedJournalId = driver.FindElement(By.XPath(Properties.Settings.Default.X_RelatedJournalId)).Text;
+                                            long relatedjournal = long.Parse(relatedJournalId);
+                                            t.RelatedJournal_Id = relatedjournal;
+                                        } else
+                                        {
+                                            journalId = driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text;
+                                            long journId = long.Parse(journalId);
+                                            t.Journal_Id = journId;
+                                        }
+
+                                        postedTransDate = driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text;
+                                        DateTime postedDate = DateTime.Parse(postedTransDate);
+                                        t.PostedDate = postedDate;
+
                                         driver.Navigate().Back();
                                         break;
                                 }
-                                //Get Detail Journal ID becomes transaction ID for main transactions, create transaction number
-                                //Add related transactions to seperate txt
-                                
+                                //Get Detail journal id's for discount/payments and transaction id's/relate journal id's for toll transactions                                                                
                             }
                             if (ReturnValue == null)
                             {
