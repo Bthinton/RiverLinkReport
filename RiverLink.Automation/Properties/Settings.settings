@@ -59,8 +59,14 @@
     <Setting Name="X_PostedDate" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_lblPostedDate"]</Value>
     </Setting>
-    <Setting Name="X_RelatedJournalId" Type="System.String" Scope="User">
+    <Setting Name="X_RelatedDiscountJournalId" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_gvRelatedTransactions"]/tbody/tr[2]/td[2]</Value>
+    </Setting>
+    <Setting Name="X_RelatedTransactionId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_gvRelatedTransactions"]/tbody/tr[2]/td[1]</Value>
+    </Setting>
+    <Setting Name="X_RelatedPaymentJournalId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_gvRelatedTransactions"]/tbody/tr[3]/td[2]</Value>
     </Setting>
   </Settings>
 </SettingsFile>

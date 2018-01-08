@@ -413,9 +413,11 @@ namespace RiverLink.Automation
                             string transactionType = string.Empty;
                             string transDate = string.Empty;
                             string postedTransDate = string.Empty;
-                            string relatedJournalId = string.Empty;
+                            string relatedDiscountJournalId = string.Empty;
+                            string relatedPaymentJournalId = string.Empty;
                             string transactionId = string.Empty;
                             string journalId = string.Empty;
+                            string relatedTransactionId = string.Empty;
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");                           
@@ -506,10 +508,18 @@ namespace RiverLink.Automation
                                             transactionId = driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text;
                                             long transId = long.Parse(transactionId);
                                             t.Transaction_Id = transId;
-
-                                            relatedJournalId = driver.FindElement(By.XPath(Properties.Settings.Default.X_RelatedJournalId)).Text;
-                                            long relatedjournal = long.Parse(relatedJournalId);
-                                            t.RelatedJournal_Id = relatedjournal;
+                                            if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_RelatedDiscountJournalId)))
+                                            {
+                                                relatedDiscountJournalId = driver.FindElement(By.XPath(Properties.Settings.Default.X_RelatedDiscountJournalId)).Text;
+                                                long relatedDiscountJournal = long.Parse(relatedDiscountJournalId);
+                                                t.RelatedDiscountJournal_Id = relatedDiscountJournal;
+                                            }
+                                            if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_RelatedPaymentJournalId)))
+                                            {
+                                                relatedPaymentJournalId = driver.FindElement(By.XPath(Properties.Settings.Default.X_RelatedPaymentJournalId)).Text;
+                                                long relatedPaymentJournal = long.Parse(relatedPaymentJournalId);
+                                                t.RelatedPaymentJournal_Id = relatedPaymentJournal;
+                                            }
                                         } else
                                         {
                                             journalId = driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text;
@@ -517,7 +527,14 @@ namespace RiverLink.Automation
                                             t.Journal_Id = journId;
                                         }
 
-                                        postedTransDate = driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text;
+                                        if (transactionType == "Discount")
+                                        {
+                                            relatedTransactionId = driver.FindElement(By.XPath(Properties.Settings.Default.X_RelatedTransactionId)).Text;
+                                            long relatedTransId = long.Parse(relatedTransactionId);
+                                            t.RelatedTransaction_Id = relatedTransId;
+                                        }
+
+                                            postedTransDate = driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text;
                                         DateTime postedDate = DateTime.Parse(postedTransDate);
                                         t.PostedDate = postedDate;
 

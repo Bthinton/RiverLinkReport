@@ -65,15 +65,18 @@ namespace RiverLink.Models
         [MaxLength(20)]
         public virtual long Journal_Id { get; set; }
         
-        public virtual long RelatedJournal_Id { get; set; }
+        public virtual long RelatedDiscountJournal_Id { get; set; }
+
+        public virtual long RelatedPaymentJournal_Id { get; set; }
+
+        public virtual long RelatedTransaction_Id { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(20)]      
         [FieldHidden]
         public virtual Transponder Transponder { get; set; }
 
         [MaxLength(20)]
-        [FieldHidden]
         public TransactionTypes TransactionType { get; set; }
 
         [Required]

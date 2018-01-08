@@ -254,12 +254,36 @@ namespace RiverLink.Automation.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_gvRelatedTransactions\"]/tbody/tr[2]/td[2]")]
-        public string X_RelatedJournalId {
+        public string X_RelatedDiscountJournalId {
             get {
-                return ((string)(this["X_RelatedJournalId"]));
+                return ((string)(this["X_RelatedDiscountJournalId"]));
             }
             set {
-                this["X_RelatedJournalId"] = value;
+                this["X_RelatedDiscountJournalId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_gvRelatedTransactions\"]/tbody/tr[2]/td[1]")]
+        public string X_RelatedTransactionId {
+            get {
+                return ((string)(this["X_RelatedTransactionId"]));
+            }
+            set {
+                this["X_RelatedTransactionId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_gvRelatedTransactions\"]/tbody/tr[3]/td[2]")]
+        public string X_RelatedPaymentJournalId {
+            get {
+                return ((string)(this["X_RelatedPaymentJournalId"]));
+            }
+            set {
+                this["X_RelatedPaymentJournalId"] = value;
             }
         }
     }
