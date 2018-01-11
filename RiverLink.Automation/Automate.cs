@@ -410,14 +410,12 @@ namespace RiverLink.Automation
                             string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i - 1);
                             Transaction t = new Transaction();
                             string transponderNumber = string.Empty;
-                            string transactionType = string.Empty;
+                            TransactionTypes transactionType;
                             string transDate = string.Empty;
                             string postedTransDate = string.Empty;
-                            string relatedDiscountJournalId = string.Empty;
-                            string relatedPaymentJournalId = string.Empty;
+                            string detailPaymentJournalId = string.Empty;
                             string transactionId = string.Empty;
-                            string journalId = string.Empty;
-                            string relatedTransactionId = string.Empty;
+                            long journalId = 0;
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");                           
@@ -427,19 +425,7 @@ namespace RiverLink.Automation
                                 {
                                     case 0:
                                         //Transaction Type
-                                        transactionType = cells[0].InnerHtml;
-                                        if (transactionType == "Toll")
-                                        {
-                                            t.TransactionType = TransactionTypes.Toll;
-                                        }
-                                        if (transactionType == "Payment")
-                                        {
-                                            t.TransactionType = TransactionTypes.Payment;
-                                        }
-                                        if (transactionType == "Discount")
-                                        {
-                                            t.TransactionType = TransactionTypes.Discount;
-                                        }
+                                        transactionType = TranslateTransactionType(cells[0].InnerHtml);
                                         break;
                                     case 1:
                                         double amount = 0;
@@ -502,39 +488,93 @@ namespace RiverLink.Automation
                                         break;
                                     case 8:
                                         driver.FindElement(By.XPath(detailBTNX_Path)).Click();
-
-                                        if (transactionType == "Toll")
+                                        if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionIdField)))
                                         {
                                             transactionId = driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text;
                                             long transId = long.Parse(transactionId);
                                             t.Transaction_Id = transId;
-                                            if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_RelatedDiscountJournalId)))
-                                            {
-                                                relatedDiscountJournalId = driver.FindElement(By.XPath(Properties.Settings.Default.X_RelatedDiscountJournalId)).Text;
-                                                long relatedDiscountJournal = long.Parse(relatedDiscountJournalId);
-                                                t.RelatedDiscountJournal_Id = relatedDiscountJournal;
-                                            }
-                                            if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_RelatedPaymentJournalId)))
-                                            {
-                                                relatedPaymentJournalId = driver.FindElement(By.XPath(Properties.Settings.Default.X_RelatedPaymentJournalId)).Text;
-                                                long relatedPaymentJournal = long.Parse(relatedPaymentJournalId);
-                                                t.RelatedPaymentJournal_Id = relatedPaymentJournal;
-                                            }
-                                        } else
-                                        {
-                                            journalId = driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text;
-                                            long journId = long.Parse(journalId);
-                                            t.Journal_Id = journId;
                                         }
-
-                                        if (transactionType == "Discount")
+                                        if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionJournalId)))
                                         {
-                                            relatedTransactionId = driver.FindElement(By.XPath(Properties.Settings.Default.X_RelatedTransactionId)).Text;
-                                            long relatedTransId = long.Parse(relatedTransactionId);
-                                            t.RelatedTransaction_Id = relatedTransId;
+                                            long.TryParse(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text, out journalId);
+                                            t.Journal_Id = journalId;
                                         }
+                                        HtmlDocument rowDoc2 = new HtmlDocument();
+                                        rowDoc2.LoadHtml(driver.PageSource);
+                                        HtmlNodeCollection tableNode = rowDoc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable);
+                                        int counter = 0;
+                                        foreach (HtmlNode item in tableNode)
+                                        {
+                                            if (counter == 0)
+                                            {
+                                                continue;
+                                            }
+                                            else
+                                            {
+                                                counter++;
+                                            }
+                                            HtmlDocument detailRowDoc = new HtmlDocument();
+                                            var detailCells = item.SelectNodes("//td");
 
-                                            postedTransDate = driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text;
+                                            for (int k = 0; k < detailCells.Count; k++)
+                                            {
+                                                if (k == 0)
+                                                {
+                                                    continue;
+                                                }
+                                                double detailAmount = 0.0;
+                                                DateTime detailPostedDate = DateTime.MinValue;
+                                                long detailTransactionId = 0;
+                                                string detailDescription;
+                                                long detailJournalId = 0;
+                                                TransactionTypes detailTransactionType = TransactionTypes.None;
+                                                switch (k)
+                                                {
+                                                    case 1:
+                                                        long.TryParse(detailCells[1].InnerText, out detailTransactionId);
+                                                        break;
+                                                    case 2:
+                                                        string cellDetailJournalId = detailCells[2].InnerText;
+                                                        long detailJournal = long.Parse(cellDetailJournalId);
+                                                        detailJournalId = detailJournal;
+                                                        break;
+                                                    case 3:
+                                                        detailTransactionType = TranslateTransactionType(detailCells[3].InnerText);
+                                                        break;
+                                                    case 4:
+                                                        detailAmount = 0;
+                                                        double.TryParse(detailCells[4].InnerHtml.Replace("$", ""), out detailAmount);
+                                                        break;
+                                                    case 5:
+                                                        DateTime.TryParse(detailCells[5].InnerText, out detailPostedDate);
+                                                        break;
+                                                    case 6:
+                                                        detailDescription = detailCells[6].InnerText;
+                                                        if (ReturnValue == null)
+                                                        {
+                                                            ReturnValue = new List<Transaction>();
+                                                        }
+                                                        Transaction searchTransaction = ReturnValue.Find(tr => tr.Journal_Id == detailJournalId);
+                                                        if (searchTransaction == null)
+                                                        {
+                                                            Transaction DetailTransaction = new Transaction
+                                                            {
+                                                                Transaction_Id = detailTransactionId,
+                                                                TransactionDate = detailPostedDate,
+                                                                TransactionType = detailTransactionType,
+                                                                Journal_Id = detailJournalId,
+                                                                Amount = detailAmount,
+                                                                TransactionDescription = detailDescription
+                                                            };
+                                                            ReturnValue.Add(DetailTransaction);
+                                                        }
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+                                            }
+                                        }                                       
+                                        postedTransDate = driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text;
                                         DateTime postedDate = DateTime.Parse(postedTransDate);
                                         t.PostedDate = postedDate;
 
@@ -543,13 +583,19 @@ namespace RiverLink.Automation
                                 }
                                 //Get Detail journal id's for discount/payments and transaction id's/relate journal id's for toll transactions                                                                
                             }
-                            if (ReturnValue == null)
+                            Transaction mainTransaction = ReturnValue.Find(y => y.Journal_Id == journalId);
+                            if (mainTransaction == null)
                             {
-                                ReturnValue = new List<Transaction>();
+                                ReturnValue.Add(t);
                             }
-                            ReturnValue.Add(t);                               
+                            else
+                            {
+                                mainTransaction.Plaza = t.Plaza;
+                                mainTransaction.Lane = t.Lane;
+                                mainTransaction.PlateNumber = t.PlateNumber;
+                                mainTransaction.TransactionDate = t.TransactionDate;
+                            }                                                         
                         }
-
                         var engine = new FileHelperEngine<Transaction>();
                         if (System.IO.File.Exists($"{dataDirectory}Transactions-{timeStamp}.Txt"))
                         {
@@ -708,6 +754,23 @@ namespace RiverLink.Automation
             {
                 return false;
             }
+        }
+
+        private TransactionTypes TranslateTransactionType(string transactionType)
+        { 
+            if (transactionType == "Toll")
+            {
+               return TransactionTypes.Toll;
+            }
+            if (transactionType == "Payment")
+            {
+                return TransactionTypes.Payment;
+            }
+            if (transactionType == "Discount")
+            {
+                return TransactionTypes.Discount;
+            }
+            return TransactionTypes.None;
         }
 
         #endregion PageVerify

@@ -29,7 +29,8 @@ namespace RiverLink.Models
     {
         Payment,
         Toll,
-        Discount
+        Discount, 
+        None
     }
 
     [DelimitedRecord("|")]
@@ -40,12 +41,14 @@ namespace RiverLink.Models
         public long Transaction_Id { get; set; }
 
         [Required]
+        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime TransactionDate { get; set; }
 
         [Required]
+        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime PostedDate { get; set; }
+        public DateTime? PostedDate { get; set; }
 
         [Required]
         [StringLength(20)]

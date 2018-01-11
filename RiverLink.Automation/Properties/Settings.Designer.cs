@@ -286,5 +286,17 @@ namespace RiverLink.Automation.Properties {
                 this["X_RelatedPaymentJournalId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_gvRelatedTransactions\"]/tbody//tr")]
+        public string X_DetailPageTable {
+            get {
+                return ((string)(this["X_DetailPageTable"]));
+            }
+            set {
+                this["X_DetailPageTable"] = value;
+            }
+        }
     }
 }

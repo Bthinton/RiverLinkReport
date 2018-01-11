@@ -68,5 +68,8 @@
     <Setting Name="X_RelatedPaymentJournalId" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_gvRelatedTransactions"]/tbody/tr[3]/td[2]</Value>
     </Setting>
+    <Setting Name="X_DetailPageTable" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_gvRelatedTransactions"]/tbody//tr</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
