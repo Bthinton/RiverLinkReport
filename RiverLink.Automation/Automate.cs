@@ -216,7 +216,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
+                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("PassWord");
                 } else
                 {
                     throw new Exception("Error EditAd: unable to change the Password field.");
@@ -341,8 +341,10 @@ namespace RiverLink.Automation
                                     {
                                         t.TransponderType = TransponderTypes.Sticker;
                                     }
-                                    List<Transponder> tList = new List<Transponder>();
-                                    tList.Add(t);                                    
+                                    List<Transponder> tList = new List<Transponder>
+                                    {
+                                        t
+                                    };
                                     v.Transponders = tList;
                                     if (System.IO.File.Exists($"{dataDirectory}Transponders-{timeStamp}.Txt"))
                                     {
@@ -425,6 +427,7 @@ namespace RiverLink.Automation
                                 {
                                     case 0:                                        
                                         transactionType = TranslateTransactionType(cells[0].InnerHtml);
+                                        t.TransactionType = transactionType;
                                         break;
                                     case 1:
                                         double amount = 0;
@@ -476,8 +479,10 @@ namespace RiverLink.Automation
                                         transponderNumber = cells[6].InnerHtml;
                                         int number = 0;
                                         Int32.TryParse(transponderNumber, out number);
-                                        Transponder transponder = new Transponder();
-                                        transponder.Transponder_Id = number;
+                                        Transponder transponder = new Transponder
+                                        {
+                                            Transponder_Id = number
+                                        };
                                         t.Transponder = transponder;
                                         break;
                                     case 7:
@@ -516,41 +521,38 @@ namespace RiverLink.Automation
                                                 {
                                                     continue;
                                                 }
+                                                Transaction Dt = new Transaction();
                                                 HtmlDocument rowDoc2 = new HtmlDocument();
                                                 rowDoc2.LoadHtml(doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable)[m].InnerHtml);                                                
                                                 var detailCells = rowDoc2.DocumentNode.SelectNodes("//td");
-                                                for (int k = 0; k < detailCells.Count + 1; k++)
+                                                double detailAmount = 0.0;
+                                                DateTime detailPostedDate = DateTime.MinValue;
+                                                long detailTransactionId = 0;
+                                                long detailJournalId = 0;
+                                                string detailDescription = string.Empty;
+                                                TransactionTypes detailTransactionType = TransactionTypes.None;
+                                                for (int k = 0; k < detailCells.Count; k++)
                                                 {
-                                                    if (k == 0)
-                                                    {
-                                                        continue;
-                                                    }
-                                                    double detailAmount = 0.0;
-                                                    DateTime detailPostedDate = DateTime.MinValue;
-                                                    long detailTransactionId = 0;
-                                                    string detailDescription;
-                                                    long detailJournalId = 0;
-                                                    TransactionTypes detailTransactionType = TransactionTypes.None;
 
                                                     switch (k)
                                                     {
-                                                        case 1:
+                                                        case 0:
                                                             long.TryParse(detailCells[0].InnerText, out detailTransactionId);
                                                             break;
-                                                        case 2:
+                                                        case 1:
                                                             long.TryParse(detailCells[1].InnerText, out detailJournalId);
                                                             break;
-                                                        case 3:
+                                                        case 2:
                                                             detailTransactionType = TranslateTransactionType(detailCells[2].InnerText);
                                                             break;
-                                                        case 4:
+                                                        case 3:
                                                             detailAmount = 0;
                                                             double.TryParse(detailCells[3].InnerHtml.Replace("$", ""), out detailAmount);
                                                             break;
-                                                        case 5:
+                                                        case 4:
                                                             DateTime.TryParse(detailCells[4].InnerText, out detailPostedDate);
                                                             break;
-                                                        case 6:
+                                                        case 5:
                                                             detailDescription = detailCells[5].InnerText;
                                                             if (ReturnValue == null)
                                                             {
