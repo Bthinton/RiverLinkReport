@@ -68,7 +68,7 @@ namespace RiverLink.Models
         [MaxLength(20)]
         public virtual long Journal_Id { get; set; }
 
-        //public virtual List<long> RelatedJournal_Id { get; set; }
+        public virtual List<long> RelatedJournal_Id { get; set; }
 
         [Required]
         [MaxLength(20)]      
