@@ -200,7 +200,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("UserName");
+                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("Username");
                 } else
                 {
                     throw new Exception("Error EditAd: unable to change the Username field.");
@@ -216,7 +216,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("PassWord");
+                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
                 } else
                 {
                     throw new Exception("Error EditAd: unable to change the Password field.");
@@ -415,7 +415,6 @@ namespace RiverLink.Automation
                             TransactionTypes transactionType;
                             string transDate = string.Empty;
                             string postedTransDate = string.Empty;
-                            string detailPaymentJournalId = string.Empty;
                             string transactionId = string.Empty;
                             long journalId = 0;
                             HtmlDocument rowDoc = new HtmlDocument();
@@ -515,13 +514,13 @@ namespace RiverLink.Automation
                                             string html2 = driver.PageSource;
                                             HtmlDocument doc2 = new HtmlDocument();
                                             doc2.LoadHtml(html2);
+                                            //List<long> relatedTransactions = null;
                                             for (int m = 0; m < doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable).Count; m++)
                                             {
                                                 if (m == 0)
                                                 {
                                                     continue;
-                                                }
-                                                Transaction Dt = new Transaction();
+                                                }                                                
                                                 HtmlDocument rowDoc2 = new HtmlDocument();
                                                 rowDoc2.LoadHtml(doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable)[m].InnerHtml);                                                
                                                 var detailCells = rowDoc2.DocumentNode.SelectNodes("//td");
@@ -530,7 +529,8 @@ namespace RiverLink.Automation
                                                 long detailTransactionId = 0;
                                                 long detailJournalId = 0;
                                                 string detailDescription = string.Empty;
-                                                TransactionTypes detailTransactionType = TransactionTypes.None;
+                                                //List<long> detailRelatedTransactions = null;
+                                                TransactionTypes detailTransactionType = TransactionTypes.None;                                                
                                                 for (int k = 0; k < detailCells.Count; k++)
                                                 {
 
@@ -541,6 +541,17 @@ namespace RiverLink.Automation
                                                             break;
                                                         case 1:
                                                             long.TryParse(detailCells[1].InnerText, out detailJournalId);
+                                                            //if (relatedTransactions == null)
+                                                            //{
+                                                            //    relatedTransactions = new List<long>();
+                                                            //}
+                                                            //if (detailRelatedTransactions == null)
+                                                            //{
+                                                            //    detailRelatedTransactions = new List<long>();
+                                                            //}                                                            
+                                                            //relatedTransactions.Add(detailJournalId);
+                                                            //detailRelatedTransactions.Add(journalId);
+                                                            //t.RelatedJournal_Id = relatedTransactions;
                                                             break;
                                                         case 2:
                                                             detailTransactionType = TranslateTransactionType(detailCells[2].InnerText);
@@ -564,11 +575,12 @@ namespace RiverLink.Automation
                                                                 Transaction DetailTransaction = new Transaction
                                                                 {
                                                                     Transaction_Id = detailTransactionId,
-                                                                    TransactionDate = detailPostedDate,
+                                                                    PostedDate = detailPostedDate,
                                                                     TransactionType = detailTransactionType,
                                                                     Journal_Id = detailJournalId,
                                                                     Amount = detailAmount,
                                                                     TransactionDescription = detailDescription
+                                                                    //RelatedJournal_Id = detailRelatedTransactions
                                                                 };
                                                                 ReturnValue.Add(DetailTransaction);
                                                             }
@@ -578,29 +590,16 @@ namespace RiverLink.Automation
                                                     }
                                                 }
                                             }   
-                                        }
-                                        //HtmlDocument rowDoc2 = new HtmlDocument();
-                                        //rowDoc2.LoadHtml(driver.PageSource);
-                                        //HtmlNodeCollection tableNode = rowDoc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable);
-                                        //int counter = 0;
-                                        //foreach (HtmlNode item in tableNode)
-                                        //{
-                                        //    if (counter == 0)
-                                        //    {
-                                        //        continue;
-                                        //    }
-                                        //    else
-                                        //    {
-                                        //        counter++;
-                                        //    }
-                                            
-                                        //}                                       
+                                        }                                
                                         driver.Navigate().Back();
                                         break;
                                 }                                                                
                             }
-
-                            Transaction mainTransaction = ReturnValue.Find(y => y.Journal_Id == journalId);
+                            if (ReturnValue == null)
+                            {
+                                ReturnValue = new List<Transaction>();
+                            }
+                            Transaction mainTransaction = ReturnValue.Find(l => l.Journal_Id == journalId);
                             if (mainTransaction == null)
                             {
                                 ReturnValue.Add(t);
