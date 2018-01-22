@@ -204,7 +204,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("Username");
+                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("username");
                 }
                 else
                 {
@@ -221,7 +221,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
+                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("password");
                 }
                 else
                 {
@@ -289,12 +289,8 @@ namespace RiverLink.Automation
                     string html = driver.PageSource;
                     HtmlDocument doc = new HtmlDocument();
                     doc.LoadHtml(html);
-                    for (int i = 0; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable).Count; i++)
+                    for (int i = 1; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable).Count; i++)
                     {
-                        if (i == 0)
-                        {
-                            continue;
-                        }
                         var engine = new FileHelperEngine<Vehicle>();
                         var engine2 = new FileHelperEngine<Transponder>();
                         Vehicle v = new Vehicle();
