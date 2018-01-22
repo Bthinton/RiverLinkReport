@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FileHelpers;
+using RiverLink.Models;
 
 namespace RiverLink.Models
 {
@@ -29,7 +30,8 @@ namespace RiverLink.Models
     {
         Payment,
         Toll,
-        Discount, 
+        Discount,
+        Fee,
         None
     }
 
@@ -68,6 +70,7 @@ namespace RiverLink.Models
         [MaxLength(20)]
         public virtual long Journal_Id { get; set; }
 
+        [FieldConverter(typeof(RelatedJournalConverter))]
         public virtual List<long> RelatedJournal_Id { get; set; }
 
         [Required]

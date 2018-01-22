@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RelatedJournalConverter.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="Transponder.cs" />
     <Compile Include="Vehicle.cs" />
