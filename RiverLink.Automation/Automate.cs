@@ -231,7 +231,7 @@ namespace RiverLink.Automation
 
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_LoginBTN)))
                 {
-                    StatusMessage = "Logging in...";
+                    StatusMessage = "Logging In...";
                     OnStatusChanged(StatusMessage);
 
                     driver.FindElement(By.XPath(Properties.Settings.Default.X_LoginBTN)).Click();
@@ -254,7 +254,7 @@ namespace RiverLink.Automation
                 {
                     StatusMessage = $"Overview Page Not Loaded...";
                     OnStatusChanged(StatusMessage);
-                    StatusMessage = $"Page could not be verified...";
+                    StatusMessage = $"Page Could Not Be verified...";
                     OnStatusChanged(StatusMessage);
                 }
             }
@@ -327,10 +327,28 @@ namespace RiverLink.Automation
                                     break;
                                 case 4:
                                     v.VehicleStatus = cells[4].InnerHtml;
-                                    break;
-                                //TODO Select the vehicle class object from list of vehicle classes
+                                    break;                                
                                 case 5:
-                                    string VehiclePriceClass = cells[5].InnerHtml;
+                                    VehicleClass vc = new VehicleClass();
+                                    //Considering removing VehicleClass model and handling within Vehicle model
+                                    string vehiclePriceClass = cells[5].InnerHtml;
+                                    if (vehiclePriceClass == "Class 1")
+                                    {
+                                        vc.Classification = Classifications.Class1;
+                                    }
+                                    if (vehiclePriceClass == "Class 2")
+                                    {
+                                        vc.Classification = Classifications.Class2;
+                                    }
+                                    if (vehiclePriceClass == "Class 3")
+                                    {
+                                        vc.Classification = Classifications.Class3;
+                                    }
+                                    List<VehicleClass> vcList = new List<VehicleClass>
+                                    {
+                                        vc
+                                    };
+                                    v.VehiclePriceClass = vcList;
                                     break;
                                 case 6:
                                     transponderNumber = cells[6].InnerHtml;
@@ -386,12 +404,13 @@ namespace RiverLink.Automation
             {
                 StatusMessage = $"Overview Page Not Loaded...";
                 OnStatusChanged(StatusMessage);
-                StatusMessage = $"Page could not be verified...";
+                StatusMessage = $"Page Could Not Be Verified...";
                 OnStatusChanged(StatusMessage);
             }
             return ReturnValue;
         }
 
+        //Pulls transaction history
         public List<Transaction> GetTransactionData(out string Success)
         {
             List<Transaction> ReturnValue = null;
@@ -494,6 +513,8 @@ namespace RiverLink.Automation
                                         t.PlateNumber = cells[7].InnerHtml;
                                         break;
                                     case 8:
+                                        StatusMessage = $"Navigating To Detail Page...";
+                                        OnStatusChanged(StatusMessage);
                                         driver.FindElement(By.XPath(detailBTNX_Path)).Click();
                                         if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionIdField)))
                                         {
@@ -512,7 +533,7 @@ namespace RiverLink.Automation
                                             DateTime postedDate = DateTime.Parse(postedTransDate);
                                             t.PostedDate = postedDate;
                                         }
-
+                                        t.RelatedJournal_Id = new List<long>();
                                         if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_DetailPageTable)))
                                         {
                                             StatusMessage = $"Detail Page Table Verified...";
@@ -526,91 +547,29 @@ namespace RiverLink.Automation
                                                 HtmlDocument rowDoc2 = new HtmlDocument();
                                                 rowDoc2.LoadHtml(doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable)[m].InnerHtml);
                                                 var detailCells = rowDoc2.DocumentNode.SelectNodes("//td");
-                                                double detailAmount = 0.0;
-                                                DateTime detailPostedDate = DateTime.MinValue;
-                                                long detailTransactionId = 0;
-                                                long detailJournalId = 0;
-                                                string detailDescription = string.Empty;
-                                                //List<long> detailRelatedTransactions = null;
-                                                TransactionTypes detailTransactionType = TransactionTypes.None;
-                                                for (int k = 0; k < detailCells.Count; k++)
+                                                long.TryParse(detailCells[1].InnerText, out long detailJournalId);
+                                                if (relatedTransactions == null)
                                                 {
-
-                                                    switch (k)
-                                                    {
-                                                        case 0:
-                                                            long.TryParse(detailCells[0].InnerText, out detailTransactionId);
-                                                            break;
-                                                        case 1:
-                                                            long.TryParse(detailCells[1].InnerText, out detailJournalId);
-                                                            if (relatedTransactions == null)
-                                                            {
-                                                                relatedTransactions = new List<long>();
-                                                            }
-                                                            //if (detailRelatedTransactions == null)
-                                                            //{
-                                                            //    detailRelatedTransactions = new List<long>();
-                                                            //}                                                            
-                                                            relatedTransactions.Add(detailJournalId);
-                                                            //detailRelatedTransactions.Add(journalId);
-                                                            t.RelatedJournal_Id = relatedTransactions;
-                                                            break;
-                                                        case 2:
-                                                            detailTransactionType = TranslateTransactionType(detailCells[2].InnerText);
-                                                            break;
-                                                        case 3:
-                                                            detailAmount = 0;
-                                                            double.TryParse(detailCells[3].InnerHtml.Replace("$", ""), out detailAmount);
-                                                            break;
-                                                        case 4:
-                                                            DateTime.TryParse(detailCells[4].InnerText, out detailPostedDate);
-                                                            break;
-                                                        case 5:
-                                                            detailDescription = detailCells[5].InnerText;
-                                                            //if (ReturnValue == null)
-                                                            //{
-                                                            //    ReturnValue = new List<Transaction>();
-                                                            //}
-                                                            //Transaction searchTransaction = ReturnValue.Find(l => l.Journal_Id == detailJournalId);
-                                                            //if (searchTransaction == null)
-                                                            //{
-                                                            //    Transaction DetailTransaction = new Transaction
-                                                            //    {
-                                                            //        Transaction_Id = detailTransactionId,
-                                                            //        PostedDate = detailPostedDate,
-                                                            //        TransactionType = detailTransactionType,
-                                                            //        Journal_Id = detailJournalId,
-                                                            //        Amount = detailAmount,
-                                                            //        TransactionDescription = detailDescription
-                                                            //        //RelatedJournal_Id = detailRelatedTransactions
-                                                            //    };
-                                                            //    ReturnValue.Add(DetailTransaction);
-                                                            //}
-                                                            break;
-                                                        default:
-                                                            break;
-                                                    }
-                                                } 
+                                                    relatedTransactions = new List<long>();
+                                                }                                                           
+                                                relatedTransactions.Add(detailJournalId);
+                                                t.RelatedJournal_Id = relatedTransactions;
                                             }
                                         }
                                         else
                                         {
-                                            if (t.RelatedJournal_Id == null)
-                                            {
-                                                t.RelatedJournal_Id = new List<long>();
-                                            }
+                                            StatusMessage = $"No Detail Page Table Available...";
+                                            OnStatusChanged(StatusMessage);
                                         }
                                         driver.Navigate().Back();
                                         break;
                                 }
                             }
-
                             if (ReturnValue == null)
                             {
                                 ReturnValue = new List<Transaction>();
                             }
                             ReturnValue.Add(t);
-
                         }
                         var engine = new FileHelperEngine<Transaction>();
                         if (System.IO.File.Exists($"{dataDirectory}Transactions-{timeStamp}.Txt"))
@@ -628,14 +587,14 @@ namespace RiverLink.Automation
                         {
                             StatusMessage = $"Next button verified...";
                             OnStatusChanged(StatusMessage);
-                            StatusMessage = $"Navigating to next transaction page...";
+                            StatusMessage = $"Navigating To Next Transaction Page...";
                             OnStatusChanged(StatusMessage);
                             driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionNextBTN)).Click();
                             GetTransactionData(out string success);
                         }
                         else
                         {
-                            StatusMessage = $"Next button could not be found.";
+                            StatusMessage = $"Next Button Could Not Be Found.";
                             OnStatusChanged(StatusMessage);
                         }
                     }
@@ -644,7 +603,7 @@ namespace RiverLink.Automation
                 {
                     StatusMessage = $"Transaction History Not Loaded";
                     OnStatusChanged(StatusMessage);
-                    StatusMessage = $"Page could not be verified";
+                    StatusMessage = $"Page Could Not be Verified";
                     OnStatusChanged(StatusMessage);
                 }
             }

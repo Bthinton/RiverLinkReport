@@ -43,7 +43,7 @@ namespace RiverLink.Models
         [MaxLength(20)]
         [Display(Name = "Vehicle Class")]
         [FieldHidden]
-        public virtual VehicleClass VehiclePriceClass { get; set; }
+        public virtual ICollection<VehicleClass> VehiclePriceClass { get; set; }
 
         [MaxLength(20)]
         [FieldHidden]
