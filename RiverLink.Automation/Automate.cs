@@ -97,6 +97,7 @@ namespace RiverLink.Automation
             return returnValue;
         }
 
+        //Navigates to Login page
         public string GoToLoginPage(string Success)
         {
             string returnValue = "Failed";
@@ -133,6 +134,7 @@ namespace RiverLink.Automation
             return returnValue;
         }
 
+        //Navigates to Transaction History page
         public string GoToTransactionHistory(string success)
         {
             string returnValue = "Failed";
@@ -189,7 +191,7 @@ namespace RiverLink.Automation
 
         #region Actions
 
-        //logs in to riverlink account
+        //Logs in to riverlink account
         public string Login(string Success)
         {
             string returnValue = "Failed";
@@ -267,9 +269,9 @@ namespace RiverLink.Automation
             return returnValue;
         }
 
+        //Pulls vehicle data from overview page
         public List<Vehicle> GetVehicleData(out string Success)
-        {
-            //TODO Get a list of vehicle classes
+        {            
             List<Vehicle> ReturnValue = null;
             Success = "failed";
 
@@ -406,7 +408,7 @@ namespace RiverLink.Automation
             return ReturnValue;
         }
 
-        //Pulls transaction history
+        //Pulls Transaction History
         public List<Transaction> GetTransactionData(out string Success)
         {
             List<Transaction> ReturnValue = null;
@@ -494,8 +496,7 @@ namespace RiverLink.Automation
                                             t.Plaza = Plazas.KennedyNB;
                                         }
                                         break;
-                                    case 6:
-                                        //Transponder ID associated with transaction
+                                    case 6:                                        
                                         transponderNumber = cells[6].InnerHtml;
                                         int number = 0;
                                         Int32.TryParse(transponderNumber, out number);
@@ -509,6 +510,7 @@ namespace RiverLink.Automation
                                         t.PlateNumber = cells[7].InnerHtml;
                                         break;
                                     case 8:
+                                        //Pulls data from detail page
                                         StatusMessage = $"Navigating To Detail Page...";
                                         OnStatusChanged(StatusMessage);
                                         driver.FindElement(By.XPath(detailBTNX_Path)).Click();
@@ -551,11 +553,6 @@ namespace RiverLink.Automation
                                                 relatedTransactions.Add(detailJournalId);
                                                 t.RelatedJournal_Id = relatedTransactions;
                                             }
-                                        }
-                                        else
-                                        {
-                                            StatusMessage = $"No Detail Page Table Available...";
-                                            OnStatusChanged(StatusMessage);
                                         }
                                         driver.Navigate().Back();
                                         break;
@@ -683,7 +680,7 @@ namespace RiverLink.Automation
         #region PageVerify
         private bool IsHomePage(IWebDriver driver)
         {
-            //see if we're on the home page
+            //See if we're on the home page
             if (driver.PageSource.Contains(Properties.Settings.Default.V_HomePage))
             {
                 return true;
@@ -696,7 +693,7 @@ namespace RiverLink.Automation
 
         private bool IsLoginPage(IWebDriver driver)
         {
-            //see if we're on the login page
+            //See if we're on the login page
             if (driver.PageSource.Contains(Properties.Settings.Default.V_LoginPage))
             {
                 return true;
@@ -709,7 +706,7 @@ namespace RiverLink.Automation
 
         private bool IsAccountOverview(IWebDriver driver)
         {
-            //see if we're on the account page
+            //See if we're on the account page
             if (driver.PageSource.Contains(Properties.Settings.Default.V_AccountOverview))
             {
                 return true;
@@ -722,7 +719,7 @@ namespace RiverLink.Automation
 
         private bool IsTransactionHistory(IWebDriver driver)
         {
-            //see if we're on the transaction history page
+            //See if we're on the transaction history page
             if (driver.PageSource.Contains(Properties.Settings.Default.V_TransactionHistory))
             {
                 return true;
