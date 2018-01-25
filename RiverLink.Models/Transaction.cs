@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FileHelpers;
 using RiverLink.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RiverLink.Models
 {
@@ -17,7 +18,8 @@ namespace RiverLink.Models
         KennedySB,
         KennedyNB,
         EastEndSB,
-        EastEndNB
+        EastEndNB,
+        None
     }
 
     public enum TransactionStatuses
@@ -53,45 +55,40 @@ namespace RiverLink.Models
         public DateTime? PostedDate { get; set; }
 
         [Required]
-        [StringLength(20)]
         [FieldHidden]
         public TransactionStatuses TransactionStatus { get; set; }
 
         [Required]
-        [StringLength(32)]
         [FieldHidden]
         public Plazas Plaza { get; set; }
 
         [Required]
-        [MaxLength(20)]
         [FieldHidden]
         public virtual Vehicle Vehicle { get; set; }
 
-        [MaxLength(20)]
         public virtual long Journal_Id { get; set; }
 
         [FieldConverter(typeof(RelatedJournalConverter))]
         public virtual List<long> RelatedJournal_Id { get; set; }
 
-        [Required]
-        [MaxLength(20)]      
+        [Required]  
         [FieldHidden]
         public virtual Transponder Transponder { get; set; }
 
-        [MaxLength(20)]
         public TransactionTypes TransactionType { get; set; }
 
         [Required]
-        [MaxLength(20)]
         public virtual Double Amount { get; set; }
 
         [MaxLength(20)]
         public virtual string TransactionDescription { get; set;}
 
-        [MaxLength(20)]
         public virtual int Lane { get; set; }
 
         [MaxLength(20)]
         public virtual string PlateNumber { get; set; }
+
+        //[ForeignKey("VehicleClass")]
+        //public Int16 VehicleClass_Id { get; set; }
     }
 }

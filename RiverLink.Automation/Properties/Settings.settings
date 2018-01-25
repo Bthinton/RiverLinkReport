@@ -71,5 +71,8 @@
     <Setting Name="X_DetailPageTable" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_gvRelatedTransactions"]/tbody//tr</Value>
     </Setting>
+    <Setting Name="V_DetailPage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Transaction Info</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

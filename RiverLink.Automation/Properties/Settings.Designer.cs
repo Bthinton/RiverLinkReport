@@ -298,5 +298,17 @@ namespace RiverLink.Automation.Properties {
                 this["X_DetailPageTable"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Transaction Info")]
+        public string V_DetailPage {
+            get {
+                return ((string)(this["V_DetailPage"]));
+            }
+            set {
+                this["V_DetailPage"] = value;
+            }
+        }
     }
 }

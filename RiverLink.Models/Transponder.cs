@@ -25,12 +25,10 @@ namespace RiverLink.Models
     {
         [Key]
         [Required]
-        [MaxLength(20)]
         public int Transponder_Id { get; set; }
 
         [Required]
         [Display(Name = "Transponder Type")]
-        [StringLength(20)]
         [FieldHidden]
         public TransponderTypes TransponderType { get; set; }
 

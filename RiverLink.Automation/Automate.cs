@@ -187,6 +187,26 @@ namespace RiverLink.Automation
             return returnValue;
         }
 
+        public string GotoTransactionDetail(string success, string detailBTNX_Path, IWebDriver driver)
+        {
+            string returnValue = "Failed";
+            if (IsElementDisplayed(driver, By.XPath(detailBTNX_Path)))
+            {
+                StatusMessage = $"Navigating To Detail Page...";
+                OnStatusChanged(StatusMessage);
+                driver.FindElement(By.XPath(detailBTNX_Path)).Click();
+                if (IsDetailPage(driver))
+                {
+                    returnValue = "Success";
+                    StatusMessage = $"Detail Page Loaded...";
+                    OnStatusChanged(StatusMessage);
+                    StatusMessage = $"Page Verified...";
+                    OnStatusChanged(StatusMessage);
+                }
+            }
+            return returnValue;
+        }
+
         #endregion Navigation
 
         #region Actions
@@ -206,7 +226,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("username");
+                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("Username");
                 }
                 else
                 {
@@ -223,7 +243,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("password");
+                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
                 }
                 else
                 {
@@ -412,6 +432,7 @@ namespace RiverLink.Automation
         public List<Transaction> GetTransactionData(out string Success)
         {
             List<Transaction> ReturnValue = null;
+            string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
             Success = "failed";
             try
             {
@@ -448,72 +469,38 @@ namespace RiverLink.Automation
                                 switch (j)
                                 {
                                     case 0:
-                                        transactionType = TranslateTransactionType(cells[0].InnerHtml);
+                                        transactionType = GetTransactionType(cells[0].InnerHtml);
                                         t.TransactionType = transactionType;
                                         break;
                                     case 1:
-                                        double amount = 0;
-                                        double.TryParse(cells[1].InnerHtml.Replace("$", ""), out amount);
-                                        t.Amount = amount;
+                                        t.Amount = GetTransactionAmount(cells[1].InnerHtml);
                                         break;
                                     case 2:
-                                        transDate = cells[2].InnerHtml;
-                                        DateTime transactionDate = DateTime.Parse(transDate);
-                                        t.TransactionDate = transactionDate;
+                                        t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);
                                         break;
                                     case 3:
                                         t.TransactionDescription = cells[3].InnerHtml;
                                         break;
                                     case 4:
-                                        int lane = 0;
-                                        int.TryParse(cells[4].InnerHtml, out lane);
-                                        t.Lane = lane;
+                                        t.Lane = GetLane(cells[4].InnerHtml);
                                         break;
                                     case 5:
-                                        string plaza = cells[5].InnerHtml;
-                                        if (plaza == "East End Crossing - SB")
-                                        {
-                                            t.Plaza = Plazas.EastEndSB;
-                                        }
-                                        if (plaza == "East End Crossing - NB")
-                                        {
-                                            t.Plaza = Plazas.EastEndNB;
-                                        }
-                                        if (plaza == "Lincoln Bridge - SB")
-                                        {
-                                            t.Plaza = Plazas.LincolnSB;
-                                        }
-                                        if (plaza == "Lincoln Bridge - NB")
-                                        {
-                                            t.Plaza = Plazas.LincolnNB;
-                                        }
-                                        if (plaza == "Kennedy Bridge - SB")
-                                        {
-                                            t.Plaza = Plazas.KennedySB;
-                                        }
-                                        if (plaza == "Kennedy Bridge - NB")
-                                        {
-                                            t.Plaza = Plazas.KennedyNB;
-                                        }
+                                        t.Plaza = GetPlaza(cells[5].InnerHtml);
                                         break;
                                     case 6:                                        
-                                        transponderNumber = cells[6].InnerHtml;
-                                        int number = 0;
-                                        Int32.TryParse(transponderNumber, out number);
-                                        Transponder transponder = new Transponder
-                                        {
-                                            Transponder_Id = number
-                                        };
-                                        t.Transponder = transponder;
+                                        t.Transponder = GetTransponderInfo(cells[6].InnerHtml);
                                         break;
                                     case 7:
                                         t.PlateNumber = cells[7].InnerHtml;
                                         break;
                                     case 8:
                                         //Pulls data from detail page
-                                        StatusMessage = $"Navigating To Detail Page...";
-                                        OnStatusChanged(StatusMessage);
-                                        driver.FindElement(By.XPath(detailBTNX_Path)).Click();
+                                        string success = string.Empty;
+                                        GotoTransactionDetail(success, detailBTNX_Path, driver);
+                                        if (success != "Success")
+                                        {
+                                            throw new Exception($"Error {method}: Could not navigate to detail page");
+                                        }
                                         if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionIdField)))
                                         {
                                             transactionId = driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text;
@@ -602,8 +589,7 @@ namespace RiverLink.Automation
             }
             catch (Exception ex)
             {
-                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
+                StatusMessage = $"{method} Error: Unexpected Error {ex}";
                 OnStatusChanged(StatusMessage);
             }
             return ReturnValue;
@@ -691,6 +677,18 @@ namespace RiverLink.Automation
             }
         }
 
+        private bool IsDetailPage(IWebDriver driver)
+        {
+            if (driver.PageSource.Contains(Properties.Settings.Default.V_DetailPage))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private bool IsLoginPage(IWebDriver driver)
         {
             //See if we're on the login page
@@ -729,8 +727,53 @@ namespace RiverLink.Automation
                 return false;
             }
         }
+    
+        #endregion PageVerify
 
-        private TransactionTypes TranslateTransactionType(string transactionType)
+        #region Helper Methods
+
+        private Transponder GetTransponderInfo(string cellText)
+        {
+            string transponderNumber = cellText;
+            Int32.TryParse(transponderNumber, out int number);
+            Transponder transponder = new Transponder
+            {
+                Transponder_Id = number
+            };
+            return transponder;
+        }
+
+        private Plazas GetPlaza(string cellText)
+        {
+            string plaza = cellText;
+            if (plaza == "East End Crossing - SB")
+            {
+                return Plazas.EastEndSB;
+            }
+            if (plaza == "East End Crossing - NB")
+            {
+                return Plazas.EastEndNB;
+            }
+            if (plaza == "Lincoln Bridge - SB")
+            {
+                return Plazas.LincolnSB;
+            }
+            if (plaza == "Lincoln Bridge - NB")
+            {
+                return Plazas.LincolnNB;
+            }
+            if (plaza == "Kennedy Bridge - SB")
+            {
+                return Plazas.KennedySB;
+            }
+            if (plaza == "Kennedy Bridge - NB")
+            {
+                return Plazas.KennedyNB;
+            }
+            return Plazas.None;
+        }
+
+        private TransactionTypes GetTransactionType(string transactionType)
         {
             if (transactionType == "Toll")
             {
@@ -751,11 +794,25 @@ namespace RiverLink.Automation
             return TransactionTypes.None;
         }
 
-        #endregion PageVerify
+        private int GetLane(string cellText)
+        {
+            int.TryParse(cellText, out int lane);
+            return lane;
+        }
 
-        #region Helper Methods
+        private DateTime GetTransactionDate(string cellText)
+        {
+            string transDate = cellText;
+            DateTime transactionDate = DateTime.Parse(transDate);
+            return transactionDate;
+        }
 
-
+        private double GetTransactionAmount(string cellText)
+        {
+            double.TryParse(cellText, out double amount);
+            return amount;
+        }
+                                                   
         private string GetElementTextFromHtml(string Html, string Xpath, string DefaultValue)
         {
             string returnValue = DefaultValue;
