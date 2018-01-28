@@ -49,13 +49,22 @@ namespace RiverLinkReport.BAL
         }
         #endregion Events
 
-        public void GetData()
+        public bool GetData()
         {
+            bool returnValue = true;
             string Success = string.Empty;
 
             List<Vehicle> VehicleList = Worker.GetVehicleData(out Success);
+            if (Success != "Success")
+            {
+                return false;
+            }
 
             Success = Worker.GoToTransactionHistory(string.Empty);
+            if (Success != "Success")
+            {
+                return false;
+            }
 
             List<Transaction> TransactionList = Worker.GetTransactionData(out Success);
 
@@ -66,6 +75,8 @@ namespace RiverLinkReport.BAL
             ///Count number of pages
             ///Goto each page and grab data
             ///insert data into database
+
+            return returnValue;
         }
 
         public bool Login()

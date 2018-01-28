@@ -15,6 +15,13 @@ using System.IO;
 
 namespace RiverLink.Automation
 {
+    /// <summary>
+    /// The main <c>Automate</c> class
+    /// Contains all automation methods
+    /// </summary>
+    /// <remarks>
+    /// This class performs all navigating and data-getting
+    /// </remarks>
     public class Automate
     {
         #region Fields
@@ -30,21 +37,41 @@ namespace RiverLink.Automation
         private static string path = AppDomain.CurrentDomain.BaseDirectory;
         private static string dataDirectory = $"{path}Data\\";
         private static string timeStamp = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}";
-
+        
         #endregion Fields
 
         #region Events
+        /// <summary>
+        /// Used to print messages to console
+        /// </summary>
+        /// <param name="Message">
+        /// The text that will be printed to the console
+        /// </param>
         public delegate void StatusChangedEventHandler(string Message);
-
+        /// <summary>
+        /// Defines event name for console messages
+        /// </summary>
         public event StatusChangedEventHandler StatusChanged;
+        /// <summary>
+        /// Performs the writing of messages to the console
+        /// </summary>
+        /// <param name="Message">
+        /// The text that will be written to the console
+        /// </param>
         protected virtual void OnStatusChanged(string Message)
         {
-            if (StatusChanged != null)
-                StatusChanged(Message);
+            StatusChanged?.Invoke(Message);
         }
         #endregion Events
 
         #region Constructors
+        /// <summary>
+        /// Sets variables for the driver, url, and wait times
+        /// </summary>
+        /// <param name="WebDriver">Defines driver</param>
+        /// <param name="URL">Defines url</param>
+        /// <param name="LWait">Defines Long wait time</param>
+        /// <param name="SWait">Defines short wait time</param>
         public Automate(IWebDriver WebDriver, string URL, int LWait, int SWait)
         {
             driver = WebDriver;
@@ -56,13 +83,17 @@ namespace RiverLink.Automation
 
         #region Navigation
         //Naviagtes to RiverLink Home Page
+        /// <summary>
+        /// Navigates to RiverLink home page and verfies the driver made it to the correct page
+        /// </summary>
+        /// <param name="Success">Passed to Login method in RiverLinkLogic.cs</param>
+        /// <returns>If failed or succeeded</returns>
         public string GoToHomePage(string Success)
         {
             if (!Directory.Exists(dataDirectory))
             {
                 Directory.CreateDirectory(dataDirectory);
             }
-
             string returnValue = "Failed";
             try
             {
@@ -70,7 +101,6 @@ namespace RiverLink.Automation
                 OnStatusChanged(StatusMessage);
                 driver.Url = BaseURL;
                 Thread.Sleep(ShortWait);
-
                 if (IsHomePage(driver))
                 {
                     returnValue = "Success";
@@ -93,16 +123,18 @@ namespace RiverLink.Automation
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
                 OnStatusChanged(StatusMessage);
             }
-
-
             return returnValue;
         }
 
         //Navigates to Login Page
+        /// <summary>
+        /// Navigates to RiverLink login page and verfies the driver made it to the correct page
+        /// </summary>
+        /// <param name="Success">Passed to Login method in RiverLinkLogic.cs</param>
+        /// <returns>If failed or succeeded</returns>
         public string GoToLoginPage(string Success)
         {
             string returnValue = "Failed";
-
             try
             {
                 StatusMessage = $"Going To {BaseURL}{Properties.Settings.Default.U_Login}...";
@@ -131,11 +163,15 @@ namespace RiverLink.Automation
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
                 OnStatusChanged(StatusMessage);
             }
-
             return returnValue;
         }
 
         //Navigates to Transaction History Page
+        /// <summary>
+        /// Navigates to Transaction History page and verfies the driver made it to the correct page
+        /// </summary>
+        /// <param name="success">Passed to Login method in RiverLinkLogic.cs</param>
+        /// <returns>If failed or succeeded</returns>
         public string GoToTransactionHistory(string success)
         {
             string returnValue = "Failed";
@@ -189,6 +225,12 @@ namespace RiverLink.Automation
         }
 
         //Navigates to Transaction Detail Pages
+        /// <summary>
+        /// Navigates to the Transaction Detail pages and verfies the driver made it to the correct page
+        /// </summary>
+        /// <param name="Success">Passed to Login method in RiverLinkLogic.cs</param>
+        /// <param name="detailBTNX_Path">Button associated with detail page</param>
+        /// <returns>If failed or succeeded</returns>
         public string GotoTransactionDetail(string Success, string detailBTNX_Path)
         {
             string returnValue = "Failed";
@@ -210,6 +252,13 @@ namespace RiverLink.Automation
         }
 
         //Navigates to next Transaction History Page
+        /// <summary>
+        /// Navigates to the next Transaction History page and verifies the driver made it to the correct page
+        /// Checks to see if it pulled all transactions currently on the page before navigating to next page
+        /// </summary>
+        /// <param name="Success">Passed to GetData method in RiverLinkLogic.cs</param>
+        /// <param name="transactionNextBTNX_Path">Button for navigating to next Transaction History page</param>
+        /// <returns>If failed or succeeded</returns>
         public string GotoNextTransactionPage(string Success, string transactionNextBTNX_Path)
         {
             string returnValue = "Failed";
@@ -239,10 +288,14 @@ namespace RiverLink.Automation
         #region Actions
 
         //Logs in to riverlink account
+        /// <summary>
+        /// Logs in to RiverLink account by verifying input fields, entering username/password, then clicking the button
+        /// </summary>
+        /// <param name="Success">Passed to Login method in RiverLinkLogic.cs</param>
+        /// <returns>If failed or succeeded</returns>
         public string Login(string Success)
         {
             string returnValue = "Failed";
-
             try
             {
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_UserField)))
@@ -259,8 +312,6 @@ namespace RiverLink.Automation
                 {
                     throw new Exception("Error EditAd: unable to change the Username field.");
                 }
-
-
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_PassField)))
                 {
                     StatusMessage = "Selecting Password Field...";
@@ -276,8 +327,6 @@ namespace RiverLink.Automation
                 {
                     throw new Exception("Error EditAd: unable to change the Password field.");
                 }
-
-
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_LoginBTN)))
                 {
                     StatusMessage = "Logging In...";
@@ -290,7 +339,6 @@ namespace RiverLink.Automation
                 {
                     throw new Exception("Error EditAd: unable to access Login button.");
                 }
-
                 if (IsAccountOverview(driver))
                 {
                     returnValue = "Success";
@@ -314,6 +362,11 @@ namespace RiverLink.Automation
         }
 
         //Pulls vehicle data from overview page
+        /// <summary>
+        /// Data-getter for vehicle data on Account Overview page
+        /// </summary>
+        /// <param name="Success">Passed to GetData method in RiverLinkLogic.cs</param>
+        /// <returns>If failed or succeeded</returns>
         public List<Vehicle> GetVehicleData(out string Success)
         {            
             List<Vehicle> ReturnValue = null;
@@ -382,7 +435,7 @@ namespace RiverLink.Automation
                                 case 6:
                                     int transponderNumber = GetTransponderNumber(cells[6].InnerHtml);
                                     break;
-                                case 7:
+                                case 7:                                   
                                     Transponder t = new Transponder
                                     {
                                         Transponder_Id = GetTransponderNumber(cells[6].InnerHtml),
@@ -429,6 +482,11 @@ namespace RiverLink.Automation
         }
 
         //Pulls Transaction History
+        /// <summary>
+        /// Gets transaction data from the Transaction History Page
+        /// </summary>
+        /// <param name="Success">Passed to GetData method in RiverLinkLogic.cs</param>
+        /// <returns>If succeeded or failed</returns>
         public List<Transaction> GetTransactionData(out string Success)
         {
             List<Transaction> ReturnValue = null;
@@ -614,6 +672,10 @@ namespace RiverLink.Automation
         #endregion Actions
 
         #region PageVerify
+        /// <summary>
+        /// Verfies if the driver made it to the RiverLink home page
+        /// </summary>
+        /// <param name="driver">browser being used</param>
         private bool IsHomePage(IWebDriver driver)
         {
             //See if we're on the home page
@@ -626,7 +688,10 @@ namespace RiverLink.Automation
                 return false;
             }
         }
-
+        /// <summary>
+        /// Verifies if the driver made it to the transaction detail page
+        /// </summary>
+        /// <param name="driver">browser being used</param>
         private bool IsDetailPage(IWebDriver driver)
         {
             if (driver.PageSource.Contains(Properties.Settings.Default.V_DetailPage))
@@ -638,7 +703,10 @@ namespace RiverLink.Automation
                 return false;
             }
         }
-
+        /// <summary>
+        /// Verifies if the driver made it to RiverLink's login page
+        /// </summary>
+        /// <param name="driver">browser being used</param>
         private bool IsLoginPage(IWebDriver driver)
         {
             //See if we're on the login page
@@ -651,7 +719,11 @@ namespace RiverLink.Automation
                 return false;
             }
         }
-
+        /// <summary>
+        /// Verfies if the driver made it to the Account Overview page
+        /// </summary>
+        /// <param name="driver">browser being used</param>
+        /// <returns></returns>
         private bool IsAccountOverview(IWebDriver driver)
         {
             //See if we're on the account page
@@ -664,7 +736,10 @@ namespace RiverLink.Automation
                 return false;
             }
         }
-
+        /// <summary>
+        /// Verifies if the driver made it to the Transaction History page
+        /// </summary>
+        /// <param name="driver">browser being used</param>
         private bool IsTransactionHistory(IWebDriver driver)
         {
             //See if we're on the transaction history page
@@ -676,12 +751,15 @@ namespace RiverLink.Automation
             {
                 return false;
             }
-        }
-    
+        }    
         #endregion PageVerify
 
         #region Helper Methods
-
+        /// <summary>
+        /// Parses the cell's text into the transponder id and passes it to a transponder
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>transponder associated with the transaction</returns>
         private Transponder GetTransponderInfo(string cellText)
         {
             string transponderNumber = cellText;
@@ -692,14 +770,11 @@ namespace RiverLink.Automation
             };
             return transponder;
         }
-
-        private int GetTransponderNumber(string cellText)
-        {
-            string transponderNumber = cellText;
-            Int32.TryParse(transponderNumber, out int number);
-            return number;
-        }      
-
+        /// <summary>
+        /// Compares the cell's text to string specified and returns the Vehicle classification
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>vehicle's price class associated with the transaction</returns>
         private Classifications GetVehiclePriceClass(string cellText)
         {
             string vehiclePriceClass = cellText;
@@ -717,14 +792,22 @@ namespace RiverLink.Automation
             }
             return Classifications.None;
         }
-
+        /// <summary>
+        /// Parses the cell's data into the vehicle year and returns it
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>year of vehicle associated with the transaction</returns>
         private int GetVehicleYear(string cellText)
         {
             string year = cellText;
             Int16.TryParse(year, out Int16 vehicleYear);
             return vehicleYear;
         }
-
+        /// <summary>
+        /// Compares cell's text to string specified and returns the Transponder Type
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>type of transponder associated with the transaction</returns>
         private TransponderTypes GetTransponderType(string cellText)
         {
             string transponderType = cellText;
@@ -737,7 +820,22 @@ namespace RiverLink.Automation
                 return TransponderTypes.Sticker;
             }
         }
-
+        /// <summary>
+        /// Parses the cell's text into the transponder id and returns it
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>The number associated with the transponder</returns>
+        private int GetTransponderNumber(string cellText)
+        {
+            string transponderNumber = cellText;
+            Int32.TryParse(transponderNumber, out int number);
+            return number;
+        }
+        /// <summary>
+        /// Parses cell's text and returns the transaction id
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>transaction id associated with transaction</returns>
         private int GetTransactionId(string cellText)
         {            
             if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionIdField)))
@@ -751,7 +849,11 @@ namespace RiverLink.Automation
                 return 0;
             }       
         }
-
+        /// <summary>
+        /// Parses cell's text and return the journal id
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>journal id associated with the transaction</returns>
         private int GetJournalId(string cellText)
         {
             if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionJournalId)))
@@ -765,7 +867,11 @@ namespace RiverLink.Automation
                 return 0;
             }
         }
-
+        /// <summary>
+        /// Parses cell's text and returns date/time 
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>posted date of the transaction</returns>
         private DateTime? GetPostedDate(string cellText)
         {
             if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_PostedDate)))
@@ -780,14 +886,22 @@ namespace RiverLink.Automation
                 return null;
             }
         }
-
+        /// <summary>
+        /// Parses cell's text and returns related journal ids
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>journal ids that are related to the transaction</returns>
         private int GetRelatedJournalId(string cellText)
         {
             string detailJournId = cellText;
             int.TryParse(detailJournId, out int detailJournalId);
             return detailJournalId;
         }
-
+        /// <summary>
+        /// Compares cell's text to specified string and returns plaza
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>plaza associated with the transaction</returns>
         private Plazas GetPlaza(string cellText)
         {
             string plaza = cellText;
@@ -817,9 +931,14 @@ namespace RiverLink.Automation
             }
             return Plazas.None;
         }
-
-        private TransactionTypes GetTransactionType(string transactionType)
+        /// <summary>
+        /// Compares cell's data to specified string and returns Transaction Type
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>type of transaction made</returns>
+        private TransactionTypes GetTransactionType(string cellText)
         {
+            string transactionType = cellText;
             if (transactionType == "Toll")
             {
                 return TransactionTypes.Toll;
@@ -838,20 +957,32 @@ namespace RiverLink.Automation
             }
             return TransactionTypes.None;
         }
-
+        /// <summary>
+        /// Parses cell's data and returns lane
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>lane associated with transaction</returns>
         private int GetLane(string cellText)
         {
             int.TryParse(cellText, out int lane);
             return lane;
         }
-
+        /// <summary>
+        /// Parses cell's text and returns date/time
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>date of transaction</returns>
         private DateTime GetTransactionDate(string cellText)
         {
             string transDate = cellText;
             DateTime transactionDate = DateTime.Parse(transDate);
             return transactionDate;
         }
-
+        /// <summary>
+        /// Parses cell's text and returns amount
+        /// </summary>
+        /// <param name="cellText">the cell the data is located within the table</param>
+        /// <returns>monetary amount of transaction</returns>
         private double GetTransactionAmount(string cellText)
         {
             double.TryParse(cellText, out double amount);
@@ -1003,12 +1134,14 @@ namespace RiverLink.Automation
 
             return returnValue;
         }
-
+        /// <summary>
+        /// Navigates to url specified
+        /// </summary>
+        /// <param name="Url">The address being navigated to</param>
         public void Navigate(string Url)
         {
             driver.Url = Url;
             driver.Navigate();
-
             //wait after naviogation
             Thread.Sleep(2000);
         }
@@ -1035,7 +1168,11 @@ namespace RiverLink.Automation
 
             return returnValue;
         }
-
+        /// <summary>
+        /// Checks to see if element specified is displayed on page
+        /// </summary>
+        /// <param name="driver">browser being used</param>
+        /// <param name="element">specific element being checked for</param>
         public bool IsElementDisplayed(IWebDriver driver, By element)
         {
 
@@ -1061,7 +1198,11 @@ namespace RiverLink.Automation
 
             return false;
         }
-
+        /// <summary>
+        /// Checks to see if element is displayed within browser element
+        /// </summary>
+        /// <param name="Element">Specified element being checked for</param>
+        /// <param name="FindBy">Mechanism used to find element</param>
         public bool IsElementDisplayedWithinElement(IWebElement Element, By FindBy)
         {
 
@@ -1089,6 +1230,11 @@ namespace RiverLink.Automation
         }
 
         //Enabled
+        /// <summary>
+        /// Checks to see if element is enabled
+        /// </summary>
+        /// <param name="driver">browser being used</param>
+        /// <param name="element">element being checked</param>
         public bool IsElementEnabled(IWebDriver driver, By element)
         {
             IReadOnlyCollection<IWebElement> elements = driver.FindElements(element);
