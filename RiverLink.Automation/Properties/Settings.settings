@@ -50,9 +50,6 @@
     <Setting Name="X_TransactionIdField" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_lblTransactionNo"]</Value>
     </Setting>
-    <Setting Name="X_DetailCloseBTN" Type="System.String" Scope="User">
-      <Value Profile="(Default)">//*[@id="MainContent_btnCloseTransponderDetails"]</Value>
-    </Setting>
     <Setting Name="X_TransactionJournalId" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_lblJournalID"]</Value>
     </Setting>

@@ -42,7 +42,7 @@ namespace RiverLink.Models
     {
         [Key]
         [Required]
-        public long Transaction_Id { get; set; }
+        public int Transaction_Id { get; set; }
 
         [Required]
         [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
@@ -66,10 +66,10 @@ namespace RiverLink.Models
         [FieldHidden]
         public virtual Vehicle Vehicle { get; set; }
 
-        public virtual long Journal_Id { get; set; }
+        public virtual int Journal_Id { get; set; }
 
         [FieldConverter(typeof(RelatedJournalConverter))]
-        public virtual List<long> RelatedJournal_Id { get; set; }
+        public virtual List<int> RelatedJournal_Id { get; set; }
 
         [Required]  
         [FieldHidden]

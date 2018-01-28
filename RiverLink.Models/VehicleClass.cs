@@ -12,7 +12,8 @@ namespace RiverLink.Models
     {
         Class1,
         Class2,
-        Class3
+        Class3,
+        None
     }
 
     public enum PriceTypes

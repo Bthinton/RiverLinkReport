@@ -38,7 +38,6 @@ namespace RiverLinkReport.CLI
                             TestUsernameAndPassword(string.Empty, string.Empty);
                             break;
                         case 2:
-                            //MyCode.DisplayTeams();
                             Console.WriteLine("You picked 2.");
                             break;
                         default:

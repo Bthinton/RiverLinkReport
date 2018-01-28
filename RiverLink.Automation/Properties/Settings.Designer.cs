@@ -217,18 +217,6 @@ namespace RiverLink.Automation.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_btnCloseTransponderDetails\"]")]
-        public string X_DetailCloseBTN {
-            get {
-                return ((string)(this["X_DetailCloseBTN"]));
-            }
-            set {
-                this["X_DetailCloseBTN"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"MainContent_lblJournalID\"]")]
         public string X_TransactionJournalId {
             get {

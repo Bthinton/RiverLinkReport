@@ -55,6 +55,7 @@ namespace RiverLink.Automation
         #endregion Constructors
 
         #region Navigation
+        //Naviagtes to RiverLink Home Page
         public string GoToHomePage(string Success)
         {
             if (!Directory.Exists(dataDirectory))
@@ -97,7 +98,7 @@ namespace RiverLink.Automation
             return returnValue;
         }
 
-        //Navigates to Login page
+        //Navigates to Login Page
         public string GoToLoginPage(string Success)
         {
             string returnValue = "Failed";
@@ -134,7 +135,7 @@ namespace RiverLink.Automation
             return returnValue;
         }
 
-        //Navigates to Transaction History page
+        //Navigates to Transaction History Page
         public string GoToTransactionHistory(string success)
         {
             string returnValue = "Failed";
@@ -187,7 +188,8 @@ namespace RiverLink.Automation
             return returnValue;
         }
 
-        public string GotoTransactionDetail(string success, string detailBTNX_Path, IWebDriver driver)
+        //Navigates to Transaction Detail Pages
+        public string GotoTransactionDetail(string Success, string detailBTNX_Path)
         {
             string returnValue = "Failed";
             if (IsElementDisplayed(driver, By.XPath(detailBTNX_Path)))
@@ -199,6 +201,31 @@ namespace RiverLink.Automation
                 {
                     returnValue = "Success";
                     StatusMessage = $"Detail Page Loaded...";
+                    OnStatusChanged(StatusMessage);
+                    StatusMessage = $"Page Verified...";
+                    OnStatusChanged(StatusMessage);
+                }
+            }
+            return returnValue;
+        }
+
+        //Navigates to next Transaction History Page
+        public string GotoNextTransactionPage(string Success, string transactionNextBTNX_Path)
+        {
+            string returnValue = "Failed";
+            int x = driver.FindElements(By.XPath(Properties.Settings.Default.X_TransactionTable)).Count;
+            if (x >= 1000)
+            {
+                StatusMessage = $"Next button verified...";
+                OnStatusChanged(StatusMessage);
+                StatusMessage = $"Navigating To Next Transaction Page...";
+                OnStatusChanged(StatusMessage);
+                driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionNextBTN)).Click();
+                GetTransactionData(out string success);
+                if (IsTransactionHistory(driver))
+                {
+                    returnValue = "Success";
+                    StatusMessage = $"Next Transaction Page Loaded...";
                     OnStatusChanged(StatusMessage);
                     StatusMessage = $"Page Verified...";
                     OnStatusChanged(StatusMessage);
@@ -316,7 +343,7 @@ namespace RiverLink.Automation
                         var engine = new FileHelperEngine<Vehicle>();
                         var engine2 = new FileHelperEngine<Transponder>();
                         Vehicle v = new Vehicle();
-                        string transponderNumber = string.Empty;
+                        //string transponderNumber = string.Empty;
                         HtmlDocument rowDoc = new HtmlDocument();
                         rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable)[i].InnerHtml);
                         var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
@@ -331,9 +358,7 @@ namespace RiverLink.Automation
                                     v.Model = cells[1].InnerHtml;
                                     break;
                                 case 2:
-                                    short year = 0;
-                                    Int16.TryParse(cells[2].InnerHtml, out year);
-                                    v.Year = year;
+                                    v.Year = GetVehicleYear(cells[2].InnerHtml);
                                     break;
                                 case 3:
                                     string[] statePlateArray = cells[3].InnerHtml?.Split(':');
@@ -347,21 +372,10 @@ namespace RiverLink.Automation
                                     v.VehicleStatus = cells[4].InnerHtml;
                                     break;                                
                                 case 5:
-                                    VehicleClass vc = new VehicleClass();
-                                    //Considering removing VehicleClass model and handling within Vehicle model
-                                    string vehiclePriceClass = cells[5].InnerHtml;
-                                    if (vehiclePriceClass == "Class 1")
+                                    VehicleClass vc = new VehicleClass
                                     {
-                                        vc.Classification = Classifications.Class1;
-                                    }
-                                    if (vehiclePriceClass == "Class 2")
-                                    {
-                                        vc.Classification = Classifications.Class2;
-                                    }
-                                    if (vehiclePriceClass == "Class 3")
-                                    {
-                                        vc.Classification = Classifications.Class3;
-                                    }
+                                        Classification = GetVehiclePriceClass(cells[5].InnerHtml)
+                                    };
                                     List<VehicleClass> vcList = new List<VehicleClass>
                                     {
                                         vc
@@ -369,22 +383,14 @@ namespace RiverLink.Automation
                                     v.VehiclePriceClass = vcList;
                                     break;
                                 case 6:
-                                    transponderNumber = cells[6].InnerHtml;
+                                    int transponderNumber = GetTransponderNumber(cells[6].InnerHtml);
                                     break;
                                 case 7:
-                                    Transponder t = new Transponder();
-                                    int number = 0;
-                                    Int32.TryParse(transponderNumber, out number);
-                                    t.Transponder_Id = number;
-                                    string transponderType = cells[7].InnerHtml;
-                                    if (transponderType == "EZP")
+                                    Transponder t = new Transponder
                                     {
-                                        t.TransponderType = TransponderTypes.EZPass;
-                                    }
-                                    else
-                                    {
-                                        t.TransponderType = TransponderTypes.Sticker;
-                                    }
+                                        Transponder_Id = GetTransponderNumber(cells[6].InnerHtml),
+                                        TransponderType = GetTransponderType(cells[7].InnerHtml)
+                                    };
                                     List<Transponder> tList = new List<Transponder>
                                     {
                                         t
@@ -455,96 +461,59 @@ namespace RiverLink.Automation
                         {
                             string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i - 1);
                             Transaction t = new Transaction();
-                            string transponderNumber = string.Empty;
-                            TransactionTypes transactionType;
-                            string transDate = string.Empty;
-                            string postedTransDate = string.Empty;
-                            string transactionId = string.Empty;
-                            long journalId = 0;
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
-                            for (int j = 0; j < cells.Count + 1; j++)
-                            {
-                                switch (j)
-                                {
-                                    case 0:
-                                        transactionType = GetTransactionType(cells[0].InnerHtml);
-                                        t.TransactionType = transactionType;
-                                        break;
-                                    case 1:
-                                        t.Amount = GetTransactionAmount(cells[1].InnerHtml);
-                                        break;
-                                    case 2:
-                                        t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);
-                                        break;
-                                    case 3:
-                                        t.TransactionDescription = cells[3].InnerHtml;
-                                        break;
-                                    case 4:
-                                        t.Lane = GetLane(cells[4].InnerHtml);
-                                        break;
-                                    case 5:
-                                        t.Plaza = GetPlaza(cells[5].InnerHtml);
-                                        break;
-                                    case 6:                                        
-                                        t.Transponder = GetTransponderInfo(cells[6].InnerHtml);
-                                        break;
-                                    case 7:
-                                        t.PlateNumber = cells[7].InnerHtml;
-                                        break;
-                                    case 8:
-                                        //Pulls data from detail page
-                                        string success = string.Empty;
-                                        GotoTransactionDetail(success, detailBTNX_Path, driver);
-                                        if (success != "Success")
+                                    t.TransactionType = GetTransactionType(cells[0].InnerHtml);
+                                    t.Amount = GetTransactionAmount(cells[1].InnerHtml);
+                                    t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);
+                                    t.TransactionDescription = cells[3].InnerHtml;
+                                    t.Lane = GetLane(cells[4].InnerHtml);
+                                    t.Plaza = GetPlaza(cells[5].InnerHtml);                                      
+                                    t.Transponder = GetTransponderInfo(cells[6].InnerHtml);
+                                    t.PlateNumber = cells[7].InnerHtml;
+                                    //Pulls data from detail page
+                                    GotoTransactionDetail(Success, detailBTNX_Path);
+                                    if (Success != "Success")
+                                    {
+                                        throw new Exception($"Error {method}: Could not navigate to detail page");
+                                    }
+                                    t.Transaction_Id = GetTransactionId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text);
+                                    t.Journal_Id = GetJournalId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text);
+                                    t.PostedDate = GetPostedDate(driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text);
+
+                                    t.RelatedJournal_Id = new List<int>();
+                                    if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_DetailPageTable)))
+                                    {
+                                        StatusMessage = $"Detail Page Table Verified...";
+                                        OnStatusChanged(StatusMessage);
+                                        StatusMessage = $"Pulling Related Transactions...";
+                                        OnStatusChanged(StatusMessage);
+                                        string html2 = driver.PageSource;
+                                        HtmlDocument doc2 = new HtmlDocument();
+                                        doc2.LoadHtml(html2);
+                                        List<int> relatedTransactions = null;
+                                        for (int m = 1; m < doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable).Count; m++)
                                         {
-                                            throw new Exception($"Error {method}: Could not navigate to detail page");
-                                        }
-                                        if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionIdField)))
-                                        {
-                                            transactionId = driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text;
-                                            long transId = long.Parse(transactionId);
-                                            t.Transaction_Id = transId;
-                                        }
-                                        if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionJournalId)))
-                                        {
-                                            long.TryParse(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text, out journalId);
-                                            t.Journal_Id = journalId;
-                                        }
-                                        if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_PostedDate)))
-                                        {
-                                            postedTransDate = driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text;
-                                            DateTime postedDate = DateTime.Parse(postedTransDate);
-                                            t.PostedDate = postedDate;
-                                        }
-                                        t.RelatedJournal_Id = new List<long>();
-                                        if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_DetailPageTable)))
-                                        {
-                                            StatusMessage = $"Detail Page Table Verified...";
-                                            OnStatusChanged(StatusMessage);
-                                            string html2 = driver.PageSource;
-                                            HtmlDocument doc2 = new HtmlDocument();
-                                            doc2.LoadHtml(html2);
-                                            List<long> relatedTransactions = null;
-                                            for (int m = 1; m < doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable).Count; m++)
+                                            HtmlDocument rowDoc2 = new HtmlDocument();
+                                            rowDoc2.LoadHtml(doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable)[m].InnerHtml);
+                                            var detailCells = rowDoc2.DocumentNode.SelectNodes("//td");
+                                            int detailJournalId = GetRelatedJournalId(detailCells[1].InnerHtml);
+                                            if (relatedTransactions == null)
                                             {
-                                                HtmlDocument rowDoc2 = new HtmlDocument();
-                                                rowDoc2.LoadHtml(doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable)[m].InnerHtml);
-                                                var detailCells = rowDoc2.DocumentNode.SelectNodes("//td");
-                                                long.TryParse(detailCells[1].InnerText, out long detailJournalId);
-                                                if (relatedTransactions == null)
-                                                {
-                                                    relatedTransactions = new List<long>();
-                                                }                                                           
-                                                relatedTransactions.Add(detailJournalId);
-                                                t.RelatedJournal_Id = relatedTransactions;
-                                            }
+                                                relatedTransactions = new List<int>();
+                                            }                                                           
+                                            relatedTransactions.Add(detailJournalId);
+                                            t.RelatedJournal_Id = relatedTransactions;
                                         }
-                                        driver.Navigate().Back();
-                                        break;
-                                }
-                            }
+                                    }
+                                    else
+                                    {
+                                        StatusMessage = $"No Detail Page Table Available...";
+                                        OnStatusChanged(StatusMessage);
+                                    }
+                            driver.Navigate().Back();                                
+                            
                             if (ReturnValue == null)
                             {
                                 ReturnValue = new List<Transaction>();
@@ -562,20 +531,11 @@ namespace RiverLink.Automation
                             engine.WriteFile($"{dataDirectory}Transactions-{timeStamp}.Txt", ReturnValue);
                         }
 
-                        int x = driver.FindElements(By.XPath(Properties.Settings.Default.X_TransactionTable)).Count;
-                        if (x >= 1000)
+                        string transactionNextBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionNextBTN);
+                        GotoNextTransactionPage(Success, transactionNextBTNX_Path);
+                        if (Success != "Success")
                         {
-                            StatusMessage = $"Next button verified...";
-                            OnStatusChanged(StatusMessage);
-                            StatusMessage = $"Navigating To Next Transaction Page...";
-                            OnStatusChanged(StatusMessage);
-                            driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionNextBTN)).Click();
-                            GetTransactionData(out string success);
-                        }
-                        else
-                        {
-                            StatusMessage = $"Next Button Could Not Be Found.";
-                            OnStatusChanged(StatusMessage);
+                            throw new Exception($"Error {method}: Could not navigate to next transaction page");
                         }
                     }
                 }
@@ -741,6 +701,101 @@ namespace RiverLink.Automation
                 Transponder_Id = number
             };
             return transponder;
+        }
+
+        private int GetTransponderNumber(string cellText)
+        {
+            string transponderNumber = cellText;
+            Int32.TryParse(transponderNumber, out int number);
+            return number;
+        }      
+
+        private Classifications GetVehiclePriceClass(string cellText)
+        {
+            string vehiclePriceClass = cellText;
+            if (vehiclePriceClass == "Class 1")
+            {
+                return Classifications.Class1;
+            }
+            if (vehiclePriceClass == "Class 2")
+            {
+                return Classifications.Class2;
+            }
+            if (vehiclePriceClass == "Class 3")
+            {
+                return Classifications.Class3;
+            }
+            return Classifications.None;
+        }
+
+        private int GetVehicleYear(string cellText)
+        {
+            string year = cellText;
+            Int16.TryParse(year, out Int16 vehicleYear);
+            return vehicleYear;
+        }
+
+        private TransponderTypes GetTransponderType(string cellText)
+        {
+            string transponderType = cellText;
+            if (transponderType == "EZP")
+            {
+                return TransponderTypes.EZPass;
+            }
+            else
+            {
+                return TransponderTypes.Sticker;
+            }
+        }
+
+        private int GetTransactionId(string cellText)
+        {            
+            if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionIdField)))
+            {
+                string transactionId = cellText;
+                int.TryParse(transactionId, out int transId);
+                return transId;
+            }
+            else
+            {
+                return 0;
+            }       
+        }
+
+        private int GetJournalId(string cellText)
+        {
+            if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionJournalId)))
+            {
+                string journalId = cellText;
+                int.TryParse(journalId, out int journId);
+                return journId;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        private DateTime? GetPostedDate(string cellText)
+        {
+            if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_PostedDate)))
+            {
+
+                string postedTransDate = cellText;
+                DateTime.TryParse(postedTransDate, out DateTime postedDate);
+                return postedDate;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private int GetRelatedJournalId(string cellText)
+        {
+            string detailJournId = cellText;
+            int.TryParse(detailJournId, out int detailJournalId);
+            return detailJournalId;
         }
 
         private Plazas GetPlaza(string cellText)

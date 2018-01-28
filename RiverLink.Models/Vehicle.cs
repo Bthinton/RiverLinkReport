@@ -29,7 +29,7 @@ namespace RiverLink.Models
         [StringLength(32)]
         public string Model { get; set; }
 
-        public Int16 Year { get; set; }
+        public int Year { get; set; }
 
         [Required]
         [Display(Name = "Vehicle State")]
