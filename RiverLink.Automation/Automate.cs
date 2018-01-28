@@ -301,10 +301,7 @@ namespace RiverLink.Automation
                 }
                 else
                 {
-                    StatusMessage = $"Overview Page Not Loaded...";
-                    OnStatusChanged(StatusMessage);
-                    StatusMessage = $"Page Could Not Be verified...";
-                    OnStatusChanged(StatusMessage);
+                    throw new Exception("Error EditAd: unable to access Overview page.");
                 }
             }
             catch (Exception ex)
@@ -426,10 +423,7 @@ namespace RiverLink.Automation
             }
             else
             {
-                StatusMessage = $"Overview Page Not Loaded...";
-                OnStatusChanged(StatusMessage);
-                StatusMessage = $"Page Could Not Be Verified...";
-                OnStatusChanged(StatusMessage);
+                throw new Exception("Error EditAd: unable to access Overview page.");
             }
             return ReturnValue;
         }
@@ -481,7 +475,6 @@ namespace RiverLink.Automation
                                     t.Transaction_Id = GetTransactionId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text);
                                     t.Journal_Id = GetJournalId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text);
                                     t.PostedDate = GetPostedDate(driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text);
-
                                     t.RelatedJournal_Id = new List<int>();
                                     if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_DetailPageTable)))
                                     {
@@ -541,10 +534,7 @@ namespace RiverLink.Automation
                 }
                 else
                 {
-                    StatusMessage = $"Transaction History Not Loaded";
-                    OnStatusChanged(StatusMessage);
-                    StatusMessage = $"Page Could Not be Verified";
-                    OnStatusChanged(StatusMessage);
+                    throw new Exception("Error EditAd: unable to access Transaction History page.");
                 }
             }
             catch (Exception ex)
