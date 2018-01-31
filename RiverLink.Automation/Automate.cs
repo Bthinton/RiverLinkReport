@@ -229,7 +229,7 @@ namespace RiverLink.Automation
         /// Navigates to the Transaction Detail pages and verfies the driver made it to the correct page
         /// </summary>
         /// <param name="Success">Passed to Login method in RiverLinkLogic.cs</param>
-        /// <param name="detailBTNX_Path">Button associated with detail page</param>
+        /// <param name="detailBTNX_Path">Button used to access detail page</param>
         /// <returns>If failed or succeeded</returns>
         public string GotoTransactionDetail(string Success, string detailBTNX_Path)
         {
@@ -306,7 +306,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("Username");
+                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("username");
                 }
                 else
                 {
@@ -321,7 +321,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
+                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("password");
                 }
                 else
                 {
