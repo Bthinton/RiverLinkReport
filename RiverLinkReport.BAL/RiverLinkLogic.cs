@@ -1,10 +1,15 @@
-﻿using OpenQA.Selenium;
+﻿using FileHelpers;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using RiverLink.Automation;
 using RiverLink.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using RiverLink.DAL;
+using System.Data.Entity;
 
 
 namespace RiverLinkReport.BAL
@@ -45,6 +50,38 @@ namespace RiverLinkReport.BAL
                 StatusChanged(Message);
         }
         #endregion Events
+
+        public static void ImportVehicleData()
+        {
+            var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+            string dataDirectory = $@"{AppDomain.CurrentDomain.BaseDirectory}\Data\";
+            string filePath = string.Empty;
+            var engine = new FileHelperEngine<Vehicle>();
+            string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            if (Directory.Exists(dataDirectory))
+            {
+                string[] filePaths = Directory.GetFiles(dataDirectory, "Vehicle*.txt");
+                foreach (var file in filePaths)
+                {
+                    var result = engine.ReadFile(file);
+                    foreach (Vehicle v in result)
+                    {
+                        Console.WriteLine("Vehicle Info:");
+                        Console.WriteLine(v.Model + " - ");
+                        using (var context = new DB())
+                        {
+                            context.Vehicles.Add(v);
+                            context.SaveChanges();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception($"Error {method}: Unable to find data directory {dataDirectory}");
+            }
+
+        }
 
         public bool GetData()
         {
