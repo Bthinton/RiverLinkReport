@@ -413,8 +413,8 @@ namespace RiverLink.Automation
                                     string[] statePlateArray = cells[3].InnerHtml?.Split(':');
                                     if (statePlateArray.Length == 2)
                                     {
-                                        v.VehicleState = statePlateArray[0];
-                                        v.PlateNumber = statePlateArray[1];
+                                        v.VehicleState = statePlateArray[0].Trim();
+                                        v.PlateNumber = statePlateArray[1].Trim();
                                     }
                                     break;
                                 case 4:
@@ -518,11 +518,11 @@ namespace RiverLink.Automation
                                     t.TransactionType = GetTransactionType(cells[0].InnerHtml);
                                     t.Amount = GetTransactionAmount(cells[1].InnerHtml);
                                     t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);
-                                    t.TransactionDescription = cells[3].InnerHtml;
+                                    t.TransactionDescription = cells[3].InnerHtml.Trim();
                                     t.Lane = GetLane(cells[4].InnerHtml);
                                     t.Plaza = GetPlaza(cells[5].InnerHtml);                                      
                                     t.Transponder = GetTransponderInfo(cells[6].InnerHtml);
-                                    t.PlateNumber = cells[7].InnerHtml;
+                                    t.PlateNumber = cells[7].InnerHtml.Trim();
                                     //Pulls data from detail page
                                     GotoTransactionDetail(Success, detailBTNX_Path);
                                     if (Success != "Success")
@@ -834,7 +834,9 @@ namespace RiverLink.Automation
         /// Parses cell's text and returns the transaction id
         /// </summary>
         /// <param name="cellText">the cell the data is located within the table</param>
-        /// <returns>transaction id associated with transaction</returns>
+        /// <returns>
+        /// transaction id associated with transaction
+        /// </returns>
         private int GetTransactionId(string cellText)
         {            
             if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionIdField)))

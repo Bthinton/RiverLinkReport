@@ -53,6 +53,18 @@
     <Compile Include="Migrations\201801250036420_InitialCreate.Designer.cs">
       <DependentUpon>201801250036420_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802010101235_InitialCreate1.cs" />
+    <Compile Include="Migrations\201802010101235_InitialCreate1.Designer.cs">
+      <DependentUpon>201802010101235_InitialCreate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802010117302_AddedIdToVehicle.cs" />
+    <Compile Include="Migrations\201802010117302_AddedIdToVehicle.Designer.cs">
+      <DependentUpon>201802010117302_AddedIdToVehicle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802010127447_RequiredTest.cs" />
+    <Compile Include="Migrations\201802010127447_RequiredTest.Designer.cs">
+      <DependentUpon>201802010127447_RequiredTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -69,6 +81,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201801250036420_InitialCreate.resx">
       <DependentUpon>201801250036420_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802010101235_InitialCreate1.resx">
+      <DependentUpon>201802010101235_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802010117302_AddedIdToVehicle.resx">
+      <DependentUpon>201802010117302_AddedIdToVehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802010127447_RequiredTest.resx">
+      <DependentUpon>201802010127447_RequiredTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

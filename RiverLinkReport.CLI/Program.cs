@@ -34,6 +34,9 @@ namespace RiverLinkReport.CLI
                             break;
                         case 2:
                             Console.WriteLine("You picked 2.");
+                            break;                            
+                        case 5:
+                            RiverLinkLogic.ImportVehicleData();
                             break;
                         default:
                             break;
@@ -57,7 +60,8 @@ namespace RiverLinkReport.CLI
             Console.WriteLine("2. Send Email Alert");
             Console.WriteLine("3. Send SMS Alert");
             Console.WriteLine("4. Send Debug Package");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("5. Import Vehicle Data");
+            Console.WriteLine("6. Exit");
             var result = Console.ReadLine();
             return Convert.ToInt32(GetNumbers(result));
         }

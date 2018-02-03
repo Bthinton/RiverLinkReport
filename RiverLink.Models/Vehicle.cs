@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FileHelpers;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RiverLink.Models
 {
     /// <value>
     /// Defines status of the Vehicle
     /// </value>
+    
     public enum VehicleStatuses
     {
         Active,
@@ -15,14 +17,18 @@ namespace RiverLink.Models
     /// <summary>
     /// Main <c>Vehicle</c> class where all properties are set
     /// </summary>
+    [IgnoreFirst(1)] 
     [DelimitedRecord("|")]
     public class Vehicle
     {
+        [FieldHidden]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Vehicle_Id { get; set; }
         /// <value>
         /// Gets and sets the vehicle's license plate number
         /// </value>
-        [Key]
-        [Required]
+        //[Required]
         [StringLength(20)]
         [Display(Name = "Plate Number")]
         public string PlateNumber { get; set; }
@@ -43,7 +49,7 @@ namespace RiverLink.Models
         /// <value>
         /// Gets and sets the State of the vehicle
         /// </value>
-        [Required]
+        //[Required]
         [Display(Name = "Vehicle State")]
         [StringLength(2)]
         public string VehicleState { get; set; }
@@ -55,7 +61,6 @@ namespace RiverLink.Models
         /// <value>
         /// Gets and sets the vehicle's class
         /// </value>
-        [Required]
         [Display(Name = "Vehicle Class")]
         [FieldHidden]
         public virtual ICollection<VehicleClass> VehiclePriceClass { get; set; }
