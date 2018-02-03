@@ -984,7 +984,7 @@ namespace RiverLink.Automation
         /// <returns>monetary amount of transaction</returns>
         private double GetTransactionAmount(string cellText)
         {
-            double.TryParse(cellText, out double amount);
+            double.TryParse(cellText.Replace("$", ""), out double amount);
             return amount;
         }
                                                    
