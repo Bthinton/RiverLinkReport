@@ -305,7 +305,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("username");
+                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("Username");
                 }
                 else
                 {
@@ -320,7 +320,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("password");
+                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
                 }
                 else
                 {

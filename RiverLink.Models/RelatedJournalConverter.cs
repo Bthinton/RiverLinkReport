@@ -10,7 +10,7 @@ namespace RiverLink.Models
     {
         public override object StringToField(string from)
         {
-            return from.Split(',').Select(x => Convert.ToInt64(x)).ToList();
+            return from.Split(',').Select(x => Convert.ToInt32(x)).ToList();
         }
 
         public override string FieldToString(object fieldValue)

@@ -38,6 +38,9 @@ namespace RiverLinkReport.CLI
                         case 5:
                             RiverLinkLogic.ImportVehicleData();
                             break;
+                        case 6:
+                            RiverLinkLogic.ImportTransactionData();
+                            break;
                         default:
                             break;
                     }
@@ -61,7 +64,8 @@ namespace RiverLinkReport.CLI
             Console.WriteLine("3. Send SMS Alert");
             Console.WriteLine("4. Send Debug Package");
             Console.WriteLine("5. Import Vehicle Data");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("6. Import Transaction Data");
+            Console.WriteLine("7. Exit");
             var result = Console.ReadLine();
             return Convert.ToInt32(GetNumbers(result));
         }

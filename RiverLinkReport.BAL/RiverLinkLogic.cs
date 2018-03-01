@@ -80,7 +80,37 @@ namespace RiverLinkReport.BAL
             {
                 throw new Exception($"Error {method}: Unable to find data directory {dataDirectory}");
             }
+        }
 
+        public static void ImportTransactionData()
+        {
+            var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+            string dataDirectory = $@"{AppDomain.CurrentDomain.BaseDirectory}\Data\";
+            string filePath = string.Empty;
+            var engine = new FileHelperEngine<Transaction>();
+            string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            if (Directory.Exists(dataDirectory))
+            {
+                string[] filePaths = Directory.GetFiles(dataDirectory, "Transaction*.txt");
+                foreach (var file in filePaths)
+                {
+                    var result = engine.ReadFile(file);
+                    foreach (Transaction t in result)
+                    {
+                        Console.WriteLine("Transaction Info:");
+                        Console.WriteLine(t.Journal_Id + " - ");
+                        using (var context = new DB())
+                        {
+                            context.Transactions.Add(t);
+                            context.SaveChanges();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception($"Error {method}: Unable to find data directory {dataDirectory}");
+            }
         }
 
         public bool GetData()

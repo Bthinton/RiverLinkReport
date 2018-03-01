@@ -21,6 +21,9 @@ namespace RiverLink.Models
     [DelimitedRecord("|")]
     public class Vehicle
     {
+        /// <value>
+        ///  Gets and sets the ID of the vehicle
+        /// </value>
         [FieldHidden]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
