@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using FileHelpers;
 
 namespace RiverLink.Models
@@ -128,7 +129,6 @@ namespace RiverLink.Models
         [MaxLength(20)]
         public virtual string PlateNumber { get; set; }
 
-        //[ForeignKey("VehicleClass")]
-        //public Int16 VehicleClass_Id { get; set; }
+        public Int16 VehicleClass_Id { get; set; }
     }
 }

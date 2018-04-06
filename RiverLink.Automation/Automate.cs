@@ -11,7 +11,6 @@ using System.Web;
 using FileHelpers;
 using System.IO;
 
-
 namespace RiverLink.Automation
 {
     /// <summary>
@@ -36,8 +35,9 @@ namespace RiverLink.Automation
         private static string path = AppDomain.CurrentDomain.BaseDirectory;
         private static string dataDirectory = $"{path}Data\\";
         private static string timeStamp = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}";
-        
+        private static List<VehicleClass> VehicleClasses;
         #endregion Fields
+
 
         #region Events
         /// <summary>
@@ -71,7 +71,7 @@ namespace RiverLink.Automation
         /// <param name="URL">Defines url</param>
         /// <param name="LWait">Defines Long wait time</param>
         /// <param name="SWait">Defines short wait time</param>
-        public Automate(IWebDriver WebDriver, string URL, int LWait, int SWait)
+        public Automate(IWebDriver WebDriver, string URL, int LWait, int SWait, List<VehicleClass> ListOfClasses)
         {
             driver = WebDriver;
             BaseURL = URL;
@@ -492,7 +492,7 @@ namespace RiverLink.Automation
             string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
             Success = "failed";
             try
-            {
+            {         
                 if (IsTransactionHistory(driver))
                 {
                     Success = "Success";
@@ -523,6 +523,9 @@ namespace RiverLink.Automation
                                     t.Plaza = GetPlaza(cells[5].InnerHtml);                                      
                                     t.Transponder = GetTransponderInfo(cells[6].InnerHtml);
                                     t.PlateNumber = cells[7].InnerHtml.Trim();
+
+                                    t.VehicleClass_Id = VehicleClasses.FirstOrDefault(x => x.Price == t.Amount).VehicleClass_Id;
+
                                     //Pulls data from detail page
                                     GotoTransactionDetail(Success, detailBTNX_Path);
                                     if (Success != "Success")

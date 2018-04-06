@@ -22,7 +22,8 @@ namespace RiverLink.Models
     {
         Transponder,
         RegisteredPlate,
-        UnregisteredPlate
+        UnregisteredPlate,
+        None
     }
     /// <summary>
     /// The main <c>VehicleClass</c> class that all properties are set to
@@ -40,9 +41,6 @@ namespace RiverLink.Models
         /// </value>
         [StringLength(32)]
         public string VehicleDescription { get; set; }
-        //[Required]
-        //[StringLength(32)]
-        //public string ClassificationDescription { get; set; }
         /// <value>
         /// Gets and sets the price for the vehicle class
         /// </value>
@@ -55,7 +53,6 @@ namespace RiverLink.Models
         /// <value>
         /// Gets and sets vehicle's associated with the vehicle class
         /// </value>
-        [Required]
         public virtual ICollection<Vehicle> Vehicles { get; set; }
         /// <value>
         /// Gets and sets the classfication of the vehicle class

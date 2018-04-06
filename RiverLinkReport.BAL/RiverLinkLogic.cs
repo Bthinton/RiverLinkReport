@@ -30,11 +30,14 @@ namespace RiverLinkReport.BAL
         #region Constructors
         public RiverLinkLogic(string URL, int LWait, int SWait)
         {
+
             driver = GetNewDriver();
             BaseURL = URL;
             LongWait = LWait;
             ShortWait = SWait;
-            Worker = new Automate(driver, BaseURL, LongWait, ShortWait);
+            var context = new RiverLink.DAL.DB();
+            List<VehicleClass> VehicleClasses = context.VehicleClassess.ToList();
+            Worker = new Automate(driver, BaseURL, LongWait, ShortWait, VehicleClasses);
             Worker.StatusChanged += Worker_StatusChanged;
         }
 
@@ -80,7 +83,6 @@ namespace RiverLinkReport.BAL
             {
                 throw new Exception($"Error {method}: Unable to find data directory {dataDirectory}");
             }
-
         }
 
         public bool GetData()
@@ -142,7 +144,7 @@ namespace RiverLinkReport.BAL
         private IWebDriver GetNewDriver()
         {
             ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--disable-extensions");
+            options.AddArgument("--disable-extensions --disable-accelerated-video-decode");
 
             Process[] before = Process.GetProcessesByName("chrome");
             IWebDriver driver = new ChromeDriver(options);

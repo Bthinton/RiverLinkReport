@@ -65,6 +65,14 @@
     <Compile Include="Migrations\201802010127447_RequiredTest.Designer.cs">
       <DependentUpon>201802010127447_RequiredTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804052254525_ChangedRequiredFields.cs" />
+    <Compile Include="Migrations\201804052254525_ChangedRequiredFields.Designer.cs">
+      <DependentUpon>201804052254525_ChangedRequiredFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804052336587_AddedVehicleClassID.cs" />
+    <Compile Include="Migrations\201804052336587_AddedVehicleClassID.Designer.cs">
+      <DependentUpon>201804052336587_AddedVehicleClassID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -90,6 +98,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802010127447_RequiredTest.resx">
       <DependentUpon>201802010127447_RequiredTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804052254525_ChangedRequiredFields.resx">
+      <DependentUpon>201804052254525_ChangedRequiredFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804052336587_AddedVehicleClassID.resx">
+      <DependentUpon>201804052336587_AddedVehicleClassID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
