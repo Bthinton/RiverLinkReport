@@ -42,6 +42,7 @@ namespace RiverLink.Models
     /// <summary>
     /// Main <c>Transaction</c> class where all properties are set
     /// </summary>
+    [IgnoreFirst(1)] 
     [DelimitedRecord("|")]
     public class Transaction
     {
