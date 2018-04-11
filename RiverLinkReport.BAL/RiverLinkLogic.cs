@@ -30,7 +30,6 @@ namespace RiverLinkReport.BAL
         #region Constructors
         public RiverLinkLogic(string URL, int LWait, int SWait)
         {
-
             driver = GetNewDriver();
             BaseURL = URL;
             LongWait = LWait;

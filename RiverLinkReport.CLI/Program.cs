@@ -38,9 +38,9 @@ namespace RiverLinkReport.CLI
                         case 5:
                             RiverLinkLogic.ImportVehicleData();
                             break;
-                        case 6:
-                            RiverLinkLogic.ImportTransactionData();
-                            break;
+                        //case 6:
+                        //    RiverLinkLogic.ImportTransactionData();
+                        //    break;
                         default:
                             break;
                     }
