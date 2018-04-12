@@ -305,7 +305,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("Username");
+                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("EricAllenPaul@hotmail.com");
                 }
                 else
                 {
@@ -320,7 +320,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
+                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("!Sttng0812");
                 }
                 else
                 {
@@ -366,9 +366,9 @@ namespace RiverLink.Automation
         /// </summary>
         /// <param name="Success">Passed to GetData method in RiverLinkLogic.cs</param>
         /// <returns>If failed or succeeded</returns>
-        public List<Vehicle> GetVehicleData(out string Success)
+        public List<VehicleData> GetVehicleData(out string Success)
         {            
-            List<Vehicle> ReturnValue = null;
+            List<VehicleData> ReturnValue = null;
             Success = "failed";
 
             if (IsAccountOverview(driver))
@@ -389,9 +389,9 @@ namespace RiverLink.Automation
                     doc.LoadHtml(html);
                     for (int i = 1; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable).Count; i++)
                     {
-                        var engine = new FileHelperEngine<Vehicle>();
+                        var engine = new FileHelperEngine<VehicleData>();
                         var engine2 = new FileHelperEngine<Transponder>();
-                        Vehicle v = new Vehicle();
+                        VehicleData v = new VehicleData();
                         //string transponderNumber = string.Empty;
                         HtmlDocument rowDoc = new HtmlDocument();
                         rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable)[i].InnerHtml);
@@ -421,39 +421,14 @@ namespace RiverLink.Automation
                                     v.VehicleStatus = cells[4].InnerHtml;
                                     break;                                
                                 case 5:
-                                    VehicleClass vc = new VehicleClass
-                                    {
-                                        Classification = GetVehiclePriceClass(cells[5].InnerHtml)
-                                    };
-                                    List<VehicleClass> vcList = new List<VehicleClass>
-                                    {
-                                        vc
-                                    };
-                                    v.VehiclePriceClass = vcList;
+                                    v.VehicleClass = cells[5].InnerHtml;
                                     break;
                                 case 6:
                                     int transponderNumber = GetTransponderNumber(cells[6].InnerHtml);
                                     break;
                                 case 7:                                   
-                                    Transponder t = new Transponder
-                                    {
-                                        Transponder_Id = GetTransponderNumber(cells[6].InnerHtml),
-                                        TransponderType = GetTransponderType(cells[7].InnerHtml)
-                                    };
-                                    List<Transponder> tList = new List<Transponder>
-                                    {
-                                        t
-                                    };
-                                    v.Transponders = tList;
-                                    if (System.IO.File.Exists($"{dataDirectory}Transponders-{timeStamp}.Txt"))
-                                    {
-                                        engine2.AppendToFile($"{dataDirectory}Transponders-{timeStamp}.Txt", tList);
-                                    }
-                                    else
-                                    {
-                                        engine2.HeaderText = "Transponder_Id";
-                                        engine2.WriteFile($"{dataDirectory}Transponders-{timeStamp}.Txt", tList);
-                                    }
+                                     v.Transponder = cells[6].InnerHtml;
+                                     v.TransponderType = cells[7].InnerHtml;
                                     break;
                                 default:
                                     break;
@@ -461,7 +436,7 @@ namespace RiverLink.Automation
                         }
                         if (ReturnValue == null)
                         {
-                            ReturnValue = new List<Vehicle>();
+                            ReturnValue = new List<VehicleData>();
                         }
                         ReturnValue.Add(v);
                         engine.HeaderText = engine.GetFileHeader();

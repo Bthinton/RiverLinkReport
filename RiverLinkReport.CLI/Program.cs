@@ -36,11 +36,11 @@ namespace RiverLinkReport.CLI
                             Console.WriteLine("You picked 2.");
                             break;                            
                         case 5:
-                            RiverLinkLogic.ImportVehicleData();
+                            //RiverLinkLogic.ImportVehicleData();
                             break;
-                        //case 6:
-                        //    riverlinklogic.importtransactiondata();
-                        //    break;
+                        case 6:
+                            RiverLinkLogic.InsertData();
+                            break;
                         default:
                             break;
                     }

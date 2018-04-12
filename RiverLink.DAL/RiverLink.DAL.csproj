@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201804052336587_AddedVehicleClassID.Designer.cs">
       <DependentUpon>201804052336587_AddedVehicleClassID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804120046130_NewColumns.cs" />
+    <Compile Include="Migrations\201804120046130_NewColumns.Designer.cs">
+      <DependentUpon>201804120046130_NewColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -111,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804052336587_AddedVehicleClassID.resx">
       <DependentUpon>201804052336587_AddedVehicleClassID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804120046130_NewColumns.resx">
+      <DependentUpon>201804120046130_NewColumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -32,6 +32,8 @@ namespace RiverLink.Models
         [Key]
         [Required]
         public int Transponder_Id { get; set; }
+
+        public string TransponderNumber { get; set; }
         /// <value>
         /// Gets and sets the type of transponder
         /// </value>
