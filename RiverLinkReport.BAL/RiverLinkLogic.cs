@@ -53,36 +53,45 @@ namespace RiverLinkReport.BAL
         }
         #endregion Events
 
-//        //public static void ImportVehicleData()
-//        //{
-//        //    var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
-//        //    string dataDirectory = $@"{AppDomain.CurrentDomain.BaseDirectory}\Data\";
-//        string filePath = string.Empty;
-//        var engine = new FileHelperEngine<VehicleData>();
-//        string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
-//            if (Directory.Exists(dataDirectory))
-//            {
-//                string[] filePaths = Directory.GetFiles(dataDirectory, "Vehicle*.txt");
-//                foreach (var file in filePaths)
-//                {
-//                    var result = engine.ReadFile(file);
-//                    foreach (VehicleData v in result)
-//                    {
-//                        Console.WriteLine("Vehicle Info:");
-//                        Console.WriteLine(v.Model + " - ");
-//                        using (var context = new DB())
-//                        {
-//                            context.Vehicles.Add(v);
-//                            context.SaveChanges();
-//                        }
-//}
-//                }
-//            }
-//            else
-//            {
-//                throw new Exception($"Error {method}: Unable to find data directory {dataDirectory}");
-//            }
-//        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static List<Vehicle> GetVehicleData(string FileName)
+        {
+            List<Vehicle> returnValue = new List<Vehicle>();
+            var engine = new FileHelperEngine<VehicleData>();
+            string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            var result = engine.ReadFile(FileName);
+            foreach (VehicleData vd in result)
+            {
+                Classifications Classification = Classifications.Class1;
+                if (vd.VehicleClass.ToLower() == "class 1")
+                {
+                    Classification = Classifications.Class1;
+                }
+                if (vd.VehicleClass.ToLower() == "class 2")
+                {
+                    Classification = Classifications.Class2;
+                }
+                if (vd.VehicleClass.ToLower() == "class 3")
+                {
+                    Classification = Classifications.Class3;
+                }
+                Vehicle v = new Vehicle
+                {
+                    PlateNumber = vd.PlateNumber,
+                    Make = vd.Make,
+                    Model = vd.Model,
+                    Year = vd.Year,
+                    VehicleState = vd.VehicleState,
+                    VehicleStatus = vd.VehicleStatus,
+                    Classification = Classification
+                };
+                returnValue.Add(v);
+            }
+            return returnValue;
+        }
 
         public static List<Transponder> GetTransponderData(string FileName)
         {
@@ -107,12 +116,27 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
-        //public bool InsertVehicleData()
-        //{
-        //    bool returnValue = false;
-
-        //    return returnValue;
-        //}
+        public static bool InsertVehicleData(List<Vehicle> Vehicles)
+        {
+            bool returnValue = false;
+            using (var context = new DB())
+            {
+                var ExistingVehicles = context.Vehicles.ToList();
+                foreach (var v in Vehicles)
+                {
+                    var ExistingVehicle = ExistingVehicles.SingleOrDefault(x => x.PlateNumber == v.PlateNumber);
+                    if (ExistingVehicle == null)
+                    {
+                        context.Vehicles.Add(v);
+                    }
+                }
+                if (context.ChangeTracker.HasChanges())
+                {
+                    context.SaveChanges();
+                }
+            }
+            return returnValue;
+        }
 
         public static bool InsertTransponderData(List<Transponder> Transponders)
         {
@@ -152,6 +176,8 @@ namespace RiverLinkReport.BAL
                     {
                         List<Transponder> transponderList = GetTransponderData(file);
                         InsertTransponderData(transponderList);
+                        List<Vehicle> vehicleList = GetVehicleData(file);
+                        InsertVehicleData(vehicleList);
                     }
                 }
             }

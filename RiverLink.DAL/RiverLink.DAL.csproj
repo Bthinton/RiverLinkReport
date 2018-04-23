@@ -84,6 +84,22 @@
     <Compile Include="Migrations\201804120046130_NewColumns.Designer.cs">
       <DependentUpon>201804120046130_NewColumns.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804122317438_EditToVehicle.cs" />
+    <Compile Include="Migrations\201804122317438_EditToVehicle.Designer.cs">
+      <DependentUpon>201804122317438_EditToVehicle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804141753169_AddedParamToVehicleData.cs" />
+    <Compile Include="Migrations\201804141753169_AddedParamToVehicleData.Designer.cs">
+      <DependentUpon>201804141753169_AddedParamToVehicleData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804141816479_SwitchedVehDataToVehicle.cs" />
+    <Compile Include="Migrations\201804141816479_SwitchedVehDataToVehicle.Designer.cs">
+      <DependentUpon>201804141816479_SwitchedVehDataToVehicle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804141853403_RevertToVehicle.cs" />
+    <Compile Include="Migrations\201804141853403_RevertToVehicle.Designer.cs">
+      <DependentUpon>201804141853403_RevertToVehicle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -118,6 +134,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804120046130_NewColumns.resx">
       <DependentUpon>201804120046130_NewColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804122317438_EditToVehicle.resx">
+      <DependentUpon>201804122317438_EditToVehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804141753169_AddedParamToVehicleData.resx">
+      <DependentUpon>201804141753169_AddedParamToVehicleData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804141816479_SwitchedVehDataToVehicle.resx">
+      <DependentUpon>201804141816479_SwitchedVehDataToVehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804141853403_RevertToVehicle.resx">
+      <DependentUpon>201804141853403_RevertToVehicle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

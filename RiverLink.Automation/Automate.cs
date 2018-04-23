@@ -305,7 +305,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("EricAllenPaul@hotmail.com");
+                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("Username");
                 }
                 else
                 {
@@ -320,7 +320,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("!Sttng0812");
+                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
                 }
                 else
                 {
@@ -392,47 +392,25 @@ namespace RiverLink.Automation
                         var engine = new FileHelperEngine<VehicleData>();
                         var engine2 = new FileHelperEngine<Transponder>();
                         VehicleData v = new VehicleData();
-                        //string transponderNumber = string.Empty;
                         HtmlDocument rowDoc = new HtmlDocument();
                         rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable)[i].InnerHtml);
                         var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
                         for (int j = 0; j < cells.Count; j++)
                         {
-                            switch (j)
+                            v.Make = cells[0].InnerHtml;
+                            v.Model = cells[1].InnerHtml;
+                            v.Year = GetVehicleYear(cells[2].InnerHtml);
+                            string[] statePlateArray = cells[3].InnerHtml?.Split(':');
+                            if (statePlateArray.Length == 2)
                             {
-                                case 0:
-                                    v.Make = cells[0].InnerHtml;
-                                    break;
-                                case 1:
-                                    v.Model = cells[1].InnerHtml;
-                                    break;
-                                case 2:
-                                    v.Year = GetVehicleYear(cells[2].InnerHtml);
-                                    break;
-                                case 3:
-                                    string[] statePlateArray = cells[3].InnerHtml?.Split(':');
-                                    if (statePlateArray.Length == 2)
-                                    {
-                                        v.VehicleState = statePlateArray[0].Trim();
-                                        v.PlateNumber = statePlateArray[1].Trim();
-                                    }
-                                    break;
-                                case 4:
-                                    v.VehicleStatus = cells[4].InnerHtml;
-                                    break;                                
-                                case 5:
-                                    v.VehicleClass = cells[5].InnerHtml;
-                                    break;
-                                case 6:
-                                    int transponderNumber = GetTransponderNumber(cells[6].InnerHtml);
-                                    break;
-                                case 7:                                   
-                                     v.Transponder = cells[6].InnerHtml;
-                                     v.TransponderType = cells[7].InnerHtml;
-                                    break;
-                                default:
-                                    break;
+                                v.VehicleState = statePlateArray[0].Trim();
+                                v.PlateNumber = statePlateArray[1].Trim();
                             }
+                            v.VehicleStatus = cells[4].InnerHtml;
+                            v.VehicleClass = cells[5].InnerHtml;
+                            int transponderNumber = GetTransponderNumber(cells[6].InnerHtml);                               
+                            v.Transponder = cells[6].InnerHtml;
+                            v.TransponderType = cells[7].InnerHtml;                            
                         }
                         if (ReturnValue == null)
                         {

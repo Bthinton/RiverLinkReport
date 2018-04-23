@@ -39,11 +39,10 @@ namespace RiverLink.Models
         /// </value>
         [Required]
         [Display(Name = "Transponder Type")]
-        [FieldHidden]
         public TransponderTypes TransponderType { get; set; }
         /// <value>
         /// Gets and sets the vehicle used with the transponder
-        /// </value>
+        /// Field</value>
         [FieldHidden]
         public virtual ICollection<Vehicle> Vehicles { get; set; }
         /// <value>

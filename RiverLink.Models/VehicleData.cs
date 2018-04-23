@@ -12,6 +12,11 @@ namespace RiverLink.Models
     [DelimitedRecord("|")]
     public class VehicleData
     {
+        [FieldHidden]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Vehicle_Id { get; set; }
+
         [StringLength(20)]
         public string PlateNumber { get; set; }
         /// <value>
@@ -43,9 +48,8 @@ namespace RiverLink.Models
         /// </value>
 
         public string VehicleClass { get; set; }
-        /// <value>
-        /// Gets and sets the transponders associated with the vehicle
-        /// </value>
+
+        public Classifications Classification { get; set; }
 
         public string Transponder { get; set; }
 

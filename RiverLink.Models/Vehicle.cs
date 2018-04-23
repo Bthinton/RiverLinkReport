@@ -64,9 +64,11 @@ namespace RiverLink.Models
         /// <value>
         /// Gets and sets the vehicle's class
         /// </value>
+        public string VehicleClass { get; set; } 
+
         [Display(Name = "Vehicle Class")]
         [FieldHidden]
-        public virtual ICollection<VehicleClass> VehiclePriceClass { get; set; }
+        public Classifications Classification { get; set; }
         /// <value>
         /// Gets and sets the transaction that was made with the vehicle
         /// </value>
