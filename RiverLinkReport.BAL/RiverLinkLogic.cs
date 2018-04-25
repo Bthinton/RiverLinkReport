@@ -23,6 +23,7 @@ namespace RiverLinkReport.BAL
         private string BaseURL = string.Empty;
         private int ShortWait = 1000;
         private int LongWait = 2000;
+        private static List<VehicleClass> VehicleClassList = new List<VehicleClass>();
 
         private Automate Worker;
         #endregion Fields
@@ -35,7 +36,7 @@ namespace RiverLinkReport.BAL
             LongWait = LWait;
             ShortWait = SWait;
             var context = new RiverLink.DAL.DB();
-            List<VehicleClass> VehicleClasses = context.VehicleClassess.ToList();
+            List<VehicleClass> VehicleClasses = context.VehicleClasses.ToList();
             Worker = new Automate(driver, BaseURL, LongWait, ShortWait, VehicleClasses);
             Worker.StatusChanged += Worker_StatusChanged;
         }
@@ -78,6 +79,7 @@ namespace RiverLinkReport.BAL
                 {
                     Classification = Classifications.Class3;
                 }
+                PopulateVehicleClasses();
                 Vehicle v = new Vehicle
                 {
                     PlateNumber = vd.PlateNumber,
@@ -86,11 +88,23 @@ namespace RiverLinkReport.BAL
                     Year = vd.Year,
                     VehicleState = vd.VehicleState,
                     VehicleStatus = vd.VehicleStatus,
-                    Classification = Classification
+                    Classification = Classification,
+                    VehicleClass = VehicleClassList.FirstOrDefault(x => x.Classification == Classification)
                 };
                 returnValue.Add(v);
             }
             return returnValue;
+        }
+
+        private static void PopulateVehicleClasses()
+        {
+            if (!VehicleClassList.Any())
+            {
+                using (var context = new DB())
+                {
+                    VehicleClassList = context.VehicleClasses.ToList();
+                }
+            }
         }
 
         public static List<Transponder> GetTransponderData(string FileName)
@@ -116,6 +130,39 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
+        /// <summary>
+        /// Gets the transaction data.
+        /// </summary>
+        /// <param name="FileName">Name of the file.</param>
+        /// <returns></returns>
+        //public static List<Transaction> GetTransactionData(string FileName)
+        //{
+        //    List<Transaction> returnValue = new List<Transaction>();
+        //    var engine = new FileHelperEngine<Transaction>();
+        //    string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
+        //    var result = engine.ReadFile(FileName);
+        //    foreach (Transaction td in result)
+        //    {
+        //        Transaction t = new Transaction
+        //        {
+        //            Plaza = td.Plaza,
+        //            TransactionStatus = td.TransactionStatus,
+        //            TransactionType = td.TransactionType,
+        //            Transaction_Id = td.Transaction_Id,
+        //            TransactionDate = td.TransactionDate,
+        //            PostedDate = td.PostedDate,
+        //            Journal_Id = td.Journal_Id,
+        //            Vehicle = td.Vehicle,
+        //            Amount = td.Amount,
+        //            Lane = td.Lane,
+        //            Transponder = td.Transponder,
+        //            TransactionDescription = td.TransactionDescription
+        //    };
+        //    returnValue.Add(t);
+        //}
+        //    return returnValue;
+        //}
+
         public static bool InsertVehicleData(List<Vehicle> Vehicles)
         {
             bool returnValue = false;
@@ -127,6 +174,7 @@ namespace RiverLinkReport.BAL
                     var ExistingVehicle = ExistingVehicles.SingleOrDefault(x => x.PlateNumber == v.PlateNumber);
                     if (ExistingVehicle == null)
                     {
+                        context.VehicleClasses.Attach(v.VehicleClass);
                         context.Vehicles.Add(v);
                     }
                 }
@@ -160,6 +208,28 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
+        //public static bool InsertTransactionData(List<Transaction> Transactions)
+        //{
+        //    bool returnValue = false;
+        //    using (var context = new DB())
+        //    {
+        //        var ExistingTransactions = context.Transactions.ToList();
+        //        foreach (var t in Transactions)
+        //        {
+        //            var ExistingTransaction = ExistingTransactions.SingleOrDefault(x => x.Transaction_Id == t.Transaction_Id);
+        //            if (ExistingTransaction == null)
+        //            {
+        //                context.Transactions.Add(t);
+        //            }
+        //        }
+        //        if (context.ChangeTracker.HasChanges())
+        //        {
+        //            context.SaveChanges();
+        //        }
+        //    }
+        //    return returnValue;
+        //}
+
         public static bool InsertData()
         {
             bool returnValue = false;
@@ -179,6 +249,12 @@ namespace RiverLinkReport.BAL
                         List<Vehicle> vehicleList = GetVehicleData(file);
                         InsertVehicleData(vehicleList);
                     }
+                    //if (fi.Name.ToLower().Contains("transaction"))
+                    //{
+                    //    List<Transaction> transactionList = GetTransactionData(file);
+                    //    InsertTransactionData(transactionList);
+
+                    //}
                 }
             }
             else

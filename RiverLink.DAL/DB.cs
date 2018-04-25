@@ -18,7 +18,7 @@ namespace RiverLink.DAL
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Transponder> Transponders { get; set; }
-        public DbSet<VehicleClass> VehicleClassess { get; set; }
+        public DbSet<VehicleClass> VehicleClasses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

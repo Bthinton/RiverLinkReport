@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="RelatedJournalConverter.cs" />
     <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionData.cs" />
     <Compile Include="Transponder.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

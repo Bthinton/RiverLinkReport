@@ -19,7 +19,7 @@ namespace RiverLink.DAL.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            context.VehicleClassess.AddOrUpdate(x => new { x.Price },
+            context.VehicleClasses.AddOrUpdate(x => new { x.Price },
                 new Models.VehicleClass { Classification = Classifications.None, PriceType = PriceTypes.None, Price = 0, VehicleDescription = "Unknown" },
 
                 new Models.VehicleClass { Classification = Classifications.Class2, PriceType = PriceTypes.RegisteredPlate, Price = 6.00, VehicleDescription = "Medium Vehicle" },

@@ -31,7 +31,6 @@ namespace RiverLink.Models
         /// <value>
         /// Gets and sets the vehicle's license plate number
         /// </value>
-        //[Required]
         [StringLength(20)]
         [Display(Name = "Plate Number")]
         public string PlateNumber { get; set; }
@@ -64,7 +63,7 @@ namespace RiverLink.Models
         /// <value>
         /// Gets and sets the vehicle's class
         /// </value>
-        public string VehicleClass { get; set; } 
+        public VehicleClass VehicleClass { get; set; } 
 
         [Display(Name = "Vehicle Class")]
         [FieldHidden]

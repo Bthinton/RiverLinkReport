@@ -100,6 +100,10 @@
     <Compile Include="Migrations\201804141853403_RevertToVehicle.Designer.cs">
       <DependentUpon>201804141853403_RevertToVehicle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804252242291_ChangedVehicleClass.cs" />
+    <Compile Include="Migrations\201804252242291_ChangedVehicleClass.Designer.cs">
+      <DependentUpon>201804252242291_ChangedVehicleClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -146,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804141853403_RevertToVehicle.resx">
       <DependentUpon>201804141853403_RevertToVehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804252242291_ChangedVehicleClass.resx">
+      <DependentUpon>201804252242291_ChangedVehicleClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

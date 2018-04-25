@@ -49,8 +49,6 @@ namespace RiverLink.Models
 
         public string VehicleClass { get; set; }
 
-        public Classifications Classification { get; set; }
-
         public string Transponder { get; set; }
 
         public string TransponderType { get; set; }

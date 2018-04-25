@@ -1,0 +1,18 @@
+namespace RiverLink.DAL.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class ChangedVehicleClass : DbMigration
+    {
+        public override void Up()
+        {
+            DropColumn("dbo.Vehicle", "VehicleClass");
+        }
+        
+        public override void Down()
+        {
+            AddColumn("dbo.Vehicle", "VehicleClass", c => c.String());
+        }
+    }
+}
