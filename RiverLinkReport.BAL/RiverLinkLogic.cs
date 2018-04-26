@@ -135,33 +135,33 @@ namespace RiverLinkReport.BAL
         /// </summary>
         /// <param name="FileName">Name of the file.</param>
         /// <returns></returns>
-        //public static List<Transaction> GetTransactionData(string FileName)
-        //{
-        //    List<Transaction> returnValue = new List<Transaction>();
-        //    var engine = new FileHelperEngine<Transaction>();
-        //    string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
-        //    var result = engine.ReadFile(FileName);
-        //    foreach (Transaction td in result)
-        //    {
-        //        Transaction t = new Transaction
-        //        {
-        //            Plaza = td.Plaza,
-        //            TransactionStatus = td.TransactionStatus,
-        //            TransactionType = td.TransactionType,
-        //            Transaction_Id = td.Transaction_Id,
-        //            TransactionDate = td.TransactionDate,
-        //            PostedDate = td.PostedDate,
-        //            Journal_Id = td.Journal_Id,
-        //            Vehicle = td.Vehicle,
-        //            Amount = td.Amount,
-        //            Lane = td.Lane,
-        //            Transponder = td.Transponder,
-        //            TransactionDescription = td.TransactionDescription
-        //    };
-        //    returnValue.Add(t);
-        //}
-        //    return returnValue;
-        //}
+        public static List<Transaction> GetTransactionData(string FileName)
+        {
+            List<Transaction> returnValue = new List<Transaction>();
+            var engine = new FileHelperEngine<Transaction>();
+            string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            var result = engine.ReadFile(FileName);
+            foreach (Transaction td in result)
+            {
+                Transaction t = new Transaction
+                {
+                    Plaza = td.Plaza,
+                    TransactionStatus = td.TransactionStatus,
+                    TransactionType = td.TransactionType,
+                    Transaction_Id = td.Transaction_Id,
+                    TransactionDate = td.TransactionDate,
+                    PostedDate = td.PostedDate,
+                    Journal_Id = td.Journal_Id,
+                    Vehicle = td.Vehicle,
+                    Amount = td.Amount,
+                    Lane = td.Lane,
+                    Transponder = td.Transponder,
+                    TransactionDescription = td.TransactionDescription
+                };
+                returnValue.Add(t);
+            }
+            return returnValue;
+        }
 
         public static bool InsertVehicleData(List<Vehicle> Vehicles)
         {
@@ -208,27 +208,27 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
-        //public static bool InsertTransactionData(List<Transaction> Transactions)
-        //{
-        //    bool returnValue = false;
-        //    using (var context = new DB())
-        //    {
-        //        var ExistingTransactions = context.Transactions.ToList();
-        //        foreach (var t in Transactions)
-        //        {
-        //            var ExistingTransaction = ExistingTransactions.SingleOrDefault(x => x.Transaction_Id == t.Transaction_Id);
-        //            if (ExistingTransaction == null)
-        //            {
-        //                context.Transactions.Add(t);
-        //            }
-        //        }
-        //        if (context.ChangeTracker.HasChanges())
-        //        {
-        //            context.SaveChanges();
-        //        }
-        //    }
-        //    return returnValue;
-        //}
+        public static bool InsertTransactionData(List<Transaction> Transactions)
+        {
+            bool returnValue = false;
+            using (var context = new DB())
+            {
+                var ExistingTransactions = context.Transactions.ToList();
+                foreach (var t in Transactions)
+                {
+                    var ExistingTransaction = ExistingTransactions.SingleOrDefault(x => x.Transaction_Id == t.Transaction_Id);
+                    if (ExistingTransaction == null)
+                    {
+                        context.Transactions.Add(t);
+                    }
+                }
+                if (context.ChangeTracker.HasChanges())
+                {
+                    context.SaveChanges();
+                }
+            }
+            return returnValue;
+        }
 
         public static bool InsertData()
         {
