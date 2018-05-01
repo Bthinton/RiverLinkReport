@@ -71,5 +71,8 @@
     <Setting Name="V_DetailPage" Type="System.String" Scope="User">
       <Value Profile="(Default)">Transaction Info</Value>
     </Setting>
+    <Setting Name="X_TransactionStatus" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="MainContent_lblTransactionStatus"]</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

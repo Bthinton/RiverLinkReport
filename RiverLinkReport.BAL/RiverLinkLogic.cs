@@ -24,6 +24,7 @@ namespace RiverLinkReport.BAL
         private int ShortWait = 1000;
         private int LongWait = 2000;
         private static List<VehicleClass> VehicleClassList = new List<VehicleClass>();
+        private static List<Transponder> TransponderList = new List<Transponder>();
 
         private Automate Worker;
         #endregion Fields
@@ -37,7 +38,8 @@ namespace RiverLinkReport.BAL
             ShortWait = SWait;
             var context = new RiverLink.DAL.DB();
             List<VehicleClass> VehicleClasses = context.VehicleClasses.ToList();
-            Worker = new Automate(driver, BaseURL, LongWait, ShortWait, VehicleClasses);
+            List<Transponder> TransponderList = context.Transponders.ToList();
+            Worker = new Automate(driver, BaseURL, LongWait, ShortWait, VehicleClasses, TransponderList);
             Worker.StatusChanged += Worker_StatusChanged;
         }
 
@@ -107,6 +109,17 @@ namespace RiverLinkReport.BAL
             }
         }
 
+        private static void PopulateTransponders()
+        {
+            if (!TransponderList.Any())
+            {
+                using (var context = new DB())
+                {
+                    TransponderList = context.Transponders.ToList();
+                }
+            }
+        }
+
         public static List<Transponder> GetTransponderData(string FileName)
         {
             List<Transponder> returnValue = new List<Transponder>();
@@ -138,24 +151,27 @@ namespace RiverLinkReport.BAL
         public static List<Transaction> GetTransactionData(string FileName)
         {
             List<Transaction> returnValue = new List<Transaction>();
-            var engine = new FileHelperEngine<Transaction>();
+            var engine = new FileHelperEngine<TransactionData>();
             string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
             var result = engine.ReadFile(FileName);
-            foreach (Transaction td in result)
+            foreach (TransactionData td in result)
             {
+                PopulateTransponders();
+                PopulateVehicleClasses();
                 Transaction t = new Transaction
                 {
+                    Transaction_Id = td.Transaction_Id,
                     Plaza = td.Plaza,
                     TransactionStatus = td.TransactionStatus,
                     TransactionType = td.TransactionType,
-                    Transaction_Id = td.Transaction_Id,
                     TransactionDate = td.TransactionDate,
+                    RelatedJournal_Id = td.RelatedJournal_Id,
                     PostedDate = td.PostedDate,
                     Journal_Id = td.Journal_Id,
-                    Vehicle = td.Vehicle,
                     Amount = td.Amount,
+                    PlateNumber = td.PlateNumber,
                     Lane = td.Lane,
-                    Transponder = td.Transponder,
+                    Transponder = TransponderList.FirstOrDefault(x => x.Transponder_Id == td.TransponderNumber),
                     TransactionDescription = td.TransactionDescription
                 };
                 returnValue.Add(t);
@@ -249,12 +265,12 @@ namespace RiverLinkReport.BAL
                         List<Vehicle> vehicleList = GetVehicleData(file);
                         InsertVehicleData(vehicleList);
                     }
-                    //if (fi.Name.ToLower().Contains("transaction"))
-                    //{
-                    //    List<Transaction> transactionList = GetTransactionData(file);
-                    //    InsertTransactionData(transactionList);
+                    if (fi.Name.ToLower().Contains("transaction"))
+                    {
+                        List<Transaction> transactionList = GetTransactionData(file);
+                        InsertTransactionData(transactionList);
 
-                    //}
+                    }
                 }
             }
             else

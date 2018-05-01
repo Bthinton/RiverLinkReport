@@ -35,7 +35,7 @@ namespace RiverLink.Automation
         private static string path = AppDomain.CurrentDomain.BaseDirectory;
         private static string dataDirectory = $"{path}Data\\";
         private static string timeStamp = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}";
-        private static List<VehicleClass> VehicleClasses;
+        private static List<VehicleClass> VehicleClasses = new List<VehicleClass>();
         #endregion Fields
 
 
@@ -64,6 +64,7 @@ namespace RiverLink.Automation
         #endregion Events
 
         #region Constructors
+
         /// <summary>
         /// Sets variables for the driver, url, and wait times
         /// </summary>
@@ -71,7 +72,10 @@ namespace RiverLink.Automation
         /// <param name="URL">Defines url</param>
         /// <param name="LWait">Defines Long wait time</param>
         /// <param name="SWait">Defines short wait time</param>
-        public Automate(IWebDriver WebDriver, string URL, int LWait, int SWait, List<VehicleClass> ListOfClasses)
+        /// <param name="ListOfClasses"></param>
+        /// <param name="transponderList"></param>
+        public Automate(IWebDriver WebDriver, string URL, int LWait, int SWait, List<VehicleClass> ListOfClasses,
+            List<Transponder> transponderList)
         {
             driver = WebDriver;
             BaseURL = URL;
@@ -461,23 +465,22 @@ namespace RiverLink.Automation
                         string html = driver.PageSource;
                         HtmlDocument doc = new HtmlDocument();
                         doc.LoadHtml(html);
-                        for (int i = 1; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
+                        for (int i = 995; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
                         {
                             string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i - 1);
                             Transaction t = new Transaction();
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
-                                    t.TransactionType = GetTransactionType(cells[0].InnerHtml);
+                                    t.TransactionType = cells[0].InnerHtml;
                                     t.Amount = GetTransactionAmount(cells[1].InnerHtml);
                                     t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);
                                     t.TransactionDescription = cells[3].InnerHtml.Trim();
                                     t.Lane = GetLane(cells[4].InnerHtml);
-                                    t.Plaza = GetPlaza(cells[5].InnerHtml);                                      
-                                    t.Transponder = GetTransponderInfo(cells[6].InnerHtml);
+                                    t.Plaza = cells[5].InnerHtml;                                      
+                                    t.TransponderNumber = GetTransponderNumber(cells[6].InnerHtml);
                                     t.PlateNumber = cells[7].InnerHtml.Trim();
-
-                                    t.VehicleClass_Id = VehicleClasses.FirstOrDefault(x => x.Price == t.Amount).VehicleClass_Id;
+                                    //t.VehicleClass_Id = VehicleClasses.FirstOrDefault(x => x.Price == t.Amount).VehicleClass_Id;
 
                                     //Pulls data from detail page
                                     GotoTransactionDetail(Success, detailBTNX_Path);
@@ -488,6 +491,7 @@ namespace RiverLink.Automation
                                     t.Transaction_Id = GetTransactionId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text);
                                     t.Journal_Id = GetJournalId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text);
                                     t.PostedDate = GetPostedDate(driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text);
+                                    t.TransactionStatus = GetTransactionStatus(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionStatus)).Text);
                                     t.RelatedJournal_Id = new List<int>();
                                     if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_DetailPageTable)))
                                     {
@@ -783,7 +787,11 @@ namespace RiverLink.Automation
         private int GetTransponderNumber(string cellText)
         {
             string transponderNumber = cellText;
-            Int32.TryParse(transponderNumber, out int number);
+            int.TryParse(transponderNumber, out int number);                
+            if (cellText == null)
+            {
+                number = 0;
+            }
             return number;
         }
         /// <summary>
@@ -824,6 +832,13 @@ namespace RiverLink.Automation
                 return 0;
             }
         }
+
+        private string GetTransactionStatus(string cellText)
+        {
+                string transactionStatus = cellText;
+                return transactionStatus;
+        }
+
         /// <summary>
         /// Parses cell's text and returns date/time 
         /// </summary>

@@ -69,19 +69,15 @@ namespace RiverLink.Models
         /// <value>
         /// Gets and sets the status of the transaction
         /// </value>
-        [Required]
-        [FieldHidden]
-        public TransactionStatuses TransactionStatus { get; set; }
+        public string TransactionStatus { get; set; }
         /// <value>
         /// Gets and sets the plaza used for the transaction
         /// </value>
-        [Required]
-        [FieldHidden]
-        public Plazas Plaza { get; set; }
+        /// 
+        public string Plaza { get; set; }
         /// <value>
         /// Gets and sets the vehicle used for the transaction
         /// </value>
-        [Required]
         [FieldHidden]
         public virtual Vehicle Vehicle { get; set; }
         /// <value>
@@ -103,22 +99,23 @@ namespace RiverLink.Models
         /// <value>
         /// Gets and sets the transponder associated with the transaction
         /// </value>
-        [Required]  
         [FieldHidden]
         public virtual Transponder Transponder { get; set; }
+
+        public int TransponderNumber { get; set; }
         /// <value>
         /// Gets and sets the type of the transaction
         /// </value>
-        public TransactionTypes TransactionType { get; set; }
+        public string TransactionType { get; set; }
         /// <value>
         /// Gets and sets the amount of money associated with the transaction
         /// </value>
         [Required]
-        public virtual Double Amount { get; set; }
+        public virtual double Amount { get; set; }
         /// <value>
         /// Gets and sets the description of the transaction
         /// </value>
-        [MaxLength(20)]
+        [MaxLength(50)]
         public virtual string TransactionDescription { get; set;}
         /// <value>
         /// Gets and sets the lane associated with the transaction

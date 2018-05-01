@@ -36,16 +36,28 @@ namespace RiverLink.Models
         [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? PostedDate { get; set; }
+
+        public string TransactionStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the plaza.
+        /// </summary>
+        /// <value>
+        /// The plaza.
+        /// </value>
+        public string Plaza { get; set; }
+
         /// <value>
         /// Gets and sets the vehicle used for the transaction
         /// </value>
-        [Required]
         [FieldHidden]
-        public virtual Vehicle Vehicle { get; set; }
+        public string Vehicle { get; set; }
+
         /// <value>
         /// Gets and sets the journal id associated with the transaction
         /// </value>
         public virtual int Journal_Id { get; set; }
+
         /// <value>
         /// Gets and sets all related journal ids to the transaction
         /// </value>
@@ -58,26 +70,34 @@ namespace RiverLink.Models
         /// </example>
         [FieldConverter(typeof(RelatedJournalConverter))]
         public virtual List<int> RelatedJournal_Id { get; set; }
+
         /// <value>
         /// Gets and sets the transponder associated with the transaction
         /// </value>
-        [Required]
         [FieldHidden]
-        public virtual Transponder Transponder { get; set; }
+        public virtual string Transponder { get; set; }
+
+        public int TransponderNumber { get; set; }
+
+        public string TransactionType { get; set; }
+
         /// <value>
         /// Gets and sets the amount of money associated with the transaction
         /// </value>
         [Required]
         public virtual Double Amount { get; set; }
+
         /// <value>
         /// Gets and sets the description of the transaction
         /// </value>
-        [MaxLength(20)]
+        [MaxLength(50)]
         public virtual string TransactionDescription { get; set; }
+
         /// <value>
         /// Gets and sets the lane associated with the transaction
         /// </value>
         public virtual int Lane { get; set; }
+
         /// <value>
         /// Gets and sets the License plate number that was used for the transaction
         /// </value>
@@ -85,16 +105,6 @@ namespace RiverLink.Models
         public virtual string PlateNumber { get; set; }
 
         public Int16 VehicleClass_Id { get; set; }
-        /// <summary>
-        /// Gets or sets the plaza.
-        /// </summary>
-        /// <value>
-        /// The plaza.
-        /// </value>
-        public string Plaza { get; set; }
 
-        public string TransactionStatus { get; set; }
-
-        public string TransactionType { get; set; }
     }
 }

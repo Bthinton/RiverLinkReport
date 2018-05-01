@@ -104,6 +104,22 @@
     <Compile Include="Migrations\201804252242291_ChangedVehicleClass.Designer.cs">
       <DependentUpon>201804252242291_ChangedVehicleClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804302152372_ChangeToTransactionModel.cs" />
+    <Compile Include="Migrations\201804302152372_ChangeToTransactionModel.Designer.cs">
+      <DependentUpon>201804302152372_ChangeToTransactionModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804302228145_ChangesToTransactionModel.cs" />
+    <Compile Include="Migrations\201804302228145_ChangesToTransactionModel.Designer.cs">
+      <DependentUpon>201804302228145_ChangesToTransactionModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804302303574_ChangesToTransaction2.cs" />
+    <Compile Include="Migrations\201804302303574_ChangesToTransaction2.Designer.cs">
+      <DependentUpon>201804302303574_ChangesToTransaction2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804302330219_ChangesToTransaction3.cs" />
+    <Compile Include="Migrations\201804302330219_ChangesToTransaction3.Designer.cs">
+      <DependentUpon>201804302330219_ChangesToTransaction3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -153,6 +169,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804252242291_ChangedVehicleClass.resx">
       <DependentUpon>201804252242291_ChangedVehicleClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804302152372_ChangeToTransactionModel.resx">
+      <DependentUpon>201804302152372_ChangeToTransactionModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804302228145_ChangesToTransactionModel.resx">
+      <DependentUpon>201804302228145_ChangesToTransactionModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804302303574_ChangesToTransaction2.resx">
+      <DependentUpon>201804302303574_ChangesToTransaction2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804302330219_ChangesToTransaction3.resx">
+      <DependentUpon>201804302330219_ChangesToTransaction3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
