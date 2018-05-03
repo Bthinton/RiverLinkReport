@@ -7,13 +7,13 @@ namespace RiverLink.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class RevertToVehicle : IMigrationMetadata
+    public sealed partial class ChangeToTransaction : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RevertToVehicle));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeToTransaction));
         
         string IMigrationMetadata.Id
         {
-            get { return "201804141853403_RevertToVehicle"; }
+            get { return "201805022319191_ChangeToTransaction"; }
         }
         
         string IMigrationMetadata.Source

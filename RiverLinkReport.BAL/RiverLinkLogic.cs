@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using RiverLink.DAL;
 using System.Data.Entity;
-
+using System.Collections;
 
 namespace RiverLinkReport.BAL
 {
@@ -128,15 +128,21 @@ namespace RiverLinkReport.BAL
             var result = engine.ReadFile(FileName);
             foreach (VehicleData v in result)
             {
+                string PlateNumber = string.Empty;
                 TransponderTypes TransponderType = TransponderTypes.Sticker;
                 if (v.TransponderType.ToLower() == "ezp")
                 {
                     TransponderType = TransponderTypes.EZPass;
                 }
+                else
+                {
+                    PlateNumber = v.PlateNumber;
+                }
                 Transponder t = new Transponder
                 {
                     TransponderNumber = v.Transponder,
-                    TransponderType = TransponderType
+                    TransponderType = TransponderType,
+                    PlateNumber = PlateNumber
                 };
                 returnValue.Add(t);
             }
@@ -158,9 +164,19 @@ namespace RiverLinkReport.BAL
             {
                 PopulateTransponders();
                 PopulateVehicleClasses();
+                Transponder Transponder = null;
+                if (td.PlateNumber != null)
+                {
+                    Transponder = TransponderList.FirstOrDefault(x => x.PlateNumber == td.PlateNumber);
+                }
+                else
+                {
+                    TransponderList.FirstOrDefault(x => x.Transponder_Id == td.TransponderNumber);
+                }
+
                 Transaction t = new Transaction
                 {
-                    Transaction_Id = td.Transaction_Id,
+                    TransactionNumber = td.TransactionNumber,
                     Plaza = td.Plaza,
                     TransactionStatus = td.TransactionStatus,
                     TransactionType = td.TransactionType,
@@ -171,7 +187,8 @@ namespace RiverLinkReport.BAL
                     Amount = td.Amount,
                     PlateNumber = td.PlateNumber,
                     Lane = td.Lane,
-                    Transponder = TransponderList.FirstOrDefault(x => x.Transponder_Id == td.TransponderNumber),
+                    Transponder = Transponder,
+                    TransponderNumber = Transponder.TransponderNumber,
                     TransactionDescription = td.TransactionDescription
                 };
                 returnValue.Add(t);
@@ -235,6 +252,7 @@ namespace RiverLinkReport.BAL
                     var ExistingTransaction = ExistingTransactions.SingleOrDefault(x => x.Transaction_Id == t.Transaction_Id);
                     if (ExistingTransaction == null)
                     {
+                        context.Transponders.Attach(t.Transponder);
                         context.Transactions.Add(t);
                     }
                 }
@@ -255,22 +273,39 @@ namespace RiverLinkReport.BAL
             if (Directory.Exists(dataDirectory))
             {
                 string[] filePaths = Directory.GetFiles(dataDirectory, "*.txt");
+                ArrayList vehicleFiles = new ArrayList();
+                ArrayList transponderFiles = new ArrayList();
+                ArrayList transactionFiles = new ArrayList();
                 foreach (var file in filePaths)
                 {
                     FileInfo fi = new FileInfo(file);
                     if (fi.Name.ToLower().Contains("vehicle"))
                     {
-                        List<Transponder> transponderList = GetTransponderData(file);
-                        InsertTransponderData(transponderList);
-                        List<Vehicle> vehicleList = GetVehicleData(file);
-                        InsertVehicleData(vehicleList);
+                        vehicleFiles.Add(file);
                     }
                     if (fi.Name.ToLower().Contains("transaction"))
                     {
-                        List<Transaction> transactionList = GetTransactionData(file);
-                        InsertTransactionData(transactionList);
-
+                        transactionFiles.Add(file);
                     }
+                    if (fi.Name.ToLower().Contains("transponder"))
+                    {
+                        transponderFiles.Add(file);
+                    }
+                }
+                foreach (var vehicleFile in vehicleFiles)
+                {
+                    List<Vehicle> vehicleList = GetVehicleData(vehicleFile.ToString());
+                    InsertVehicleData(vehicleList);
+                }
+                foreach (var transponderFile in transponderFiles)
+                {
+                    List<Transponder> transponderList = GetTransponderData(transponderFile.ToString());
+                    InsertTransponderData(transponderList);
+                }
+                foreach (var transactionFile in transactionFiles)
+                {
+                    List<Transaction> transactionList = GetTransactionData(transactionFile.ToString());
+                    InsertTransactionData(transactionList);
                 }
             }
             else

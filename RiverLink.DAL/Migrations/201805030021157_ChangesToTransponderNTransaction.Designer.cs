@@ -7,13 +7,13 @@ namespace RiverLink.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ChangedRequiredFields : IMigrationMetadata
+    public sealed partial class ChangesToTransponderNTransaction : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedRequiredFields));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangesToTransponderNTransaction));
         
         string IMigrationMetadata.Id
         {
-            get { return "201804052254525_ChangedRequiredFields"; }
+            get { return "201805030021157_ChangesToTransponderNTransaction"; }
         }
         
         string IMigrationMetadata.Source

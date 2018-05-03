@@ -56,75 +56,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DB.cs" />
-    <Compile Include="Migrations\201801250036420_InitialCreate.cs" />
-    <Compile Include="Migrations\201801250036420_InitialCreate.Designer.cs">
-      <DependentUpon>201801250036420_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201805022218442_FirstMigration.cs" />
+    <Compile Include="Migrations\201805022218442_FirstMigration.Designer.cs">
+      <DependentUpon>201805022218442_FirstMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802010101235_InitialCreate1.cs" />
-    <Compile Include="Migrations\201802010101235_InitialCreate1.Designer.cs">
-      <DependentUpon>201802010101235_InitialCreate1.cs</DependentUpon>
+    <Compile Include="Migrations\201805022319191_ChangeToTransaction.cs" />
+    <Compile Include="Migrations\201805022319191_ChangeToTransaction.Designer.cs">
+      <DependentUpon>201805022319191_ChangeToTransaction.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802010117302_AddedIdToVehicle.cs" />
-    <Compile Include="Migrations\201802010117302_AddedIdToVehicle.Designer.cs">
-      <DependentUpon>201802010117302_AddedIdToVehicle.cs</DependentUpon>
+    <Compile Include="Migrations\201805022343232_ChangeToDataFiles.cs" />
+    <Compile Include="Migrations\201805022343232_ChangeToDataFiles.Designer.cs">
+      <DependentUpon>201805022343232_ChangeToDataFiles.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802010127447_RequiredTest.cs" />
-    <Compile Include="Migrations\201802010127447_RequiredTest.Designer.cs">
-      <DependentUpon>201802010127447_RequiredTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804052254525_ChangedRequiredFields.cs" />
-    <Compile Include="Migrations\201804052254525_ChangedRequiredFields.Designer.cs">
-      <DependentUpon>201804052254525_ChangedRequiredFields.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804052336587_AddedVehicleClassID.cs" />
-    <Compile Include="Migrations\201804052336587_AddedVehicleClassID.Designer.cs">
-      <DependentUpon>201804052336587_AddedVehicleClassID.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804120046130_NewColumns.cs" />
-    <Compile Include="Migrations\201804120046130_NewColumns.Designer.cs">
-      <DependentUpon>201804120046130_NewColumns.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804122317438_EditToVehicle.cs" />
-    <Compile Include="Migrations\201804122317438_EditToVehicle.Designer.cs">
-      <DependentUpon>201804122317438_EditToVehicle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804141753169_AddedParamToVehicleData.cs" />
-    <Compile Include="Migrations\201804141753169_AddedParamToVehicleData.Designer.cs">
-      <DependentUpon>201804141753169_AddedParamToVehicleData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804141816479_SwitchedVehDataToVehicle.cs" />
-    <Compile Include="Migrations\201804141816479_SwitchedVehDataToVehicle.Designer.cs">
-      <DependentUpon>201804141816479_SwitchedVehDataToVehicle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804141853403_RevertToVehicle.cs" />
-    <Compile Include="Migrations\201804141853403_RevertToVehicle.Designer.cs">
-      <DependentUpon>201804141853403_RevertToVehicle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804252242291_ChangedVehicleClass.cs" />
-    <Compile Include="Migrations\201804252242291_ChangedVehicleClass.Designer.cs">
-      <DependentUpon>201804252242291_ChangedVehicleClass.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804302152372_ChangeToTransactionModel.cs" />
-    <Compile Include="Migrations\201804302152372_ChangeToTransactionModel.Designer.cs">
-      <DependentUpon>201804302152372_ChangeToTransactionModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804302228145_ChangesToTransactionModel.cs" />
-    <Compile Include="Migrations\201804302228145_ChangesToTransactionModel.Designer.cs">
-      <DependentUpon>201804302228145_ChangesToTransactionModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804302303574_ChangesToTransaction2.cs" />
-    <Compile Include="Migrations\201804302303574_ChangesToTransaction2.Designer.cs">
-      <DependentUpon>201804302303574_ChangesToTransaction2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804302330219_ChangesToTransaction3.cs" />
-    <Compile Include="Migrations\201804302330219_ChangesToTransaction3.Designer.cs">
-      <DependentUpon>201804302330219_ChangesToTransaction3.cs</DependentUpon>
+    <Compile Include="Migrations\201805030021157_ChangesToTransponderNTransaction.cs" />
+    <Compile Include="Migrations\201805030021157_ChangesToTransponderNTransaction.Designer.cs">
+      <DependentUpon>201805030021157_ChangesToTransponderNTransaction.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -134,57 +88,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201801250036420_InitialCreate.resx">
-      <DependentUpon>201801250036420_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802010101235_InitialCreate1.resx">
-      <DependentUpon>201802010101235_InitialCreate1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802010117302_AddedIdToVehicle.resx">
-      <DependentUpon>201802010117302_AddedIdToVehicle.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802010127447_RequiredTest.resx">
-      <DependentUpon>201802010127447_RequiredTest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804052254525_ChangedRequiredFields.resx">
-      <DependentUpon>201804052254525_ChangedRequiredFields.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804052336587_AddedVehicleClassID.resx">
-      <DependentUpon>201804052336587_AddedVehicleClassID.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804120046130_NewColumns.resx">
-      <DependentUpon>201804120046130_NewColumns.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804122317438_EditToVehicle.resx">
-      <DependentUpon>201804122317438_EditToVehicle.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804141753169_AddedParamToVehicleData.resx">
-      <DependentUpon>201804141753169_AddedParamToVehicleData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804141816479_SwitchedVehDataToVehicle.resx">
-      <DependentUpon>201804141816479_SwitchedVehDataToVehicle.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804141853403_RevertToVehicle.resx">
-      <DependentUpon>201804141853403_RevertToVehicle.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804252242291_ChangedVehicleClass.resx">
-      <DependentUpon>201804252242291_ChangedVehicleClass.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804302152372_ChangeToTransactionModel.resx">
-      <DependentUpon>201804302152372_ChangeToTransactionModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804302228145_ChangesToTransactionModel.resx">
-      <DependentUpon>201804302228145_ChangesToTransactionModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804302303574_ChangesToTransaction2.resx">
-      <DependentUpon>201804302303574_ChangesToTransaction2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804302330219_ChangesToTransaction3.resx">
-      <DependentUpon>201804302330219_ChangesToTransaction3.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="DB\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DB\" />
+    <EmbeddedResource Include="Migrations\201805022218442_FirstMigration.resx">
+      <DependentUpon>201805022218442_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805022319191_ChangeToTransaction.resx">
+      <DependentUpon>201805022319191_ChangeToTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805022343232_ChangeToDataFiles.resx">
+      <DependentUpon>201805022343232_ChangeToDataFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805030021157_ChangesToTransponderNTransaction.resx">
+      <DependentUpon>201805030021157_ChangesToTransponderNTransaction.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -52,5 +52,7 @@ namespace RiverLink.Models
         /// </value>
         [FieldHidden]
         public virtual ICollection<Transaction> Transactions { get; set; }
+
+        public string PlateNumber { get; set; }
     }
 }

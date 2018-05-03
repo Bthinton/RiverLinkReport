@@ -99,10 +99,9 @@ namespace RiverLink.Models
         /// <value>
         /// Gets and sets the transponder associated with the transaction
         /// </value>
-        [FieldHidden]
         public virtual Transponder Transponder { get; set; }
 
-        public int TransponderNumber { get; set; }
+        public string TransponderNumber { get; set; }
         /// <value>
         /// Gets and sets the type of the transaction
         /// </value>
@@ -128,5 +127,7 @@ namespace RiverLink.Models
         public virtual string PlateNumber { get; set; }
 
         public Int16 VehicleClass_Id { get; set; }
+
+        public int TransactionNumber { get; set; }
     }
 }

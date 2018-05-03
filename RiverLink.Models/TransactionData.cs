@@ -16,12 +16,8 @@ namespace RiverLink.Models
     [DelimitedRecord("|")]
     public class TransactionData
     {
-        /// <value>
-        /// Gets and sets the transaction id associated with the transaction
-        /// </value>
-        [Key]
-        [Required]
-        public int Transaction_Id { get; set; }
+
+        public int TransactionNumber { get; set; }
         /// <value>
         /// Gets and sets the date and time the transaction was made
         /// </value>
@@ -46,12 +42,6 @@ namespace RiverLink.Models
         /// The plaza.
         /// </value>
         public string Plaza { get; set; }
-
-        /// <value>
-        /// Gets and sets the vehicle used for the transaction
-        /// </value>
-        [FieldHidden]
-        public string Vehicle { get; set; }
 
         /// <value>
         /// Gets and sets the journal id associated with the transaction
@@ -105,6 +95,5 @@ namespace RiverLink.Models
         public virtual string PlateNumber { get; set; }
 
         public Int16 VehicleClass_Id { get; set; }
-
     }
 }

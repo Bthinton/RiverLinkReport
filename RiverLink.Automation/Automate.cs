@@ -412,7 +412,7 @@ namespace RiverLink.Automation
                             }
                             v.VehicleStatus = cells[4].InnerHtml;
                             v.VehicleClass = cells[5].InnerHtml;
-                            int transponderNumber = GetTransponderNumber(cells[6].InnerHtml);                               
+                            string transponderNumber = cells[6].InnerHtml;                               
                             v.Transponder = cells[6].InnerHtml;
                             v.TransponderType = cells[7].InnerHtml;                            
                         }
@@ -423,6 +423,11 @@ namespace RiverLink.Automation
                         ReturnValue.Add(v);
                         engine.HeaderText = engine.GetFileHeader();
                         engine.WriteFile($"{dataDirectory}Vehicles-{timeStamp}.Txt", ReturnValue);
+                        //create transponder file
+                        //create transponders list
+                        //loop through list of vehicles to extract transponders
+                        //save and write transponder list
+                        //add transponderdata class
                     }
                 }
                 else
@@ -465,7 +470,7 @@ namespace RiverLink.Automation
                         string html = driver.PageSource;
                         HtmlDocument doc = new HtmlDocument();
                         doc.LoadHtml(html);
-                        for (int i = 1; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
+                        for (int i = 995; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
                         {
                             string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i - 1);
                             Transaction t = new Transaction();
@@ -478,7 +483,7 @@ namespace RiverLink.Automation
                                     t.TransactionDescription = cells[3].InnerHtml.Trim();
                                     t.Lane = GetLane(cells[4].InnerHtml);
                                     t.Plaza = cells[5].InnerHtml;                                      
-                                    t.TransponderNumber = GetTransponderNumber(cells[6].InnerHtml);
+                                    t.TransponderNumber = cells[6].InnerHtml;
                                     t.PlateNumber = cells[7].InnerHtml.Trim();
                                     //t.VehicleClass_Id = VehicleClasses.FirstOrDefault(x => x.Price == t.Amount).VehicleClass_Id;
 
@@ -488,7 +493,7 @@ namespace RiverLink.Automation
                                     {
                                         throw new Exception($"Error {method}: Could not navigate to detail page");
                                     }
-                                    t.Transaction_Id = GetTransactionId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text);
+                                    t.TransactionNumber = GetTransactionId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text);
                                     t.Journal_Id = GetJournalId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text);
                                     t.PostedDate = GetPostedDate(driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text);
                                     t.TransactionStatus = GetTransactionStatus(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionStatus)).Text);
@@ -784,16 +789,7 @@ namespace RiverLink.Automation
         /// </summary>
         /// <param name="cellText">the cell the data is located within the table</param>
         /// <returns>The number associated with the transponder</returns>
-        private int GetTransponderNumber(string cellText)
-        {
-            string transponderNumber = cellText;
-            int.TryParse(transponderNumber, out int number);                
-            if (cellText == null)
-            {
-                number = 0;
-            }
-            return number;
-        }
+
         /// <summary>
         /// Parses cell's text and returns the transaction id
         /// </summary>

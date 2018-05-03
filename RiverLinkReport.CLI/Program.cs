@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using RiverLinkReport.BAL;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -20,6 +21,9 @@ namespace RiverLinkReport.CLI
 
         static void Main(string[] args)
         {
+            //string path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            //string directory = Path.GetFullPath(Path.Combine(path, @"..\..\..\..\"));
+            //AppDomain.CurrentDomain.SetData("DataDirectory", directory);
             if (args.Length == 0)
             {
                 int userInput = 0;
