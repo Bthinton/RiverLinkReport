@@ -412,10 +412,7 @@ namespace RiverLink.Automation
                                 v.PlateNumber = statePlateArray[1].Trim();
                             }
                             v.VehicleStatus = cells[4].InnerHtml;
-                            v.VehicleClass = cells[5].InnerHtml;
-                            string transponderNumber = cells[6].InnerHtml;                               
-                            t.TransponderNumber = cells[6].InnerHtml;
-                            t.TransponderType = cells[7].InnerHtml;                            
+                            v.VehicleClass = cells[5].InnerHtml;                       
                         }
                         if (ReturnValue == null)
                         {
@@ -475,6 +472,11 @@ namespace RiverLink.Automation
                         {                          
                             t.TransponderNumber = cells[6].InnerHtml;
                             t.TransponderType = cells[7].InnerHtml;
+                            string[] statePlateArray = cells[3].InnerHtml?.Split(':');
+                            if (statePlateArray.Length == 2)
+                            {
+                                t.PlateNumber = statePlateArray[1].Trim();
+                            }
                         }
                         if (ReturnValue == null)
                         {

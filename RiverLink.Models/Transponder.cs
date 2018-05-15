@@ -30,6 +30,7 @@ namespace RiverLink.Models
         /// <value>
         /// Gets and sets the transponder id
         /// </value>
+        [FieldHidden]
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

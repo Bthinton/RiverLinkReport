@@ -8,12 +8,14 @@ namespace RiverLink.Models
     /// <summary>
     /// Main <c>TransponderData</c> class where all properties are set
     /// </summary>
+    [IgnoreFirst(1)]
     [DelimitedRecord("|")]
     public class TransponderData
     {
         /// <value>
         /// Gets and sets the transponder id
         /// </value>
+        [FieldHidden]
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

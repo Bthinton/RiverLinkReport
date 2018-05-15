@@ -123,24 +123,24 @@ namespace RiverLinkReport.BAL
         public static List<Transponder> GetTransponderData(string FileName)
         {
             List<Transponder> returnValue = new List<Transponder>();
-            var engine = new FileHelperEngine<VehicleData>();
+            var engine = new FileHelperEngine<TransponderData>();
             string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
             var result = engine.ReadFile(FileName);
-            foreach (VehicleData v in result)
+            foreach (TransponderData td in result)
             {
                 string PlateNumber = string.Empty;
                 TransponderTypes TransponderType = TransponderTypes.Sticker;
-                if (v.TransponderType.ToLower() == "ezp")
+                if (td.TransponderType.ToLower() == "ezp")
                 {
                     TransponderType = TransponderTypes.EZPass;
                 }
                 else
                 {
-                    PlateNumber = v.PlateNumber;
+                    PlateNumber = td.PlateNumber;
                 }
                 Transponder t = new Transponder
                 {
-                    TransponderNumber = v.Transponder,
+                    TransponderNumber = td.TransponderNumber,
                     TransponderType = TransponderType,
                     PlateNumber = PlateNumber
                 };
