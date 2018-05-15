@@ -332,6 +332,12 @@ namespace RiverLinkReport.BAL
                 return false;
             }
 
+            List<TransponderData> TransponderList = Worker.GetTransponderData(out Success);
+            if (Success != "Success")
+            {
+                return false;
+            }
+
             Success = Worker.GoToTransactionHistory(string.Empty);
             if (Success != "Success")
             {
@@ -339,7 +345,10 @@ namespace RiverLinkReport.BAL
             }
 
             List<Transaction> TransactionList = Worker.GetTransactionData(out Success);
-
+            if (Success != "Success")
+            {
+                return false;
+            }
             ///Log in 
             ///Get vehicle data if not gotten
             ///Goto transaction page

@@ -52,6 +52,7 @@
     <Compile Include="Transaction.cs" />
     <Compile Include="TransactionData.cs" />
     <Compile Include="Transponder.cs" />
+    <Compile Include="TransponderData.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VehicleClass.cs" />

@@ -396,6 +396,7 @@ namespace RiverLink.Automation
                         var engine = new FileHelperEngine<VehicleData>();
                         var engine2 = new FileHelperEngine<Transponder>();
                         VehicleData v = new VehicleData();
+                        TransponderData t = new TransponderData();
                         HtmlDocument rowDoc = new HtmlDocument();
                         rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable)[i].InnerHtml);
                         var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
@@ -413,8 +414,8 @@ namespace RiverLink.Automation
                             v.VehicleStatus = cells[4].InnerHtml;
                             v.VehicleClass = cells[5].InnerHtml;
                             string transponderNumber = cells[6].InnerHtml;                               
-                            v.Transponder = cells[6].InnerHtml;
-                            v.TransponderType = cells[7].InnerHtml;                            
+                            t.TransponderNumber = cells[6].InnerHtml;
+                            t.TransponderType = cells[7].InnerHtml;                            
                         }
                         if (ReturnValue == null)
                         {
@@ -423,6 +424,65 @@ namespace RiverLink.Automation
                         ReturnValue.Add(v);
                         engine.HeaderText = engine.GetFileHeader();
                         engine.WriteFile($"{dataDirectory}Vehicles-{timeStamp}.Txt", ReturnValue);
+                        //create transponder file
+                        //create transponders list
+                        //loop through list of vehicles to extract transponders
+                        //save and write transponder list
+                        //add transponderdata class
+                    }
+                }
+                else
+                {
+                    throw new Exception("Error EditAd: unable to access Vehicle table.");
+                }
+            }
+            else
+            {
+                throw new Exception("Error EditAd: unable to access Overview page.");
+            }
+            return ReturnValue;
+        }
+
+        public List<TransponderData> GetTransponderData(out string Success)
+        {
+            List<TransponderData> ReturnValue = null;
+            Success = "failed";
+
+            if (IsAccountOverview(driver))
+            {
+                Success = "Success";
+                StatusMessage = $"Overview Page Loaded...";
+                OnStatusChanged(StatusMessage);
+                StatusMessage = $"Page Verified...";
+                OnStatusChanged(StatusMessage);
+                StatusMessage = "Verifying Vehicle Table...";
+                OnStatusChanged(StatusMessage);
+                if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_VehicleTable)))
+                {
+                    StatusMessage = "Vehicle Table Verified...";
+                    OnStatusChanged(StatusMessage);
+                    string html = driver.PageSource;
+                    HtmlDocument doc = new HtmlDocument();
+                    doc.LoadHtml(html);
+                    for (int i = 1; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable).Count; i++)
+                    {
+                        var engine = new FileHelperEngine<TransponderData>();
+                        TransponderData t = new TransponderData();
+                        HtmlDocument rowDoc = new HtmlDocument();
+                        rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable)[i].InnerHtml);
+                        var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
+                        for (int j = 0; j < cells.Count; j++)
+                        {                          
+                            t.TransponderNumber = cells[6].InnerHtml;
+                            t.TransponderType = cells[7].InnerHtml;
+                        }
+                        if (ReturnValue == null)
+                        {
+                            ReturnValue = new List<TransponderData>();
+                        }
+                        ReturnValue.Add(t);
+                        engine.HeaderText = engine.GetFileHeader();
+                        engine.WriteFile($"{dataDirectory}Transponders-{timeStamp}.Txt", ReturnValue);
                         //create transponder file
                         //create transponders list
                         //loop through list of vehicles to extract transponders
