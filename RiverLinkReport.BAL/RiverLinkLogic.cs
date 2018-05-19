@@ -188,7 +188,7 @@ namespace RiverLinkReport.BAL
                     PlateNumber = td.PlateNumber,
                     Lane = td.Lane,
                     Transponder = Transponder,
-                    TransponderNumber = Transponder.TransponderNumber,
+                    TransponderNumber = td.TransponderNumber,
                     TransactionDescription = td.TransactionDescription
                 };
                 returnValue.Add(t);
@@ -249,10 +249,13 @@ namespace RiverLinkReport.BAL
                 var ExistingTransactions = context.Transactions.ToList();
                 foreach (var t in Transactions)
                 {
-                    var ExistingTransaction = ExistingTransactions.SingleOrDefault(x => x.Transaction_Id == t.Transaction_Id);
+                    var ExistingTransaction = ExistingTransactions.SingleOrDefault(x => x.Journal_Id == t.Journal_Id);
                     if (ExistingTransaction == null)
                     {
-                        context.Transponders.Attach(t.Transponder);
+                        if (t.Transponder != null)
+                        {
+                            context.Transponders.Attach(t.Transponder);
+                        }               
                         context.Transactions.Add(t);
                     }
                 }
@@ -344,7 +347,7 @@ namespace RiverLinkReport.BAL
                 return false;
             }
 
-            List<Transaction> TransactionList = Worker.GetTransactionData(out Success);
+            List<TransactionData> TransactionList = Worker.GetTransactionData(out Success);
             if (Success != "Success")
             {
                 return false;

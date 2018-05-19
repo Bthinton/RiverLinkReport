@@ -101,7 +101,7 @@ namespace RiverLink.Models
         /// </value>
         public virtual Transponder Transponder { get; set; }
 
-        public string TransponderNumber { get; set; }
+        public int TransponderNumber { get; set; }
         /// <value>
         /// Gets and sets the type of the transaction
         /// </value>

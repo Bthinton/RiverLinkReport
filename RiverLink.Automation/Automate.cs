@@ -396,7 +396,6 @@ namespace RiverLink.Automation
                         var engine = new FileHelperEngine<VehicleData>();
                         var engine2 = new FileHelperEngine<Transponder>();
                         VehicleData v = new VehicleData();
-                        TransponderData t = new TransponderData();
                         HtmlDocument rowDoc = new HtmlDocument();
                         rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_VehicleTable)[i].InnerHtml);
                         var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
@@ -510,9 +509,9 @@ namespace RiverLink.Automation
         /// </summary>
         /// <param name="Success">Passed to GetData method in RiverLinkLogic.cs</param>
         /// <returns>If succeeded or failed</returns>
-        public List<Transaction> GetTransactionData(out string Success)
+        public List<TransactionData> GetTransactionData(out string Success)
         {
-            List<Transaction> ReturnValue = null;
+            List<TransactionData> ReturnValue = null;
             string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
             Success = "failed";
             try
@@ -535,7 +534,7 @@ namespace RiverLink.Automation
                         for (int i = 995; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
                         {
                             string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i - 1);
-                            Transaction t = new Transaction();
+                            TransactionData t = new TransactionData();
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
@@ -544,8 +543,9 @@ namespace RiverLink.Automation
                                     t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);
                                     t.TransactionDescription = cells[3].InnerHtml.Trim();
                                     t.Lane = GetLane(cells[4].InnerHtml);
-                                    t.Plaza = cells[5].InnerHtml;                                      
-                                    t.TransponderNumber = cells[6].InnerHtml;
+                                    t.Plaza = cells[5].InnerHtml;
+                                    t.TransponderNumber = GetTransponderNumber(cells[6].InnerHtml);
+                           //Todo GetTransponder number for vtoll transactions
                                     t.PlateNumber = cells[7].InnerHtml.Trim();
                                     //t.VehicleClass_Id = VehicleClasses.FirstOrDefault(x => x.Price == t.Amount).VehicleClass_Id;
 
@@ -593,11 +593,11 @@ namespace RiverLink.Automation
                             
                             if (ReturnValue == null)
                             {
-                                ReturnValue = new List<Transaction>();
+                                ReturnValue = new List<TransactionData>();
                             }
                             ReturnValue.Add(t);
                         }
-                        var engine = new FileHelperEngine<Transaction>();
+                        var engine = new FileHelperEngine<TransactionData>();
                         if (System.IO.File.Exists($"{dataDirectory}Transactions-{timeStamp}.Txt"))
                         {
                             engine.AppendToFile($"{dataDirectory}Transactions-{timeStamp}.Txt", ReturnValue);
@@ -786,15 +786,11 @@ namespace RiverLink.Automation
         /// </summary>
         /// <param name="cellText">the cell the data is located within the table</param>
         /// <returns>transponder associated with the transaction</returns>
-        private Transponder GetTransponderInfo(string cellText)
+        private int GetTransponderNumber(string cellText)
         {
             string transponderNumber = cellText;
             Int32.TryParse(transponderNumber, out int number);
-            Transponder transponder = new Transponder
-            {
-                Transponder_Id = number
-            };
-            return transponder;
+            return number;
         }
         /// <summary>
         /// Compares the cell's text to string specified and returns the Vehicle classification

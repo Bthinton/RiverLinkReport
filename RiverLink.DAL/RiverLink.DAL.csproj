@@ -72,6 +72,10 @@
     <Compile Include="Migrations\201805030021157_ChangesToTransponderNTransaction.Designer.cs">
       <DependentUpon>201805030021157_ChangesToTransponderNTransaction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805151931026_ChangesToTransactionData.cs" />
+    <Compile Include="Migrations\201805151931026_ChangesToTransactionData.Designer.cs">
+      <DependentUpon>201805151931026_ChangesToTransactionData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -102,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805030021157_ChangesToTransponderNTransaction.resx">
       <DependentUpon>201805030021157_ChangesToTransponderNTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805151931026_ChangesToTransactionData.resx">
+      <DependentUpon>201805151931026_ChangesToTransactionData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
