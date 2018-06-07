@@ -1,3 +1,11 @@
+/*
+Rewrite transaction data getter to stop once newest date found
+Pass parameters to CLI to launch fully automated data getter 
+console.exe args
+
+Install 2012 SQL Server (SSMS)
+*/
+
 using HtmlAgilityPack;
 using OpenQA.Selenium;
 using RiverLink.Models;

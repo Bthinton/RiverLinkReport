@@ -8,11 +8,11 @@ Select
 TransponderNumber, 
 Month(TransactionDate) AS [Month], 
 Year(TransactionDate) AS [Year], 
-COUNT(TransactionNumber) as [Count],
+COUNT(TransactionNumber) as [Charges],
 (case
 	WHEN COUNT(TransactionNumber) >= 40 THEN COUNT(TransactionNumber) * 1
 	Else COUNT(TransactionNumber) * 2
-end) AS [Charges]
+end) AS [Charged]
 From [Transaction] 
 Where TransactionType = 'toll' 
 Group By TransponderNumber,  Month(TransactionDate), Year(TransactionDate)
@@ -50,6 +50,7 @@ Order By t.Year, t.Month
 
 Select * From [Transaction] Where TransactionType = 'discount' and Month(TransactionDate) = 1 and Year(TransactionDate) = 2017
 */
+
 Declare @Year int,
 @EndingMonth int,
 @StartingMonth int
@@ -58,7 +59,7 @@ Declare @Year int,
 --SET @EndingMonth = 5
 --SET @Year = 2017
 
-Select @StartingMonth = 4, @EndingMonth = 5, @Year = 2017
+Select @StartingMonth = 1, @EndingMonth = 1, @Year = 2018
 
 Select 
 t.[Month],
