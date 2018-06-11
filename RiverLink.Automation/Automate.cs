@@ -12,12 +12,17 @@ using RiverLink.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 using FileHelpers;
 using System.IO;
+using OpenQA.Selenium.Support.UI;
+using RiverLink.DAL;
+
 
 namespace RiverLink.Automation
 {
@@ -519,7 +524,8 @@ namespace RiverLink.Automation
         /// <returns>If succeeded or failed</returns>
         public List<TransactionData> GetTransactionData(out string Success)
         {
-            List<TransactionData> ReturnValue = null;
+
+        List<TransactionData> ReturnValue = null;
             string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
             Success = "failed";
             try
@@ -539,7 +545,7 @@ namespace RiverLink.Automation
                         string html = driver.PageSource;
                         HtmlDocument doc = new HtmlDocument();
                         doc.LoadHtml(html);
-                        for (int i = 995; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
+                        for (int i = 1; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
                         {
                             string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i - 1);
                             TransactionData t = new TransactionData();
@@ -552,8 +558,7 @@ namespace RiverLink.Automation
                                     t.TransactionDescription = cells[3].InnerHtml.Trim();
                                     t.Lane = GetLane(cells[4].InnerHtml);
                                     t.Plaza = cells[5].InnerHtml;
-                                    t.TransponderNumber = GetTransponderNumber(cells[6].InnerHtml);
-                           //Todo GetTransponder number for vtoll transactions
+                                    t.TransponderNumber = GetTransponderNumber(cells[6].InnerHtml);                         
                                     t.PlateNumber = cells[7].InnerHtml.Trim();
                                     //t.VehicleClass_Id = VehicleClasses.FirstOrDefault(x => x.Price == t.Amount).VehicleClass_Id;
 

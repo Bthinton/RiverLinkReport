@@ -5,7 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Threading;
+using System.Windows.Forms;
+
 
 namespace RiverLinkReport.CLI
 {
@@ -24,39 +27,44 @@ namespace RiverLinkReport.CLI
             //string path = System.Reflection.Assembly.GetExecutingAssembly().Location;
             //string directory = Path.GetFullPath(Path.Combine(path, @"..\..\..\..\"));
             //AppDomain.CurrentDomain.SetData("DataDirectory", directory);
-            if (args.Length == 0)
+            if (args[0] == "1")
             {
-                int userInput = 0;
-                do
-                {
-                    userInput = DisplayMenu();
-
-                    switch (userInput)
-                    {
-                        case 1:
-                            TestUsernameAndPassword(string.Empty, string.Empty);
-                            break;
-                        case 2:
-                            Console.WriteLine("You picked 2.");
-                            break;                            
-                        case 5:
-                            //RiverLinkLogic.ImportVehicleData();
-                            break;
-                        case 6:
-                            RiverLinkLogic.InsertData();
-                            break;
-                        default:
-                            break;
-                    }
-
-                } while (userInput != 5);
-            } else
-            {
-                Console.WriteLine(args[0]);
+                TestUsernameAndPassword("Username", "Password");
             }
-
+            if (args[1] == "2")
+            {
+                RiverLinkLogic.InsertData();
+            }
             
-            Console.Read();
+            //if (args.Length == 0)
+            //{
+            //    int userInput = 0;
+            //    do
+            //    {
+            //        userInput = DisplayMenu();
+            //        switch (userInput = 1)
+            //        {
+            //            case 1:
+            //                TestUsernameAndPassword("EricAllenPaul@hotmail.com", "!Sttng0812");
+            //                break;
+            //            case 2:
+            //                Console.WriteLine("You picked 2.");
+            //                break;                            
+            //            case 5:
+            //                //RiverLinkLogic.ImportVehicleData();
+            //                break;
+            //            case 6:
+            //                RiverLinkLogic.InsertData();
+            //                break;
+            //            default:
+            //                break;
+            //        }
+            //    } while (userInput != 5);
+            //} else
+            //{
+            //    Console.WriteLine(args[0]);
+            //}
+            Application.Exit();
         }
 
         public static int DisplayMenu()

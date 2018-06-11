@@ -53,7 +53,7 @@ ORDER BY m.[Day] asc
 
 Returns most recent transaction
 
-SELECT max(TransactionDate) FROM [Transaction]
+SELECT max(TransactionDate) FROM [Transaction] 
 
 
 SELECT TOP 1 TransactionDate
