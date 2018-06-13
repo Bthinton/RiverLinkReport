@@ -22,6 +22,7 @@ using FileHelpers;
 using System.IO;
 using OpenQA.Selenium.Support.UI;
 using RiverLink.DAL;
+using System.Data.SqlClient;
 
 
 namespace RiverLink.Automation
@@ -49,6 +50,7 @@ namespace RiverLink.Automation
         private static string dataDirectory = $"{path}Data\\";
         private static string timeStamp = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}";
         private static List<VehicleClass> VehicleClasses = new List<VehicleClass>();
+        public static DateTime LatestDate { get; set; }
         #endregion Fields
 
 
@@ -524,8 +526,7 @@ namespace RiverLink.Automation
         /// <returns>If succeeded or failed</returns>
         public List<TransactionData> GetTransactionData(out string Success)
         {
-
-        List<TransactionData> ReturnValue = null;
+            List<TransactionData> ReturnValue = null;
             string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
             Success = "failed";
             try
@@ -552,9 +553,25 @@ namespace RiverLink.Automation
                             HtmlDocument rowDoc = new HtmlDocument();
                             rowDoc.LoadHtml(doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable)[i].InnerHtml);
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
-                                    t.TransactionType = cells[0].InnerHtml;
-                                    t.Amount = GetTransactionAmount(cells[1].InnerHtml);
-                                    t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);
+                            t.TransactionType = cells[0].InnerHtml;
+                            t.Amount = GetTransactionAmount(cells[1].InnerHtml);
+
+                            //DateTime newestRecord = DateTime.Parse("05/01/2018");
+                            //using (SqlConnection connection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=RLinkDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+                            //using (SqlCommand cmd = new SqlCommand("SELECT max(TransactionDate) AS [TransactionDate] FROM [Transaction]", connection))
+                            //    {
+                            //    cmd.CommandType = CommandType.Text;
+                            //        connection.Open();
+                            //            using (var reader = cmd.ExecuteReader())
+                            //            {
+                            //                if (reader.HasRows)
+                            //                {
+                            //                    reader.Read();
+                            //                    DateTime.TryParse(reader["TransactionDate"].ToString(), out newestRecord);
+                            //                }
+                            //            }
+                            //    }
+                                t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);
                                     t.TransactionDescription = cells[3].InnerHtml.Trim();
                                     t.Lane = GetLane(cells[4].InnerHtml);
                                     t.Plaza = cells[5].InnerHtml;

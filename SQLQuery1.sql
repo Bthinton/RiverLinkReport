@@ -61,6 +61,7 @@ FROM [Transaction]
 ORDER BY TransactionDate desc
 */ 
 
+
 DECLARE @YEAR int = 2017, @Month int = 11, @TransponderNumber int = 0
 
 SELECT DISTINCT Year(TransactionDate) AS [Year]

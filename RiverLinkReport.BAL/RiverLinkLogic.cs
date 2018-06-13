@@ -156,6 +156,16 @@ namespace RiverLinkReport.BAL
         /// <returns></returns>
         public static List<Transaction> GetTransactionData(string FileName)
         {
+            DateTime lastDate = DateTime.MinValue;
+            using (var context = new DB())
+            {
+                lastDate = context.Transactions.Max(p => p.TransactionDate);               
+                if (lastDate != null)
+                {
+                    Automate.LatestDate = lastDate;
+                }
+            }
+
             List<Transaction> returnValue = new List<Transaction>();
             var engine = new FileHelperEngine<TransactionData>();
             string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
@@ -255,7 +265,7 @@ namespace RiverLinkReport.BAL
                         if (t.Transponder != null)
                         {
                             context.Transponders.Attach(t.Transponder);
-                        }               
+                        }
                         context.Transactions.Add(t);
                     }
                 }
@@ -315,7 +325,7 @@ namespace RiverLinkReport.BAL
             {
                 throw new Exception($"Error {method}: Unable to find data directory {dataDirectory}");
             }
-        return returnValue;
+            return returnValue;
         }
 
         public List<Transponder> GetTransponders(string FileName)
@@ -346,6 +356,8 @@ namespace RiverLinkReport.BAL
             {
                 return false;
             }
+
+            Automate.LatestDate = DateTime.Today;
 
             List<TransactionData> TransactionList = Worker.GetTransactionData(out Success);
             if (Success != "Success")
