@@ -22,7 +22,6 @@ using FileHelpers;
 using System.IO;
 using OpenQA.Selenium.Support.UI;
 using RiverLink.DAL;
-using System.Data.SqlClient;
 
 
 namespace RiverLink.Automation
@@ -51,6 +50,7 @@ namespace RiverLink.Automation
         private static string timeStamp = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}";
         private static List<VehicleClass> VehicleClasses = new List<VehicleClass>();
         public static DateTime LatestDate { get; set; }
+
         #endregion Fields
 
 
@@ -106,6 +106,7 @@ namespace RiverLink.Automation
         /// </summary>
         /// <param name="Success">Passed to Login method in RiverLinkLogic.cs</param>
         /// <returns>If failed or succeeded</returns>
+        /// 
         public string GoToHomePage(string Success)
         {
             if (!Directory.Exists(dataDirectory))
@@ -529,6 +530,21 @@ namespace RiverLink.Automation
             List<TransactionData> ReturnValue = null;
             string method = System.Reflection.MethodBase.GetCurrentMethod().Name;
             Success = "failed";
+            DateTime newestRecord = DateTime.MinValue;
+            //using (SqlConnection connection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=RLinkDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            //using (SqlCommand cmd = new SqlCommand("SELECT max(TransactionDate) AS [TransactionDate] FROM [Transaction]", connection))
+            //{
+            //    cmd.CommandType = CommandType.Text;
+            //    connection.Open();
+            //    using (var reader = cmd.ExecuteReader())
+            //    {
+            //        if (reader.HasRows)
+            //        {
+            //            reader.Read();
+            //            DateTime.TryParse(reader["TransactionDate"].ToString(), out newestRecord);
+            //        }
+            //    }
+            //}
             try
             {         
                 if (IsTransactionHistory(driver))
@@ -543,6 +559,7 @@ namespace RiverLink.Automation
                     {
                         StatusMessage = $"Transaction Table Verified...";
                         OnStatusChanged(StatusMessage);
+                        var engine = new FileHelperEngine<TransactionData>();
                         string html = driver.PageSource;
                         HtmlDocument doc = new HtmlDocument();
                         doc.LoadHtml(html);
@@ -556,69 +573,69 @@ namespace RiverLink.Automation
                             t.TransactionType = cells[0].InnerHtml;
                             t.Amount = GetTransactionAmount(cells[1].InnerHtml);
 
-                            //DateTime newestRecord = DateTime.Parse("05/01/2018");
-                            //using (SqlConnection connection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=RLinkDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
-                            //using (SqlCommand cmd = new SqlCommand("SELECT max(TransactionDate) AS [TransactionDate] FROM [Transaction]", connection))
-                            //    {
-                            //    cmd.CommandType = CommandType.Text;
-                            //        connection.Open();
-                            //            using (var reader = cmd.ExecuteReader())
-                            //            {
-                            //                if (reader.HasRows)
-                            //                {
-                            //                    reader.Read();
-                            //                    DateTime.TryParse(reader["TransactionDate"].ToString(), out newestRecord);
-                            //                }
-                            //            }
-                            //    }
-                                t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);
-                                    t.TransactionDescription = cells[3].InnerHtml.Trim();
-                                    t.Lane = GetLane(cells[4].InnerHtml);
-                                    t.Plaza = cells[5].InnerHtml;
-                                    t.TransponderNumber = GetTransponderNumber(cells[6].InnerHtml);                         
-                                    t.PlateNumber = cells[7].InnerHtml.Trim();
-                                    //t.VehicleClass_Id = VehicleClasses.FirstOrDefault(x => x.Price == t.Amount).VehicleClass_Id;
+                            t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);                           
+                            if (t.TransactionDate == LatestDate)
+                            {
+                                StatusMessage = $"Transaction Already Recorded";
+                                OnStatusChanged(StatusMessage);
+                                if (System.IO.File.Exists($"{dataDirectory}Transactions-{timeStamp}.Txt"))
+                                {
+                                    engine.AppendToFile($"{dataDirectory}Transactions-{timeStamp}.Txt", ReturnValue);
+                                }
+                                else
+                                {
+                                    engine.HeaderText = engine.GetFileHeader();
+                                    engine.WriteFile($"{dataDirectory}Transactions-{timeStamp}.Txt", ReturnValue);
+                                }
+                                return ReturnValue;
+                            }
+                            t.TransactionDescription = cells[3].InnerHtml.Trim();
+                            t.Lane = GetLane(cells[4].InnerHtml);
+                            t.Plaza = cells[5].InnerHtml;
+                            t.TransponderNumber = GetTransponderNumber(cells[6].InnerHtml);                         
+                            t.PlateNumber = cells[7].InnerHtml.Trim();
+                            //t.VehicleClass_Id = VehicleClasses.FirstOrDefault(x => x.Price == t.Amount).VehicleClass_Id;
 
-                                    //Pulls data from detail page
-                                    GotoTransactionDetail(Success, detailBTNX_Path);
-                                    if (Success != "Success")
+                            //Pulls data from detail page
+                            GotoTransactionDetail(Success, detailBTNX_Path);
+                            if (Success != "Success")
+                            {
+                                throw new Exception($"Error {method}: Could not navigate to detail page");
+                            }
+                            t.TransactionNumber = GetTransactionId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text);
+                            t.Journal_Id = GetJournalId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text);
+                            t.PostedDate = GetPostedDate(driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text);
+                            t.TransactionStatus = GetTransactionStatus(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionStatus)).Text);
+                            t.RelatedJournal_Id = new List<int>();
+                            if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_DetailPageTable)))
+                            {
+                                StatusMessage = $"Detail Page Table Verified...";
+                                OnStatusChanged(StatusMessage);
+                                StatusMessage = $"Pulling Related Transactions...";
+                                OnStatusChanged(StatusMessage);
+                                string html2 = driver.PageSource;
+                                HtmlDocument doc2 = new HtmlDocument();
+                                doc2.LoadHtml(html2);
+                                List<int> relatedTransactions = null;
+                                for (int m = 1; m < doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable).Count; m++)
+                                {
+                                    HtmlDocument rowDoc2 = new HtmlDocument();
+                                    rowDoc2.LoadHtml(doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable)[m].InnerHtml);
+                                    var detailCells = rowDoc2.DocumentNode.SelectNodes("//td");
+                                    int detailJournalId = GetRelatedJournalId(detailCells[1].InnerHtml);
+                                    if (relatedTransactions == null)
                                     {
-                                        throw new Exception($"Error {method}: Could not navigate to detail page");
-                                    }
-                                    t.TransactionNumber = GetTransactionId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text);
-                                    t.Journal_Id = GetJournalId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text);
-                                    t.PostedDate = GetPostedDate(driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text);
-                                    t.TransactionStatus = GetTransactionStatus(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionStatus)).Text);
-                                    t.RelatedJournal_Id = new List<int>();
-                                    if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_DetailPageTable)))
-                                    {
-                                        StatusMessage = $"Detail Page Table Verified...";
-                                        OnStatusChanged(StatusMessage);
-                                        StatusMessage = $"Pulling Related Transactions...";
-                                        OnStatusChanged(StatusMessage);
-                                        string html2 = driver.PageSource;
-                                        HtmlDocument doc2 = new HtmlDocument();
-                                        doc2.LoadHtml(html2);
-                                        List<int> relatedTransactions = null;
-                                        for (int m = 1; m < doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable).Count; m++)
-                                        {
-                                            HtmlDocument rowDoc2 = new HtmlDocument();
-                                            rowDoc2.LoadHtml(doc2.DocumentNode.SelectNodes(Properties.Settings.Default.X_DetailPageTable)[m].InnerHtml);
-                                            var detailCells = rowDoc2.DocumentNode.SelectNodes("//td");
-                                            int detailJournalId = GetRelatedJournalId(detailCells[1].InnerHtml);
-                                            if (relatedTransactions == null)
-                                            {
-                                                relatedTransactions = new List<int>();
-                                            }                                                           
-                                            relatedTransactions.Add(detailJournalId);
-                                            t.RelatedJournal_Id = relatedTransactions;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        StatusMessage = $"No Detail Page Table Available...";
-                                        OnStatusChanged(StatusMessage);
-                                    }
+                                        relatedTransactions = new List<int>();
+                                    }                                                           
+                                    relatedTransactions.Add(detailJournalId);
+                                    t.RelatedJournal_Id = relatedTransactions;
+                                }
+                            }
+                            else
+                            {
+                                StatusMessage = $"No Detail Page Table Available...";
+                                OnStatusChanged(StatusMessage);
+                            }
                             driver.Navigate().Back();                                
                             
                             if (ReturnValue == null)
@@ -626,8 +643,7 @@ namespace RiverLink.Automation
                                 ReturnValue = new List<TransactionData>();
                             }
                             ReturnValue.Add(t);
-                        }
-                        var engine = new FileHelperEngine<TransactionData>();
+                        }         
                         if (System.IO.File.Exists($"{dataDirectory}Transactions-{timeStamp}.Txt"))
                         {
                             engine.AppendToFile($"{dataDirectory}Transactions-{timeStamp}.Txt", ReturnValue);

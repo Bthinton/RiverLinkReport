@@ -24,9 +24,6 @@ namespace RiverLinkReport.CLI
 
         static void Main(string[] args)
         {
-            //string path = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            //string directory = Path.GetFullPath(Path.Combine(path, @"..\..\..\..\"));
-            //AppDomain.CurrentDomain.SetData("DataDirectory", directory);
             if (args.Length > 0)
             {
                 Console.WriteLine("Execute Automated");
@@ -34,28 +31,28 @@ namespace RiverLinkReport.CLI
             }
             else
             {
-                    int userInput = 0;
-                    do
+                int userInput = 0;
+                do
+                {
+                    userInput = DisplayMenu();
+                    switch (userInput = 1)
                     {
-                        userInput = DisplayMenu();
-                        switch (userInput = 1)
-                        {
-                            case 1:
-                                TestUsernameAndPassword("Username", "Password");
-                                break;
-                            case 2:
-                                Console.WriteLine("You picked 2.");
-                                break;
-                            case 5:
-                                //RiverLinkLogic.ImportVehicleData();
-                                break;
-                            case 6:
-                                RiverLinkLogic.InsertData();
-                                break;
-                            default:
-                                break;
-                        }
-                    } while (userInput != 5);
+                        case 1:
+                            TestUsernameAndPassword("Username", "Password");
+                            break;
+                        case 2:
+                            Console.WriteLine("You picked 2.");
+                            break;
+                        case 5:
+                            //RiverLinkLogic.ImportVehicleData();
+                            break;
+                        case 6:
+                            RiverLinkLogic.InsertData();
+                            break;
+                        default:
+                            break;
+                    }
+                } while (userInput != 5);
             }
             Application.Exit();
         }
@@ -132,10 +129,10 @@ namespace RiverLinkReport.CLI
             worker.StatusChanged += Worker_StatusChanged;
             if (worker.Login())
             {
-                Console.WriteLine("You have logged in");
+                Console.WriteLine("Operation Successful");
             } else
             {
-                Console.WriteLine("Login failed");
+                Console.WriteLine("Operation failed");
             }
             return returnValue;
         }

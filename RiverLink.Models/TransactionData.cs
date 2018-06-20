@@ -22,15 +22,15 @@ namespace RiverLink.Models
         /// Gets and sets the date and time the transaction was made
         /// </value>
         [Required]
-        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [FieldConverter(ConverterKind.Date, "yyyyMMddHHmmss")]
+        [DisplayFormat(DataFormatString = "yyyyMMddHHmmss")]
         public DateTime TransactionDate { get; set; }
         /// <value>
         /// Gets and sets the date and time the transaction was posted on the website
         /// </value>
         [Required]
-        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [FieldConverter(ConverterKind.Date, "yyyyMMddHHmmss")]
+        [DisplayFormat(DataFormatString = "yyyyMMddHHmmss")]
         public DateTime? PostedDate { get; set; }
 
         public string TransactionStatus { get; set; }
