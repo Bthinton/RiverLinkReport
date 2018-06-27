@@ -23,7 +23,6 @@ using System.IO;
 using OpenQA.Selenium.Support.UI;
 using RiverLink.DAL;
 
-
 namespace RiverLink.Automation
 {
     /// <summary>
@@ -50,6 +49,8 @@ namespace RiverLink.Automation
         private static string timeStamp = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}";
         private static List<VehicleClass> VehicleClasses = new List<VehicleClass>();
         public static DateTime LatestDate { get; set; }
+        public static string username { get; set; }
+        public static string password { get; set; }
 
         #endregion Fields
 
@@ -325,7 +326,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys("Username");
+                    driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys(username);
                 }
                 else
                 {
@@ -340,7 +341,7 @@ namespace RiverLink.Automation
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
                     OnStatusChanged(StatusMessage);
-                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys("Password");
+                    driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys(password);
                 }
                 else
                 {

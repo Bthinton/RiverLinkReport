@@ -1,5 +1,6 @@
 ﻿using NLog;
 using OpenQA.Selenium;
+using RiverLink.CLI;
 using RiverLinkReport.BAL;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
 using System.Windows.Forms;
+using RiverLink.Automation;
 
 
 namespace RiverLinkReport.CLI
@@ -21,40 +23,40 @@ namespace RiverLinkReport.CLI
         private delegate void DisplayDelegate(string text);
         public static IWebDriver driver;
         public static List<int> DriverProcessIds { get; set; }
+        private static string _username = string.Empty;
+        private static string _password = string.Empty;
 
-        static void Main(string[] args)
+        static void Main(string[] Args)
         {
-            if (args.Length > 0)
+            if (Args.Any())
             {
+                int option = 0;
                 Console.WriteLine("Execute Automated");
-                System.Threading.Thread.Sleep(5000);
-            }
-            else
-            {
-                int userInput = 0;
-                do
+                System.Threading.Thread.Sleep(1000);
+                while ((option = GetOpt.GetOptions(Args, "u:p:o")) != -1)
                 {
-                    userInput = DisplayMenu();
-                    switch (userInput = 1)
+                    switch ((char)option)
                     {
-                        case 1:
-                            TestUsernameAndPassword("Username", "Password");
+                        case 'u':
+                            Automate.username = GetOpt.Text;
                             break;
-                        case 2:
-                            Console.WriteLine("You picked 2.");
+                        case 'p':
+                            Automate.password = GetOpt.Text;                          
                             break;
-                        case 5:
-                            //RiverLinkLogic.ImportVehicleData();
-                            break;
-                        case 6:
+                        case 'o':
+                            TestUsernameAndPassword(Automate.username, Automate.password);
                             RiverLinkLogic.InsertData();
                             break;
                         default:
-                            break;
+                            return;
                     }
-                } while (userInput != 5);
+                }
+                Application.Exit();
             }
-            Application.Exit();
+            else
+            {
+                DisplayMenu();
+            }
         }
 
         public static int DisplayMenu()
