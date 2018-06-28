@@ -98,6 +98,35 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
+        public static List<int> GetYears(int Month = 0, int TransponderNumber = 0)
+        {
+            List<int> returnValue = new List<int>();
+            using (var context = new DB())
+            {
+                try
+                {
+                    IQueryable<Transaction> q = context.Transactions;
+                    if (Month > 0)
+                    {
+                        q = q.Where(x => x.TransactionDate.Month == Month);
+                    }
+                    if (TransponderNumber > 0)
+                    {
+                        q = q.Where(x => x.TransponderNumber == TransponderNumber);
+                    }
+                    
+                    returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Year).Distinct().ToList();
+                }
+                catch (Exception e)
+                {
+
+                    throw e;
+                }
+
+            }
+            return returnValue;
+        }
+
         private static void PopulateVehicleClasses()
         {
             if (!VehicleClassList.Any())
