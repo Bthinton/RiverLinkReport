@@ -127,6 +127,64 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
+        public static List<int> GetMonths(int Year = 0, int TransponderNumber = 0)
+        {
+            List<int> returnValue = new List<int>();
+            using (var context = new DB())
+            {
+                try
+                {
+                    IQueryable<Transaction> q = context.Transactions;
+                    if (Year > 0)
+                    {
+                        q = q.Where(x => x.TransactionDate.Year == Year);
+                    }
+                    if (TransponderNumber > 0)
+                    {
+                        q = q.Where(x => x.TransponderNumber == TransponderNumber);
+                    }
+
+                    returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Month).Distinct().ToList();
+                }
+                catch (Exception e)
+                {
+
+                    throw e;
+                }
+
+            }
+            return returnValue;
+        }
+
+        public static List<int> GetTransponderNumbers(int Year = 0, int Month = 0)
+        {
+            List<int> returnValue = new List<int>();
+            using (var context = new DB())
+            {
+                try
+                {
+                    IQueryable<Transaction> q = context.Transactions;
+                    if (Year > 0)
+                    {
+                        q = q.Where(x => x.TransactionDate.Year == Year);
+                    }
+                    if (Month > 0)
+                    {
+                        q = q.Where(x => x.TransactionDate.Month == Month);
+                    }
+
+                    returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransponderNumber).Distinct().ToList();
+                }
+                catch (Exception e)
+                {
+
+                    throw e;
+                }
+
+            }
+            return returnValue;
+        }
+
         private static void PopulateVehicleClasses()
         {
             if (!VehicleClassList.Any())

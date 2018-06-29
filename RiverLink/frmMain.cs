@@ -26,7 +26,11 @@ namespace RiverLink
         private void frmMain_Load(object sender, EventArgs e)
         {
             List<int> Years = RiverLinkReport.BAL.RiverLinkLogic.GetYears();
+            List<int> Months = RiverLinkReport.BAL.RiverLinkLogic.GetMonths();
+            List<int> TransponderNumbers = RiverLinkReport.BAL.RiverLinkLogic.GetTransponderNumbers();
             bsYear.DataSource = Years;
+            bsMonth.DataSource = Months;
+            bsTransponderNumber.DataSource = TransponderNumbers;
         }
 
         private void cmbYear_SelectedIndexChanged(object sender, EventArgs e)
@@ -34,6 +38,22 @@ namespace RiverLink
             if (cmbYear.SelectedIndex != -1)
             {
                 MessageBox.Show(cmbYear.SelectedItem.ToString());
+            }
+        }
+
+        private void cmbMonth_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbMonth.SelectedIndex != -1)
+            {
+                MessageBox.Show(cmbMonth.SelectedItem.ToString());
+            }
+        }
+
+        private void cmbTransponder_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (cmbTransponder.SelectedIndex != -1)
+            {
+                MessageBox.Show(cmbTransponder.SelectedItem.ToString());
             }
         }
     }

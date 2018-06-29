@@ -31,15 +31,19 @@
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbYear = new System.Windows.Forms.ComboBox();
+            this.bsYear = new System.Windows.Forms.BindingSource(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.cmbMonth = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbTransponder = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnExit = new System.Windows.Forms.Button();
-            this.bsYear = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.bsMonth = new System.Windows.Forms.BindingSource(this.components);
+            this.bsTransponderNumber = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -72,11 +76,13 @@
             // 
             // cmbMonth
             // 
+            this.cmbMonth.DataSource = this.bsMonth;
             this.cmbMonth.FormattingEnabled = true;
             this.cmbMonth.Location = new System.Drawing.Point(150, 31);
             this.cmbMonth.Name = "cmbMonth";
             this.cmbMonth.Size = new System.Drawing.Size(121, 21);
             this.cmbMonth.TabIndex = 3;
+            this.cmbMonth.SelectedIndexChanged += new System.EventHandler(this.cmbMonth_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -89,11 +95,13 @@
             // 
             // cmbTransponder
             // 
+            this.cmbTransponder.DataSource = this.bsTransponderNumber;
             this.cmbTransponder.FormattingEnabled = true;
             this.cmbTransponder.Location = new System.Drawing.Point(277, 31);
             this.cmbTransponder.Name = "cmbTransponder";
             this.cmbTransponder.Size = new System.Drawing.Size(121, 21);
             this.cmbTransponder.TabIndex = 5;
+            this.cmbTransponder.SelectedIndexChanged += new System.EventHandler(this.cmbTransponder_SelectedIndexChanged_1);
             // 
             // dataGridView1
             // 
@@ -137,8 +145,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Riverlink";
             this.Load += new System.EventHandler(this.frmMain_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,6 +165,8 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.BindingSource bsYear;
+        private System.Windows.Forms.BindingSource bsMonth;
+        private System.Windows.Forms.BindingSource bsTransponderNumber;
     }
 }
 
