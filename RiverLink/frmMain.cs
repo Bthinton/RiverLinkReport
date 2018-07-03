@@ -39,6 +39,11 @@ namespace RiverLink
             {
                 MessageBox.Show(cmbYear.SelectedItem.ToString());
             }
+            bsMonth.DataSource = null;
+            List<int> Months = new List<int>();
+            Months.Add(2);
+            Months.Add(11);
+            bsMonth.DataSource = Months;
         }
 
         private void cmbMonth_SelectedIndexChanged(object sender, EventArgs e)

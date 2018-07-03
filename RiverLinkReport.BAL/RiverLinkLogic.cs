@@ -12,6 +12,7 @@ using RiverLink.DAL;
 using System.Data.Entity;
 using System.Collections;
 
+
 namespace RiverLinkReport.BAL
 {
     public class RiverLinkLogic
@@ -122,7 +123,6 @@ namespace RiverLinkReport.BAL
 
                     throw e;
                 }
-
             }
             return returnValue;
         }
@@ -151,7 +151,6 @@ namespace RiverLinkReport.BAL
 
                     throw e;
                 }
-
             }
             return returnValue;
         }
@@ -180,7 +179,6 @@ namespace RiverLinkReport.BAL
 
                     throw e;
                 }
-
             }
             return returnValue;
         }
