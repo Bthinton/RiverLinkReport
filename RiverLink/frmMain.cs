@@ -40,12 +40,14 @@ namespace RiverLink
             if (cmbYear.SelectedIndex != -1)
             {
                 MessageBox.Show(cmbYear.SelectedItem.ToString());
+                RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(cmbYear.SelectedItem.ToString());
+                RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(cmbTransponder.SelectedItem.ToString());
+                RiverLinkReport.BAL.RiverLinkLogic.month = int.Parse(cmbMonth.SelectedItem.ToString());
+                bsMonth.DataSource = null;
+                List<int> Months = RiverLinkReport.BAL.RiverLinkLogic.GetMonths();
+                bsMonth.DataSource = Months;
             }
-            RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(cmbYear.SelectedItem.ToString());
-            RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(cmbTransponder.SelectedItem.ToString());
-            bsMonth.DataSource = null;
-            List<int> Months = RiverLinkReport.BAL.RiverLinkLogic.UpdateMonths();
-            bsMonth.DataSource = Months;
+
         }
 
         private void cmbMonth_SelectedIndexChanged(object sender, EventArgs e)
@@ -53,7 +55,14 @@ namespace RiverLink
             if (cmbMonth.SelectedIndex != -1)
             {
                 MessageBox.Show(cmbMonth.SelectedItem.ToString());
+                RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(cmbYear.SelectedItem.ToString());
+                RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(cmbTransponder.SelectedItem.ToString());
+                RiverLinkReport.BAL.RiverLinkLogic.month = int.Parse(cmbMonth.SelectedItem.ToString());
+                bsTransponderNumber.DataSource = null;
+                List<int> TransponderNumbers = RiverLinkReport.BAL.RiverLinkLogic.GetTransponderNumbers();
+                bsTransponderNumber.DataSource = TransponderNumbers;
             }
+
         }
 
         private void cmbTransponder_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -61,7 +70,14 @@ namespace RiverLink
             if (cmbTransponder.SelectedIndex != -1)
             {
                 MessageBox.Show(cmbTransponder.SelectedItem.ToString());
+                RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(cmbYear.SelectedItem.ToString());
+                RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(cmbTransponder.SelectedItem.ToString());
+                RiverLinkReport.BAL.RiverLinkLogic.month = int.Parse(cmbMonth.SelectedItem.ToString());
+                bsMonth.DataSource = null;
+                List<int> Months = RiverLinkReport.BAL.RiverLinkLogic.GetMonths();
+                bsMonth.DataSource = Months;
             }
+
         }
     }
 }
