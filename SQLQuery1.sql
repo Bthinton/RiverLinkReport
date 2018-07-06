@@ -62,7 +62,7 @@ ORDER BY TransactionDate desc
 */ 
 
 
-DECLARE @YEAR int = 0, @Month int = 0, @TransponderNumber int = 0
+DECLARE @YEAR int = 2017, @Month int = 0, @TransponderNumber int = 11018
 
 SELECT DISTINCT Year(TransactionDate) AS [Year]
 FROM [Transaction]

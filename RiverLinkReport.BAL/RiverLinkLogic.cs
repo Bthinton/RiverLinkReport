@@ -26,6 +26,9 @@ namespace RiverLinkReport.BAL
         private int LongWait = 2000;
         private static List<VehicleClass> VehicleClassList = new List<VehicleClass>();
         private static List<Transponder> TransponderList = new List<Transponder>();
+        public static int month;
+        public static int year;
+        public static int transponderNumber;
 
         private Automate Worker;
         #endregion Fields
@@ -142,6 +145,36 @@ namespace RiverLinkReport.BAL
                     if (TransponderNumber > 0)
                     {
                         q = q.Where(x => x.TransponderNumber == TransponderNumber);
+                    }
+
+                    returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Month).Distinct().ToList();
+                }
+                catch (Exception e)
+                {
+
+                    throw e;
+                }
+            }
+            return returnValue;
+        }
+
+        public static List<int> UpdateMonths(int Year = 0, int TransponderNumber = 0)
+        {
+            Year = year;
+            TransponderNumber = transponderNumber;
+            List<int> returnValue = new List<int>();
+            using (var context = new DB())
+            {
+                try
+                {
+                    IQueryable<Transaction> q = context.Transactions;
+                    if (Year > 0)
+                    {
+                        q = q.Where(x => x.TransactionDate.Year == year);
+                    }
+                    if (TransponderNumber > 0)
+                    {
+                        q = q.Where(x => x.TransponderNumber == transponderNumber);
                     }
 
                     returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Month).Distinct().ToList();

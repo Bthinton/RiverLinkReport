@@ -12,9 +12,11 @@ namespace RiverLink
 {
     public partial class frmMain : Form
     {
+
         public frmMain()
         {
             InitializeComponent();
+
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -39,10 +41,10 @@ namespace RiverLink
             {
                 MessageBox.Show(cmbYear.SelectedItem.ToString());
             }
+            RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(cmbYear.SelectedItem.ToString());
+            RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(cmbTransponder.SelectedItem.ToString());
             bsMonth.DataSource = null;
-            List<int> Months = new List<int>();
-            Months.Add(2);
-            Months.Add(11);
+            List<int> Months = RiverLinkReport.BAL.RiverLinkLogic.UpdateMonths();
             bsMonth.DataSource = Months;
         }
 
