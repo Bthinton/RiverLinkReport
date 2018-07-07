@@ -33,7 +33,7 @@ namespace RiverLinkReport.CLI
                 int option = 0;
                 Console.WriteLine("Execute Automated");
                 System.Threading.Thread.Sleep(1000);
-                while ((option = GetOpt.GetOptions(Args, "u:p:o")) != -1)
+                while ((option = GetOpt.GetOptions(Args, "ou:p:")) != -1)
                 {
                     switch ((char)option)
                     {
@@ -44,13 +44,14 @@ namespace RiverLinkReport.CLI
                             Automate.password = GetOpt.Text;                          
                             break;
                         case 'o':
-                            TestUsernameAndPassword(Automate.username, Automate.password);
-                            RiverLinkLogic.InsertData();
+
                             break;
                         default:
                             return;
                     }
                 }
+                TestUsernameAndPassword(Automate.username, Automate.password);
+                RiverLinkLogic.InsertData();
                 Application.Exit();
             }
             else
