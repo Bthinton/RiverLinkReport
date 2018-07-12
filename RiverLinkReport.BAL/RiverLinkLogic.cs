@@ -162,6 +162,25 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
+        public static List<Transaction> GetTransactions()
+        {
+            List<Transaction> returnValue = new List<Transaction>();
+
+            try
+            {
+                using (var context = new DB())
+                {
+                    returnValue = context.Transactions.ToList();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return returnValue;
+        }
+
         public static List<int> GetTransponderNumbers(int Year = 0, int Month = 0)
         {
             Month = month;

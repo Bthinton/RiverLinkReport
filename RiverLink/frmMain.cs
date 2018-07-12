@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RiverLink.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+
+//TODO Sort grid when column header is clicked
+//Filter Grid by combobox choices
+//filter out payments only show tolls
+//add tab for payments and vehicles
 
 namespace RiverLink
 {
@@ -23,8 +30,7 @@ namespace RiverLink
         {
             Application.Exit();
         }
-        //Populate Month/Transponder Drop downs
-        //Allow dropdowns to respond to eachother
+
         private void frmMain_Load(object sender, EventArgs e)
         {
             List<int> Years = RiverLinkReport.BAL.RiverLinkLogic.GetYears();
@@ -33,6 +39,7 @@ namespace RiverLink
             bsYear.DataSource = Years;
             bsMonth.DataSource = Months;
             bsTransponderNumber.DataSource = TransponderNumbers;
+            LoadGridData();
         }
 
         private void cmbYear_SelectedIndexChanged(object sender, EventArgs e)
@@ -47,7 +54,6 @@ namespace RiverLink
                 List<int> Months = RiverLinkReport.BAL.RiverLinkLogic.GetMonths();
                 bsMonth.DataSource = Months;
             }
-
         }
 
         private void cmbMonth_SelectedIndexChanged(object sender, EventArgs e)
@@ -76,8 +82,13 @@ namespace RiverLink
                 bsMonth.DataSource = null;
                 List<int> Months = RiverLinkReport.BAL.RiverLinkLogic.GetMonths();
                 bsMonth.DataSource = Months;
-            }
+            }          
+        }
 
+        private void LoadGridData()
+        {
+            List<Transaction> Transactions = RiverLinkReport.BAL.RiverLinkLogic.GetTransactions();
+            bsTransaction.DataSource = Transactions;
         }
     }
 }

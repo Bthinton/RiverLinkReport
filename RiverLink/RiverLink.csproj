@@ -94,6 +94,14 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\RiverLink.Models.RelatedJournalConverter.datasource" />
+    <None Include="Properties\DataSources\RiverLink.Models.Transaction.datasource" />
+    <None Include="Properties\DataSources\RiverLink.Models.TransactionData.datasource" />
+    <None Include="Properties\DataSources\RiverLink.Models.Transponder.datasource" />
+    <None Include="Properties\DataSources\RiverLink.Models.TransponderData.datasource" />
+    <None Include="Properties\DataSources\RiverLink.Models.Vehicle.datasource" />
+    <None Include="Properties\DataSources\RiverLink.Models.VehicleClass.datasource" />
+    <None Include="Properties\DataSources\RiverLink.Models.VehicleData.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -111,6 +119,10 @@
     <ProjectReference Include="..\RiverLink.Automation\RiverLink.Automation.csproj">
       <Project>{6a994f0d-ebd1-42eb-ac01-f965fb2f4bca}</Project>
       <Name>RiverLink.Automation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RiverLink.Models\RiverLink.Models.csproj">
+      <Project>{3a46761f-12cf-49df-8384-37e515d49d5a}</Project>
+      <Name>RiverLink.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\RiverLinkReport.BAL\RiverLinkReport.BAL.csproj">
       <Project>{3ac43186-7889-443d-820d-21f0d84d262f}</Project>
