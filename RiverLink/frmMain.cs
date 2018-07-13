@@ -47,19 +47,21 @@ namespace RiverLink
             if (cmbYear.SelectedIndex != -1)
             {
                 MessageBox.Show(cmbYear.SelectedItem.ToString());
+                LoadGridData();
                 RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(cmbYear.SelectedItem.ToString());
                 RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(cmbTransponder.SelectedItem.ToString());
                 RiverLinkReport.BAL.RiverLinkLogic.month = int.Parse(cmbMonth.SelectedItem.ToString());
                 bsMonth.DataSource = null;
                 List<int> Months = RiverLinkReport.BAL.RiverLinkLogic.GetMonths();
                 bsMonth.DataSource = Months;
-            }
+            }            
         }
 
         private void cmbMonth_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbMonth.SelectedIndex != -1)
             {
+                LoadGridData();
                 MessageBox.Show(cmbMonth.SelectedItem.ToString());
                 RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(cmbYear.SelectedItem.ToString());
                 RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(cmbTransponder.SelectedItem.ToString());
@@ -68,27 +70,30 @@ namespace RiverLink
                 List<int> TransponderNumbers = RiverLinkReport.BAL.RiverLinkLogic.GetTransponderNumbers();
                 bsTransponderNumber.DataSource = TransponderNumbers;
             }
-
         }
 
         private void cmbTransponder_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             if (cmbTransponder.SelectedIndex != -1)
             {
+                LoadGridData();
                 MessageBox.Show(cmbTransponder.SelectedItem.ToString());
-                RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(cmbYear.SelectedItem.ToString());
-                RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(cmbTransponder.SelectedItem.ToString());
-                RiverLinkReport.BAL.RiverLinkLogic.month = int.Parse(cmbMonth.SelectedItem.ToString());
-                bsMonth.DataSource = null;
-                List<int> Months = RiverLinkReport.BAL.RiverLinkLogic.GetMonths();
-                bsMonth.DataSource = Months;
-            }          
+            }
         }
 
         private void LoadGridData()
         {
+            RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(cmbYear.SelectedItem.ToString());
+            RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(cmbTransponder.SelectedItem.ToString());
+            RiverLinkReport.BAL.RiverLinkLogic.month = int.Parse(cmbMonth.SelectedItem.ToString());
             List<Transaction> Transactions = RiverLinkReport.BAL.RiverLinkLogic.GetTransactions();
             bsTransaction.DataSource = Transactions;
+        }
+
+        private void dgTransactions_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+
+            dgTransactions.Sort(dgTransactions.Columns[1], ListSortDirection.Ascending);
         }
     }
 }

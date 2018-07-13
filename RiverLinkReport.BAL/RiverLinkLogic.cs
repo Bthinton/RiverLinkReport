@@ -107,28 +107,28 @@ namespace RiverLinkReport.BAL
             Month = month;
             TransponderNumber = transponderNumber;
             List<int> returnValue = new List<int>();
-            using (var context = new DB())
-            {
                 try
                 {
-                    IQueryable<Transaction> q = context.Transactions;
-                    if (Month > 0)
+                    using (var context = new DB())
                     {
-                        q = q.Where(x => x.TransactionDate.Month == Month);
+                        IQueryable<Transaction> q = context.Transactions;
+                        if (Month > 0)
+                        {
+                            q = q.Where(x => x.TransactionDate.Month == Month);
+                        }
+                        if (TransponderNumber > 0)
+                        {
+                            q = q.Where(x => x.TransponderNumber == TransponderNumber);
+                        }
+                        returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Year)
+                            .Distinct().ToList();
                     }
-                    if (TransponderNumber > 0)
-                    {
-                        q = q.Where(x => x.TransponderNumber == TransponderNumber);
-                    }
-                    
-                    returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Year).Distinct().ToList();
                 }
                 catch (Exception e)
                 {
 
                     throw e;
-                }
-            }
+                }           
             return returnValue;
         }
 
@@ -137,47 +137,29 @@ namespace RiverLinkReport.BAL
             Year = year;
             TransponderNumber = transponderNumber;
             List<int> returnValue = new List<int>();
-            using (var context = new DB())
-            {
+
                 try
                 {
-                    IQueryable<Transaction> q = context.Transactions;
-                    if (Year > 0)
+                    using (var context = new DB())
                     {
-                        q = q.Where(x => x.TransactionDate.Year == Year);
+                        IQueryable<Transaction> q = context.Transactions;
+                        if (Year > 0)
+                        {
+                            q = q.Where(x => x.TransactionDate.Year == Year);
+                        }
+                        if (TransponderNumber > 0)
+                        {
+                            q = q.Where(x => x.TransponderNumber == TransponderNumber);
+                        }
+                        returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Month)
+                            .Distinct().ToList();
                     }
-                    if (TransponderNumber > 0)
-                    {
-                        q = q.Where(x => x.TransponderNumber == TransponderNumber);
-                    }
-
-                    returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Month).Distinct().ToList();
                 }
                 catch (Exception e)
                 {
 
                     throw e;
                 }
-            }
-            return returnValue;
-        }
-
-        public static List<Transaction> GetTransactions()
-        {
-            List<Transaction> returnValue = new List<Transaction>();
-
-            try
-            {
-                using (var context = new DB())
-                {
-                    returnValue = context.Transactions.ToList();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
             return returnValue;
         }
 
@@ -186,27 +168,53 @@ namespace RiverLinkReport.BAL
             Month = month;
             Year = year;
             List<int> returnValue = new List<int>();
-            using (var context = new DB())
-            {
+
                 try
                 {
-                    IQueryable<Transaction> q = context.Transactions;
-                    if (Year > 0)
+                    using (var context = new DB())
                     {
-                        q = q.Where(x => x.TransactionDate.Year == Year);
+                        IQueryable<Transaction> q = context.Transactions;
+                        if (Year > 0)
+                        {
+                            q = q.Where(x => x.TransactionDate.Year == Year);
+                        }
+                        if (Month > 0)
+                        {
+                            q = q.Where(x => x.TransactionDate.Month == Month);
+                        }
+                        returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransponderNumber)
+                            .Distinct().ToList();
                     }
-                    if (Month > 0)
-                    {
-                        q = q.Where(x => x.TransactionDate.Month == Month);
-                    }
-
-                    returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransponderNumber).Distinct().ToList();
                 }
                 catch (Exception e)
                 {
 
                     throw e;
                 }
+            return returnValue;
+        }
+
+        public static List<Transaction> GetTransactions(int Year = 0, int Month = 0, int TransponderNumber = 0)
+        {
+            Year = year;
+            Month = month;
+            TransponderNumber = transponderNumber;
+            List<Transaction> returnValue = new List<Transaction>();
+            try
+            {
+                using (var context = new DB())
+                {
+                    returnValue = context.Transactions.Where(t => t.TransactionDate.Year == Year)
+                                  .Where(x => x.TransactionDate.Month == Month)
+                                  .Where(l => l.TransponderNumber == TransponderNumber)
+                                  .Where(p => p.TransactionType == "Toll")
+                                  .ToList();
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
             }
             return returnValue;
         }
