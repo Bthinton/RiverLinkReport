@@ -33,7 +33,7 @@ namespace RiverLinkReport.CLI
                 int option = 0;
                 Console.WriteLine("Execute Automated");
                 System.Threading.Thread.Sleep(1000);
-                while ((option = GetOpt.GetOptions(Args, "ou:p:")) != -1)
+                while ((option = GetOpt.GetOptions(Args, "u:p:o")) != -1)
                 {
                     switch ((char)option)
                     {

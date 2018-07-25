@@ -564,7 +564,7 @@ namespace RiverLink.Automation
                         string html = driver.PageSource;
                         HtmlDocument doc = new HtmlDocument();
                         doc.LoadHtml(html);
-                        for (int i = 1; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
+                        for (int i = 950; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
                         {
                             string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i - 1);
                             TransactionData t = new TransactionData();
@@ -675,73 +675,6 @@ namespace RiverLink.Automation
             }
             return ReturnValue;
         }
-
-        //public Dictionary<string, string> GetRowDetail()
-        //{
-        //    Dictionary<string, string> returnValue = new Dictionary<string, string>();
-
-        //    StatusMessage = $"Looking for the URL...";
-        //    OnStatusChanged(StatusMessage);
-
-        //    string html = driver.PageSource;
-
-        //    //get the ad url
-        //    string AdUrl = GetAttributeValueFromHtml(html, Settings.Default.X_ManagePage_AdUrl, "href", "");
-        //    returnValue.Add("AdUrl", AdUrl);
-        //    StatusMessage = $"AdUrl: {AdUrl}";
-        //    OnStatusChanged(StatusMessage);
-
-        //    //get the price
-        //    string price = GetElementTextFromHtml(html, Settings.Default.X_ManagePage_PostedPrice, "0");
-        //    string cleanPrice = Regex.Replace(price, "[^0-9]", "");
-        //    returnValue.Add("PostedPrice", cleanPrice);
-        //    StatusMessage = $"PostedPrice: {cleanPrice}";
-        //    OnStatusChanged(StatusMessage);
-
-        //    //get the vin
-        //    string vin = GetElementTextFromHtml(html, Settings.Default.X_ManagePage_VehicleVin, "").Replace("VIN: ", "");
-        //    returnValue.Add("VehicleVin", vin);
-        //    StatusMessage = $"VehicleVin: {vin}";
-        //    OnStatusChanged(StatusMessage);
-
-        //    //get the id
-        //    string id = GetElementTextFromHtml(html, Settings.Default.X_ManagePage_Id, "").Replace("post id: ", "").Trim();
-        //    returnValue.Add("Id", id);
-        //    StatusMessage = $"Id: {id}";
-        //    OnStatusChanged(StatusMessage);
-
-        //    //get the Inventory_ID
-        //    string InventoryId = GetElementTextFromHtml(html, Settings.Default.X_ManagePage_Inventory_ID, "0").Replace("ID: ", "");
-        //    returnValue.Add("Inventory_ID", InventoryId);
-        //    StatusMessage = $"InventoryID: {InventoryId}";
-        //    OnStatusChanged(StatusMessage);
-
-        //    //get the BatchId
-        //    string BatchId = GetElementTextFromHtml(html, Settings.Default.X_ManagePage_BatchId, "").Replace("BatchID: ", "");
-        //    returnValue.Add("BatchId", BatchId);
-        //    StatusMessage = $"BatchId: {BatchId}";
-        //    OnStatusChanged(StatusMessage);
-
-        //    //get the image count
-        //    string ImageCount = GetElementCountFromHtml(html, Settings.Default.X_ManagePage_ImageCount, 0).ToString();
-        //    returnValue.Add("ImageCount", ImageCount);
-        //    StatusMessage = $"ImageCount: {ImageCount}";
-        //    OnStatusChanged(StatusMessage);
-
-        //    //get the PostedDate
-        //    string PostedDate = GetAttributeValueFromHtml(html, Settings.Default.X_ManagePage_PostedDate, "title", "1753-01-01");
-        //    returnValue.Add("PostedDate", PostedDate);
-        //    StatusMessage = $"PostedDate: {PostedDate}";
-        //    OnStatusChanged(StatusMessage);
-
-        //    //get the PostingTitle
-        //    string PostingTitle = GetElementTextFromHtml(html, Settings.Default.X_ManagePage_PostingTitle, "-");
-        //    returnValue.Add("PostingTitle", PostingTitle);
-        //    StatusMessage = $"PostingTitle: {PostingTitle}";
-        //    OnStatusChanged(StatusMessage);
-
-        //    return returnValue;
-        //}
         #endregion Actions
 
         #region PageVerify

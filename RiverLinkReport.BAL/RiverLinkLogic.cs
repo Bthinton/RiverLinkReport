@@ -123,7 +123,11 @@ namespace RiverLinkReport.BAL
                         returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Year)
                             .Distinct().ToList();
                     }
-                }
+                    if (!returnValue.Any())
+                    {
+                        returnValue.Add(0);
+                    }
+            }
                 catch (Exception e)
                 {
 
@@ -153,6 +157,10 @@ namespace RiverLinkReport.BAL
                         }
                         returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Month)
                             .Distinct().ToList();
+                    }
+                    if (!returnValue.Any())
+                    {
+                        returnValue.Add(0);
                     }
                 }
                 catch (Exception e)
@@ -185,6 +193,10 @@ namespace RiverLinkReport.BAL
                         returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransponderNumber)
                             .Distinct().ToList();
                     }
+                    if (!returnValue.Any())
+                    {
+                        returnValue.Add(0);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -209,6 +221,42 @@ namespace RiverLinkReport.BAL
                                   .Where(l => l.TransponderNumber == TransponderNumber)
                                   .Where(p => p.TransactionType == "Toll")
                                   .ToList();
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            return returnValue;
+        }
+
+        public static List<Transaction> GetPayments()
+        {
+            List<Transaction> returnValue = new List<Transaction>();
+            try
+            {
+                using (var context = new DB())
+                {
+                    returnValue = context.Transactions.Where(p => p.TransactionType == "Payment").ToList();
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            return returnValue;
+        }
+
+        public static List<Vehicle> GetVehicles()
+        {
+            List<Vehicle> returnValue = new List<Vehicle>();
+            try
+            {
+                using (var context = new DB())
+                {
+                    returnValue = context.Vehicles.ToList();
                 }
             }
             catch (Exception e)
