@@ -11,7 +11,7 @@ using System.Linq;
 using RiverLink.DAL;
 using System.Data.Entity;
 using System.Collections;
-
+using System.Text.RegularExpressions;
 
 namespace RiverLinkReport.BAL
 {
@@ -102,11 +102,11 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
-        public static List<int> GetYears(int Month = 0, int TransponderNumber = 0)
+        public static List<string> GetYears(int Month = 0, int TransponderNumber = 0)
         {
             Month = month;
             TransponderNumber = transponderNumber;
-            List<int> returnValue = new List<int>();
+            List<string> returnValue = new List<string>();
                 try
                 {
                     using (var context = new DB())
@@ -120,13 +120,12 @@ namespace RiverLinkReport.BAL
                         {
                             q = q.Where(x => x.TransponderNumber == TransponderNumber);
                         }
-                        returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Year)
+                        returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Year.ToString())
                             .Distinct().ToList();
-                    }
-                    if (!returnValue.Any())
-                    {
-                        returnValue.Add(0);
-                    }
+                        var myComparer = new CustomComparer();
+                        returnValue.Sort(myComparer);
+                }
+                    returnValue.Insert(0, "All");
             }
                 catch (Exception e)
                 {
@@ -136,13 +135,12 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
-        public static List<int> GetMonths(int Year = 0, int TransponderNumber = 0)
+        public static List<string> GetMonths(int Year = 0, int TransponderNumber = 0)
         {
             Year = year;
             TransponderNumber = transponderNumber;
-            List<int> returnValue = new List<int>();
-
-                try
+            List<string> returnValue = new List<string>();
+            try
                 {
                     using (var context = new DB())
                     {
@@ -155,13 +153,12 @@ namespace RiverLinkReport.BAL
                         {
                             q = q.Where(x => x.TransponderNumber == TransponderNumber);
                         }
-                        returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Month)
-                            .Distinct().ToList();
+                        returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransactionDate.Month.ToString())
+                        .Distinct().ToList();
+                        var myComparer = new CustomComparer();
+                        returnValue.Sort(myComparer);
                     }
-                    if (!returnValue.Any())
-                    {
-                        returnValue.Add(0);
-                    }
+                    returnValue.Insert(0, "All");
                 }
                 catch (Exception e)
                 {
@@ -171,11 +168,11 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
-        public static List<int> GetTransponderNumbers(int Year = 0, int Month = 0)
+        public static List<string> GetTransponderNumbers(int Year = 0, int Month = 0)
         {
             Month = month;
             Year = year;
-            List<int> returnValue = new List<int>();
+            List<string> returnValue = new List<string>();
 
                 try
                 {
@@ -190,13 +187,12 @@ namespace RiverLinkReport.BAL
                         {
                             q = q.Where(x => x.TransactionDate.Month == Month);
                         }
-                        returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransponderNumber)
+                        returnValue = q.Where(l => l.TransactionType == "Toll").Select(x => x.TransponderNumber.ToString())
                             .Distinct().ToList();
-                    }
-                    if (!returnValue.Any())
-                    {
-                        returnValue.Add(0);
-                    }
+                        var myComparer = new CustomComparer();
+                        returnValue.Sort(myComparer);
+                }
+                    returnValue.Insert(0, "All");
                 }
                 catch (Exception e)
                 {
@@ -216,11 +212,27 @@ namespace RiverLinkReport.BAL
             {
                 using (var context = new DB())
                 {
-                    returnValue = context.Transactions.Where(t => t.TransactionDate.Year == Year)
-                                  .Where(x => x.TransactionDate.Month == Month)
-                                  .Where(l => l.TransponderNumber == TransponderNumber)
-                                  .Where(p => p.TransactionType == "Toll")
-                                  .ToList();
+                    var query = (from oData in context.Transactions select oData);
+                    if (Year != 0)
+                    {
+                        query = query.Where(t => t.TransactionDate.Year == Year);
+                    }
+                    if (Month != 0)
+                    {
+                        query = query.Where(t => t.TransactionDate.Month == Month);
+                    }
+                    if (TransponderNumber != 0)
+                    {
+                        query = query.Where(t => t.TransponderNumber == TransponderNumber);
+                    }
+                    query = query.Where(p => p.TransactionType == "Toll");
+                    returnValue = query.ToList();
+
+                    //returnValue = context.Transactions.Where(t => t.TransactionDate.Year == Year)
+                    //              .Where(x => x.TransactionDate.Month == Month)
+                    //              .Where(l => l.TransponderNumber == TransponderNumber)
+                    //              .Where(p => p.TransactionType == "Toll")
+                    //              .ToList();
                 }
             }
             catch (Exception e)
@@ -602,5 +614,26 @@ namespace RiverLinkReport.BAL
             OnStatusChanged(Message);
         }
 
+    }
+
+    public class CustomComparer : IComparer<string>
+    {
+        public int Compare(string x, string y)
+        {
+            var regex = new Regex(@"\d+");
+
+            // run the regex on both strings
+            var xRegexResult = regex.Match(x);
+            var yRegexResult = regex.Match(y);
+
+            // check if they are both numbers
+            if (xRegexResult.Success && yRegexResult.Success)
+            {
+                return int.Parse(xRegexResult.Value).CompareTo(int.Parse(yRegexResult.Value));
+            }
+
+            // otherwise return as string comparison
+            return x.CompareTo(y);
+        }
     }
 }

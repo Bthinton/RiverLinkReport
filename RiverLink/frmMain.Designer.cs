@@ -69,7 +69,6 @@
             this.bsVehicle = new System.Windows.Forms.BindingSource(this.components);
             this.tbPayments = new System.Windows.Forms.TabPage();
             this.dgPayments = new System.Windows.Forms.DataGridView();
-            this.bsPayment = new System.Windows.Forms.BindingSource(this.components);
             this.journalIdDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.transactionDateDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.postedDateDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -77,6 +76,7 @@
             this.transactionTypeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.amountDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.transactionDescriptionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bsPayment = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).BeginInit();
@@ -109,6 +109,9 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tbTolls);
             this.tabControl1.Controls.Add(this.tbVehicles);
             this.tabControl1.Controls.Add(this.tbPayments);
@@ -295,7 +298,7 @@
             this.cmbTransponder.Name = "cmbTransponder";
             this.cmbTransponder.Size = new System.Drawing.Size(121, 21);
             this.cmbTransponder.TabIndex = 5;
-            this.cmbTransponder.SelectedIndexChanged += new System.EventHandler(this.cmbTransponder_SelectedIndexChanged_1);
+            this.cmbTransponder.SelectedIndexChanged += new System.EventHandler(this.cmbTransponder_SelectedIndexChanged);
             // 
             // cmbMonth
             // 
@@ -427,10 +430,6 @@
             this.dgPayments.TabIndex = 1;
             this.dgPayments.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgPayments_ColumnHeaderMouseClick);
             // 
-            // bsPayment
-            // 
-            this.bsPayment.DataSource = typeof(RiverLink.Models.Transaction);
-            // 
             // journalIdDataGridViewTextBoxColumn1
             // 
             this.journalIdDataGridViewTextBoxColumn1.DataPropertyName = "Journal_Id";
@@ -472,6 +471,10 @@
             this.transactionDescriptionDataGridViewTextBoxColumn1.DataPropertyName = "TransactionDescription";
             this.transactionDescriptionDataGridViewTextBoxColumn1.HeaderText = "Transaction Description";
             this.transactionDescriptionDataGridViewTextBoxColumn1.Name = "transactionDescriptionDataGridViewTextBoxColumn1";
+            // 
+            // bsPayment
+            // 
+            this.bsPayment.DataSource = typeof(RiverLink.Models.Transaction);
             // 
             // frmMain
             // 
