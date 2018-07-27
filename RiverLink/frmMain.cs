@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using System.Linq.Dynamic;
 
 //TODO Sorting the grid by header click
-//fix ui stretch buttons by anchor
+//Sort data by individual header click(asc/desc)
 
 namespace RiverLink
 {

@@ -39,19 +39,6 @@
             this.cmbYear = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dgTransactions = new System.Windows.Forms.DataGridView();
-            this.transactionNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transactionDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.postedDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transactionStatusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.plazaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.journalIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transponderNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transactionTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.amountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transactionDescriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.laneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.plateNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vehicleClassIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbTransponder = new System.Windows.Forms.ComboBox();
             this.cmbMonth = new System.Windows.Forms.ComboBox();
@@ -77,6 +64,19 @@
             this.amountDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.transactionDescriptionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsPayment = new System.Windows.Forms.BindingSource(this.components);
+            this.transactionNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transactionDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.postedDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transactionStatusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.plazaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.journalIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transponderNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transactionTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.amountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transactionDescriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.laneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.plateNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vehicleClassIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).BeginInit();
@@ -167,6 +167,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgTransactions.AutoGenerateColumns = false;
+            this.dgTransactions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgTransactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.transactionNumberDataGridViewTextBoxColumn,
@@ -189,6 +190,209 @@
             this.dgTransactions.Size = new System.Drawing.Size(811, 322);
             this.dgTransactions.TabIndex = 6;
             this.dgTransactions.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgTransactions_ColumnHeaderMouseClick);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(162, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Month";
+            // 
+            // cmbTransponder
+            // 
+            this.cmbTransponder.DataSource = this.bsTransponderNumber;
+            this.cmbTransponder.FormattingEnabled = true;
+            this.cmbTransponder.Location = new System.Drawing.Point(306, 30);
+            this.cmbTransponder.Name = "cmbTransponder";
+            this.cmbTransponder.Size = new System.Drawing.Size(121, 21);
+            this.cmbTransponder.TabIndex = 5;
+            this.cmbTransponder.SelectedIndexChanged += new System.EventHandler(this.cmbTransponder_SelectedIndexChanged);
+            // 
+            // cmbMonth
+            // 
+            this.cmbMonth.DataSource = this.bsMonth;
+            this.cmbMonth.FormattingEnabled = true;
+            this.cmbMonth.Location = new System.Drawing.Point(165, 30);
+            this.cmbMonth.Name = "cmbMonth";
+            this.cmbMonth.Size = new System.Drawing.Size(121, 21);
+            this.cmbMonth.TabIndex = 3;
+            this.cmbMonth.SelectedIndexChanged += new System.EventHandler(this.cmbMonth_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(303, 14);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(67, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Transponder";
+            // 
+            // tbVehicles
+            // 
+            this.tbVehicles.Controls.Add(this.dgVehicles);
+            this.tbVehicles.Location = new System.Drawing.Point(4, 22);
+            this.tbVehicles.Name = "tbVehicles";
+            this.tbVehicles.Padding = new System.Windows.Forms.Padding(3);
+            this.tbVehicles.Size = new System.Drawing.Size(856, 385);
+            this.tbVehicles.TabIndex = 1;
+            this.tbVehicles.Text = "Vehicles";
+            this.tbVehicles.UseVisualStyleBackColor = true;
+            // 
+            // dgVehicles
+            // 
+            this.dgVehicles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgVehicles.AutoGenerateColumns = false;
+            this.dgVehicles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgVehicles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgVehicles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.vehicleIdDataGridViewTextBoxColumn,
+            this.plateNumberDataGridViewTextBoxColumn2,
+            this.makeDataGridViewTextBoxColumn,
+            this.modelDataGridViewTextBoxColumn,
+            this.yearDataGridViewTextBoxColumn,
+            this.vehicleStateDataGridViewTextBoxColumn,
+            this.vehicleStatusDataGridViewTextBoxColumn,
+            this.classificationDataGridViewTextBoxColumn});
+            this.dgVehicles.DataSource = this.bsVehicle;
+            this.dgVehicles.Location = new System.Drawing.Point(19, 29);
+            this.dgVehicles.Name = "dgVehicles";
+            this.dgVehicles.Size = new System.Drawing.Size(819, 327);
+            this.dgVehicles.TabIndex = 1;
+            // 
+            // vehicleIdDataGridViewTextBoxColumn
+            // 
+            this.vehicleIdDataGridViewTextBoxColumn.DataPropertyName = "Vehicle_Id";
+            this.vehicleIdDataGridViewTextBoxColumn.HeaderText = "Vehicle Id";
+            this.vehicleIdDataGridViewTextBoxColumn.Name = "vehicleIdDataGridViewTextBoxColumn";
+            // 
+            // plateNumberDataGridViewTextBoxColumn2
+            // 
+            this.plateNumberDataGridViewTextBoxColumn2.DataPropertyName = "PlateNumber";
+            this.plateNumberDataGridViewTextBoxColumn2.HeaderText = "Plate Number";
+            this.plateNumberDataGridViewTextBoxColumn2.Name = "plateNumberDataGridViewTextBoxColumn2";
+            // 
+            // makeDataGridViewTextBoxColumn
+            // 
+            this.makeDataGridViewTextBoxColumn.DataPropertyName = "Make";
+            this.makeDataGridViewTextBoxColumn.HeaderText = "Make";
+            this.makeDataGridViewTextBoxColumn.Name = "makeDataGridViewTextBoxColumn";
+            // 
+            // modelDataGridViewTextBoxColumn
+            // 
+            this.modelDataGridViewTextBoxColumn.DataPropertyName = "Model";
+            this.modelDataGridViewTextBoxColumn.HeaderText = "Model";
+            this.modelDataGridViewTextBoxColumn.Name = "modelDataGridViewTextBoxColumn";
+            // 
+            // yearDataGridViewTextBoxColumn
+            // 
+            this.yearDataGridViewTextBoxColumn.DataPropertyName = "Year";
+            this.yearDataGridViewTextBoxColumn.HeaderText = "Year";
+            this.yearDataGridViewTextBoxColumn.Name = "yearDataGridViewTextBoxColumn";
+            // 
+            // vehicleStateDataGridViewTextBoxColumn
+            // 
+            this.vehicleStateDataGridViewTextBoxColumn.DataPropertyName = "VehicleState";
+            this.vehicleStateDataGridViewTextBoxColumn.HeaderText = "Vehicle State";
+            this.vehicleStateDataGridViewTextBoxColumn.Name = "vehicleStateDataGridViewTextBoxColumn";
+            // 
+            // vehicleStatusDataGridViewTextBoxColumn
+            // 
+            this.vehicleStatusDataGridViewTextBoxColumn.DataPropertyName = "VehicleStatus";
+            this.vehicleStatusDataGridViewTextBoxColumn.HeaderText = "Vehicle Status";
+            this.vehicleStatusDataGridViewTextBoxColumn.Name = "vehicleStatusDataGridViewTextBoxColumn";
+            // 
+            // classificationDataGridViewTextBoxColumn
+            // 
+            this.classificationDataGridViewTextBoxColumn.DataPropertyName = "Classification";
+            this.classificationDataGridViewTextBoxColumn.HeaderText = "Classification";
+            this.classificationDataGridViewTextBoxColumn.Name = "classificationDataGridViewTextBoxColumn";
+            // 
+            // bsVehicle
+            // 
+            this.bsVehicle.DataSource = typeof(RiverLink.Models.Vehicle);
+            // 
+            // tbPayments
+            // 
+            this.tbPayments.Controls.Add(this.dgPayments);
+            this.tbPayments.Location = new System.Drawing.Point(4, 22);
+            this.tbPayments.Name = "tbPayments";
+            this.tbPayments.Size = new System.Drawing.Size(856, 385);
+            this.tbPayments.TabIndex = 2;
+            this.tbPayments.Text = "Payments";
+            this.tbPayments.UseVisualStyleBackColor = true;
+            // 
+            // dgPayments
+            // 
+            this.dgPayments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgPayments.AutoGenerateColumns = false;
+            this.dgPayments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgPayments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgPayments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.journalIdDataGridViewTextBoxColumn1,
+            this.transactionDateDataGridViewTextBoxColumn1,
+            this.postedDateDataGridViewTextBoxColumn1,
+            this.transactionStatusDataGridViewTextBoxColumn1,
+            this.transactionTypeDataGridViewTextBoxColumn1,
+            this.amountDataGridViewTextBoxColumn1,
+            this.transactionDescriptionDataGridViewTextBoxColumn1});
+            this.dgPayments.DataSource = this.bsPayment;
+            this.dgPayments.Location = new System.Drawing.Point(19, 29);
+            this.dgPayments.Name = "dgPayments";
+            this.dgPayments.Size = new System.Drawing.Size(819, 327);
+            this.dgPayments.TabIndex = 1;
+            this.dgPayments.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgPayments_ColumnHeaderMouseClick);
+            // 
+            // journalIdDataGridViewTextBoxColumn1
+            // 
+            this.journalIdDataGridViewTextBoxColumn1.DataPropertyName = "Journal_Id";
+            this.journalIdDataGridViewTextBoxColumn1.HeaderText = "Journal Id";
+            this.journalIdDataGridViewTextBoxColumn1.Name = "journalIdDataGridViewTextBoxColumn1";
+            // 
+            // transactionDateDataGridViewTextBoxColumn1
+            // 
+            this.transactionDateDataGridViewTextBoxColumn1.DataPropertyName = "TransactionDate";
+            this.transactionDateDataGridViewTextBoxColumn1.HeaderText = "Transaction Date";
+            this.transactionDateDataGridViewTextBoxColumn1.Name = "transactionDateDataGridViewTextBoxColumn1";
+            // 
+            // postedDateDataGridViewTextBoxColumn1
+            // 
+            this.postedDateDataGridViewTextBoxColumn1.DataPropertyName = "PostedDate";
+            this.postedDateDataGridViewTextBoxColumn1.HeaderText = "Posted Date";
+            this.postedDateDataGridViewTextBoxColumn1.Name = "postedDateDataGridViewTextBoxColumn1";
+            // 
+            // transactionStatusDataGridViewTextBoxColumn1
+            // 
+            this.transactionStatusDataGridViewTextBoxColumn1.DataPropertyName = "TransactionStatus";
+            this.transactionStatusDataGridViewTextBoxColumn1.HeaderText = "Transaction Status";
+            this.transactionStatusDataGridViewTextBoxColumn1.Name = "transactionStatusDataGridViewTextBoxColumn1";
+            // 
+            // transactionTypeDataGridViewTextBoxColumn1
+            // 
+            this.transactionTypeDataGridViewTextBoxColumn1.DataPropertyName = "TransactionType";
+            this.transactionTypeDataGridViewTextBoxColumn1.HeaderText = "Transaction Type";
+            this.transactionTypeDataGridViewTextBoxColumn1.Name = "transactionTypeDataGridViewTextBoxColumn1";
+            // 
+            // amountDataGridViewTextBoxColumn1
+            // 
+            this.amountDataGridViewTextBoxColumn1.DataPropertyName = "Amount";
+            this.amountDataGridViewTextBoxColumn1.HeaderText = "Amount";
+            this.amountDataGridViewTextBoxColumn1.Name = "amountDataGridViewTextBoxColumn1";
+            // 
+            // transactionDescriptionDataGridViewTextBoxColumn1
+            // 
+            this.transactionDescriptionDataGridViewTextBoxColumn1.DataPropertyName = "TransactionDescription";
+            this.transactionDescriptionDataGridViewTextBoxColumn1.HeaderText = "Transaction Description";
+            this.transactionDescriptionDataGridViewTextBoxColumn1.Name = "transactionDescriptionDataGridViewTextBoxColumn1";
+            // 
+            // bsPayment
+            // 
+            this.bsPayment.DataSource = typeof(RiverLink.Models.Transaction);
             // 
             // transactionNumberDataGridViewTextBoxColumn
             // 
@@ -277,204 +481,9 @@
             // vehicleClassIdDataGridViewTextBoxColumn
             // 
             this.vehicleClassIdDataGridViewTextBoxColumn.DataPropertyName = "VehicleClass_Id";
-            this.vehicleClassIdDataGridViewTextBoxColumn.HeaderText = "VehicleClass Id";
+            this.vehicleClassIdDataGridViewTextBoxColumn.HeaderText = "Vehicle Class Id";
             this.vehicleClassIdDataGridViewTextBoxColumn.Name = "vehicleClassIdDataGridViewTextBoxColumn";
             this.vehicleClassIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(162, 14);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Month";
-            // 
-            // cmbTransponder
-            // 
-            this.cmbTransponder.DataSource = this.bsTransponderNumber;
-            this.cmbTransponder.FormattingEnabled = true;
-            this.cmbTransponder.Location = new System.Drawing.Point(306, 30);
-            this.cmbTransponder.Name = "cmbTransponder";
-            this.cmbTransponder.Size = new System.Drawing.Size(121, 21);
-            this.cmbTransponder.TabIndex = 5;
-            this.cmbTransponder.SelectedIndexChanged += new System.EventHandler(this.cmbTransponder_SelectedIndexChanged);
-            // 
-            // cmbMonth
-            // 
-            this.cmbMonth.DataSource = this.bsMonth;
-            this.cmbMonth.FormattingEnabled = true;
-            this.cmbMonth.Location = new System.Drawing.Point(165, 30);
-            this.cmbMonth.Name = "cmbMonth";
-            this.cmbMonth.Size = new System.Drawing.Size(121, 21);
-            this.cmbMonth.TabIndex = 3;
-            this.cmbMonth.SelectedIndexChanged += new System.EventHandler(this.cmbMonth_SelectedIndexChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(303, 14);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Transponder";
-            // 
-            // tbVehicles
-            // 
-            this.tbVehicles.Controls.Add(this.dgVehicles);
-            this.tbVehicles.Location = new System.Drawing.Point(4, 22);
-            this.tbVehicles.Name = "tbVehicles";
-            this.tbVehicles.Padding = new System.Windows.Forms.Padding(3);
-            this.tbVehicles.Size = new System.Drawing.Size(856, 385);
-            this.tbVehicles.TabIndex = 1;
-            this.tbVehicles.Text = "Vehicles";
-            this.tbVehicles.UseVisualStyleBackColor = true;
-            // 
-            // dgVehicles
-            // 
-            this.dgVehicles.AutoGenerateColumns = false;
-            this.dgVehicles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgVehicles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.vehicleIdDataGridViewTextBoxColumn,
-            this.plateNumberDataGridViewTextBoxColumn2,
-            this.makeDataGridViewTextBoxColumn,
-            this.modelDataGridViewTextBoxColumn,
-            this.yearDataGridViewTextBoxColumn,
-            this.vehicleStateDataGridViewTextBoxColumn,
-            this.vehicleStatusDataGridViewTextBoxColumn,
-            this.classificationDataGridViewTextBoxColumn});
-            this.dgVehicles.DataSource = this.bsVehicle;
-            this.dgVehicles.Location = new System.Drawing.Point(19, 29);
-            this.dgVehicles.Name = "dgVehicles";
-            this.dgVehicles.Size = new System.Drawing.Size(819, 327);
-            this.dgVehicles.TabIndex = 1;
-            // 
-            // vehicleIdDataGridViewTextBoxColumn
-            // 
-            this.vehicleIdDataGridViewTextBoxColumn.DataPropertyName = "Vehicle_Id";
-            this.vehicleIdDataGridViewTextBoxColumn.HeaderText = "Vehicle Id";
-            this.vehicleIdDataGridViewTextBoxColumn.Name = "vehicleIdDataGridViewTextBoxColumn";
-            // 
-            // plateNumberDataGridViewTextBoxColumn2
-            // 
-            this.plateNumberDataGridViewTextBoxColumn2.DataPropertyName = "PlateNumber";
-            this.plateNumberDataGridViewTextBoxColumn2.HeaderText = "Plate Number";
-            this.plateNumberDataGridViewTextBoxColumn2.Name = "plateNumberDataGridViewTextBoxColumn2";
-            // 
-            // makeDataGridViewTextBoxColumn
-            // 
-            this.makeDataGridViewTextBoxColumn.DataPropertyName = "Make";
-            this.makeDataGridViewTextBoxColumn.HeaderText = "Make";
-            this.makeDataGridViewTextBoxColumn.Name = "makeDataGridViewTextBoxColumn";
-            // 
-            // modelDataGridViewTextBoxColumn
-            // 
-            this.modelDataGridViewTextBoxColumn.DataPropertyName = "Model";
-            this.modelDataGridViewTextBoxColumn.HeaderText = "Model";
-            this.modelDataGridViewTextBoxColumn.Name = "modelDataGridViewTextBoxColumn";
-            // 
-            // yearDataGridViewTextBoxColumn
-            // 
-            this.yearDataGridViewTextBoxColumn.DataPropertyName = "Year";
-            this.yearDataGridViewTextBoxColumn.HeaderText = "Year";
-            this.yearDataGridViewTextBoxColumn.Name = "yearDataGridViewTextBoxColumn";
-            // 
-            // vehicleStateDataGridViewTextBoxColumn
-            // 
-            this.vehicleStateDataGridViewTextBoxColumn.DataPropertyName = "VehicleState";
-            this.vehicleStateDataGridViewTextBoxColumn.HeaderText = "Vehicle State";
-            this.vehicleStateDataGridViewTextBoxColumn.Name = "vehicleStateDataGridViewTextBoxColumn";
-            // 
-            // vehicleStatusDataGridViewTextBoxColumn
-            // 
-            this.vehicleStatusDataGridViewTextBoxColumn.DataPropertyName = "VehicleStatus";
-            this.vehicleStatusDataGridViewTextBoxColumn.HeaderText = "Vehicle Status";
-            this.vehicleStatusDataGridViewTextBoxColumn.Name = "vehicleStatusDataGridViewTextBoxColumn";
-            // 
-            // classificationDataGridViewTextBoxColumn
-            // 
-            this.classificationDataGridViewTextBoxColumn.DataPropertyName = "Classification";
-            this.classificationDataGridViewTextBoxColumn.HeaderText = "Classification";
-            this.classificationDataGridViewTextBoxColumn.Name = "classificationDataGridViewTextBoxColumn";
-            // 
-            // bsVehicle
-            // 
-            this.bsVehicle.DataSource = typeof(RiverLink.Models.Vehicle);
-            // 
-            // tbPayments
-            // 
-            this.tbPayments.Controls.Add(this.dgPayments);
-            this.tbPayments.Location = new System.Drawing.Point(4, 22);
-            this.tbPayments.Name = "tbPayments";
-            this.tbPayments.Size = new System.Drawing.Size(856, 385);
-            this.tbPayments.TabIndex = 2;
-            this.tbPayments.Text = "Payments";
-            this.tbPayments.UseVisualStyleBackColor = true;
-            // 
-            // dgPayments
-            // 
-            this.dgPayments.AutoGenerateColumns = false;
-            this.dgPayments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgPayments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.journalIdDataGridViewTextBoxColumn1,
-            this.transactionDateDataGridViewTextBoxColumn1,
-            this.postedDateDataGridViewTextBoxColumn1,
-            this.transactionStatusDataGridViewTextBoxColumn1,
-            this.transactionTypeDataGridViewTextBoxColumn1,
-            this.amountDataGridViewTextBoxColumn1,
-            this.transactionDescriptionDataGridViewTextBoxColumn1});
-            this.dgPayments.DataSource = this.bsPayment;
-            this.dgPayments.Location = new System.Drawing.Point(19, 29);
-            this.dgPayments.Name = "dgPayments";
-            this.dgPayments.Size = new System.Drawing.Size(819, 327);
-            this.dgPayments.TabIndex = 1;
-            this.dgPayments.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgPayments_ColumnHeaderMouseClick);
-            // 
-            // journalIdDataGridViewTextBoxColumn1
-            // 
-            this.journalIdDataGridViewTextBoxColumn1.DataPropertyName = "Journal_Id";
-            this.journalIdDataGridViewTextBoxColumn1.HeaderText = "Journal Id";
-            this.journalIdDataGridViewTextBoxColumn1.Name = "journalIdDataGridViewTextBoxColumn1";
-            // 
-            // transactionDateDataGridViewTextBoxColumn1
-            // 
-            this.transactionDateDataGridViewTextBoxColumn1.DataPropertyName = "TransactionDate";
-            this.transactionDateDataGridViewTextBoxColumn1.HeaderText = "Transaction Date";
-            this.transactionDateDataGridViewTextBoxColumn1.Name = "transactionDateDataGridViewTextBoxColumn1";
-            // 
-            // postedDateDataGridViewTextBoxColumn1
-            // 
-            this.postedDateDataGridViewTextBoxColumn1.DataPropertyName = "PostedDate";
-            this.postedDateDataGridViewTextBoxColumn1.HeaderText = "Posted Date";
-            this.postedDateDataGridViewTextBoxColumn1.Name = "postedDateDataGridViewTextBoxColumn1";
-            // 
-            // transactionStatusDataGridViewTextBoxColumn1
-            // 
-            this.transactionStatusDataGridViewTextBoxColumn1.DataPropertyName = "TransactionStatus";
-            this.transactionStatusDataGridViewTextBoxColumn1.HeaderText = "Transaction Status";
-            this.transactionStatusDataGridViewTextBoxColumn1.Name = "transactionStatusDataGridViewTextBoxColumn1";
-            // 
-            // transactionTypeDataGridViewTextBoxColumn1
-            // 
-            this.transactionTypeDataGridViewTextBoxColumn1.DataPropertyName = "TransactionType";
-            this.transactionTypeDataGridViewTextBoxColumn1.HeaderText = "Transaction Type";
-            this.transactionTypeDataGridViewTextBoxColumn1.Name = "transactionTypeDataGridViewTextBoxColumn1";
-            // 
-            // amountDataGridViewTextBoxColumn1
-            // 
-            this.amountDataGridViewTextBoxColumn1.DataPropertyName = "Amount";
-            this.amountDataGridViewTextBoxColumn1.HeaderText = "Amount";
-            this.amountDataGridViewTextBoxColumn1.Name = "amountDataGridViewTextBoxColumn1";
-            // 
-            // transactionDescriptionDataGridViewTextBoxColumn1
-            // 
-            this.transactionDescriptionDataGridViewTextBoxColumn1.DataPropertyName = "TransactionDescription";
-            this.transactionDescriptionDataGridViewTextBoxColumn1.HeaderText = "Transaction Description";
-            this.transactionDescriptionDataGridViewTextBoxColumn1.Name = "transactionDescriptionDataGridViewTextBoxColumn1";
-            // 
-            // bsPayment
-            // 
-            this.bsPayment.DataSource = typeof(RiverLink.Models.Transaction);
             // 
             // frmMain
             // 
@@ -534,6 +543,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn vehicleStateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn vehicleStatusDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn classificationDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn journalIdDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transactionDateDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn postedDateDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transactionStatusDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transactionTypeDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn amountDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transactionDescriptionDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn transactionNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn transactionDateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn postedDateDataGridViewTextBoxColumn;
@@ -547,13 +563,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn laneDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn plateNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn vehicleClassIdDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn journalIdDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionDateDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn postedDateDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionStatusDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionTypeDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn amountDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionDescriptionDataGridViewTextBoxColumn1;
     }
 }
 

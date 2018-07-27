@@ -564,7 +564,7 @@ namespace RiverLink.Automation
                         string html = driver.PageSource;
                         HtmlDocument doc = new HtmlDocument();
                         doc.LoadHtml(html);
-                        for (int i = 950; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
+                        for (int i = 1; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
                         {
                             string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i - 1);
                             TransactionData t = new TransactionData();
