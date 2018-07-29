@@ -21,6 +21,7 @@ namespace RiverLink
         bool shouldFireMonth = true;
         bool shouldFireTransponderNumber = true;
         bool shouldFireFormLoad = false;
+        private bool sortAscending = false;
 
         public frmMain()
         {
@@ -36,11 +37,6 @@ namespace RiverLink
         {
             filter();
             LoadVehiclePaymentGrid();
-            foreach (DataGridViewColumn c in dgTransactions.Columns)
-            {
-                c.SortMode = DataGridViewColumnSortMode.Automatic;
-                c.Selected = false;
-            }
         }
 
         internal void filter()
@@ -88,24 +84,22 @@ namespace RiverLink
             //Populate Year Data source
             List<string> Years = RiverLinkReport.BAL.RiverLinkLogic.GetYears();
             bsYear.DataSource = Years;
-            //Reset the selected year inside combobox
-            
+
+            //Reset the selected Year inside combobox          
             cmbYear.SelectedIndex = Years.IndexOf(Year);
 
             //Populate Month data source
             List<string> Months = RiverLinkReport.BAL.RiverLinkLogic.GetMonths();
             bsMonth.DataSource = Months;
 
-            //Reset the selected year inside combobox
-            
+            //Reset the selected Month inside combobox            
             cmbMonth.SelectedIndex = Months.IndexOf(Month);
 
             //Populate Transpondernumber data source
             List<string> TransponderNumbers = RiverLinkReport.BAL.RiverLinkLogic.GetTransponderNumbers();
             bsTransponderNumber.DataSource = TransponderNumbers;
 
-            //Reset the selected year inside combobox
-
+            //Reset the selected Transponder inside combobox
             cmbTransponder.SelectedIndex = TransponderNumbers.IndexOf(TransponderNumber);
 
             //Reload grid data based on selected options
@@ -134,15 +128,31 @@ namespace RiverLink
         private void dgTransactions_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             List<Transaction> Transactions = RiverLinkReport.BAL.RiverLinkLogic.GetTransactions();
-            bsTransaction.DataSource = Transactions.OrderBy("TransactionDate ASC").ToList();
+            if (sortAscending)
+                dgTransactions.DataSource = Transactions.OrderBy(dgTransactions.Columns[e.ColumnIndex].DataPropertyName).ToList();
+            else
+                dgTransactions.DataSource = Transactions.OrderBy(dgTransactions.Columns[e.ColumnIndex].DataPropertyName).Reverse().ToList();
+            sortAscending = !sortAscending;
         }
 
         private void dgPayments_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             List<Transaction> Payments = RiverLinkReport.BAL.RiverLinkLogic.GetPayments();
-            List<Transaction> SortedPaymentsList = Payments.OrderBy(t => t.TransactionDate).ToList();
-            bsPayment.DataSource = SortedPaymentsList;
-            
+            if (sortAscending)
+                dgPayments.DataSource = Payments.OrderBy(dgPayments.Columns[e.ColumnIndex].DataPropertyName).ToList();
+            else
+                dgPayments.DataSource = Payments.OrderBy(dgPayments.Columns[e.ColumnIndex].DataPropertyName).Reverse().ToList();
+            sortAscending = !sortAscending;
+        }
+
+        private void dgVehicles_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            List<Vehicle> Vehicles = RiverLinkReport.BAL.RiverLinkLogic.GetVehicles();
+            if (sortAscending)
+                dgVehicles.DataSource = Vehicles.OrderBy(dgVehicles.Columns[e.ColumnIndex].DataPropertyName).ToList();
+            else
+                dgVehicles.DataSource = Vehicles.OrderBy(dgVehicles.Columns[e.ColumnIndex].DataPropertyName).Reverse().ToList();
+            sortAscending = !sortAscending;
         }
 
         private void cmbYear_SelectedIndexChanged(object sender, EventArgs e)
