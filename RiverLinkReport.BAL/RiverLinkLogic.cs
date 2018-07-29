@@ -173,7 +173,6 @@ namespace RiverLinkReport.BAL
             Month = month;
             Year = year;
             List<string> returnValue = new List<string>();
-
                 try
                 {
                     using (var context = new DB())

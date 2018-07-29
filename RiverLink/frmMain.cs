@@ -10,9 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq.Dynamic;
 
-//TODO Sorting the grid by header click
-//Sort data by individual header click(asc/desc)
-
 namespace RiverLink
 {
     public partial class frmMain : Form
@@ -20,8 +17,8 @@ namespace RiverLink
         bool shouldFireYear = true;
         bool shouldFireMonth = true;
         bool shouldFireTransponderNumber = true;
-        bool shouldFireFormLoad = false;
-        private bool sortAscending = false;
+        bool shouldFireFormLoad;
+        bool sortAscending;
 
         public frmMain()
         {
@@ -72,13 +69,25 @@ namespace RiverLink
             {
                 RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(Year);
             }
+            else
+            {
+                RiverLinkReport.BAL.RiverLinkLogic.year = 0;
+            }
             if (Month != "All")
             {
                 RiverLinkReport.BAL.RiverLinkLogic.month = int.Parse(Month);
             }
+            else
+            {
+                RiverLinkReport.BAL.RiverLinkLogic.month = 0;
+            }
             if (TransponderNumber != "All")
             {
                 RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(TransponderNumber);
+            }
+            else
+            {
+                RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = 0;
             }
 
             //Populate Year Data source
@@ -105,7 +114,6 @@ namespace RiverLink
             //Reload grid data based on selected options
             LoadGridData();
             shouldFireFormLoad = true;
-
             shouldFireYear = true;
             shouldFireMonth = true;
             shouldFireTransponderNumber = true;
