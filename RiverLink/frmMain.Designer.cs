@@ -77,6 +77,14 @@
             this.amountDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.transactionDescriptionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsPayment = new System.Windows.Forms.BindingSource(this.components);
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmbSummaryMonth = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cmbSummaryTransponder = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.bsSummaryMonth = new System.Windows.Forms.BindingSource(this.components);
+            this.bsSummaryTransponder = new System.Windows.Forms.BindingSource(this.components);
+            this.lblTransponder = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).BeginInit();
@@ -90,12 +98,15 @@
             this.tbPayments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgPayments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsPayment)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsSummaryMonth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsSummaryTransponder)).BeginInit();
             this.SuspendLayout();
             // 
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.Location = new System.Drawing.Point(815, 441);
+            this.btnExit.Location = new System.Drawing.Point(815, 556);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 7;
@@ -115,10 +126,10 @@
             this.tabControl1.Controls.Add(this.tbTolls);
             this.tabControl1.Controls.Add(this.tbVehicles);
             this.tabControl1.Controls.Add(this.tbPayments);
-            this.tabControl1.Location = new System.Drawing.Point(26, 12);
+            this.tabControl1.Location = new System.Drawing.Point(26, 142);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(864, 411);
+            this.tabControl1.Size = new System.Drawing.Size(864, 396);
             this.tabControl1.TabIndex = 8;
             // 
             // tbTolls
@@ -134,7 +145,7 @@
             this.tbTolls.Location = new System.Drawing.Point(4, 22);
             this.tbTolls.Name = "tbTolls";
             this.tbTolls.Padding = new System.Windows.Forms.Padding(3);
-            this.tbTolls.Size = new System.Drawing.Size(856, 385);
+            this.tbTolls.Size = new System.Drawing.Size(856, 370);
             this.tbTolls.TabIndex = 0;
             this.tbTolls.Text = "Tolls";
             this.tbTolls.UseVisualStyleBackColor = true;
@@ -187,7 +198,7 @@
             this.dgTransactions.Location = new System.Drawing.Point(22, 60);
             this.dgTransactions.Name = "dgTransactions";
             this.dgTransactions.ReadOnly = true;
-            this.dgTransactions.Size = new System.Drawing.Size(811, 322);
+            this.dgTransactions.Size = new System.Drawing.Size(811, 307);
             this.dgTransactions.TabIndex = 6;
             this.dgTransactions.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgTransactions_ColumnHeaderMouseClick);
             // 
@@ -326,7 +337,7 @@
             this.tbVehicles.Location = new System.Drawing.Point(4, 22);
             this.tbVehicles.Name = "tbVehicles";
             this.tbVehicles.Padding = new System.Windows.Forms.Padding(3);
-            this.tbVehicles.Size = new System.Drawing.Size(856, 385);
+            this.tbVehicles.Size = new System.Drawing.Size(856, 370);
             this.tbVehicles.TabIndex = 1;
             this.tbVehicles.Text = "Vehicles";
             this.tbVehicles.UseVisualStyleBackColor = true;
@@ -412,7 +423,7 @@
             this.tbPayments.Controls.Add(this.dgPayments);
             this.tbPayments.Location = new System.Drawing.Point(4, 22);
             this.tbPayments.Name = "tbPayments";
-            this.tbPayments.Size = new System.Drawing.Size(856, 385);
+            this.tbPayments.Size = new System.Drawing.Size(856, 370);
             this.tbPayments.TabIndex = 2;
             this.tbPayments.Text = "Payments";
             this.tbPayments.UseVisualStyleBackColor = true;
@@ -486,11 +497,85 @@
             // 
             this.bsPayment.DataSource = typeof(RiverLink.Models.Transaction);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lblTransponder);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.cmbSummaryTransponder);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.cmbSummaryMonth);
+            this.groupBox1.Location = new System.Drawing.Point(30, 31);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(856, 100);
+            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Summary";
+            // 
+            // cmbSummaryMonth
+            // 
+            this.cmbSummaryMonth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbSummaryMonth.FormattingEnabled = true;
+            this.cmbSummaryMonth.Location = new System.Drawing.Point(712, 19);
+            this.cmbSummaryMonth.Name = "cmbSummaryMonth";
+            this.cmbSummaryMonth.Size = new System.Drawing.Size(121, 21);
+            this.cmbSummaryMonth.TabIndex = 0;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(669, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Month";
+            // 
+            // cmbSummaryTransponder
+            // 
+            this.cmbSummaryTransponder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbSummaryTransponder.FormattingEnabled = true;
+            this.cmbSummaryTransponder.Location = new System.Drawing.Point(544, 19);
+            this.cmbSummaryTransponder.Name = "cmbSummaryTransponder";
+            this.cmbSummaryTransponder.Size = new System.Drawing.Size(121, 21);
+            this.cmbSummaryTransponder.TabIndex = 2;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(471, 22);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(67, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Transponder";
+            // 
+            // bsSummaryMonth
+            // 
+            this.bsSummaryMonth.DataSource = typeof(RiverLink.Models.Transaction);
+            // 
+            // bsSummaryTransponder
+            // 
+            this.bsSummaryTransponder.DataSource = typeof(RiverLink.Models.Transaction);
+            // 
+            // lblTransponder
+            // 
+            this.lblTransponder.AutoSize = true;
+            this.lblTransponder.BackColor = System.Drawing.SystemColors.Control;
+            this.lblTransponder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTransponder.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lblTransponder.Location = new System.Drawing.Point(22, 26);
+            this.lblTransponder.Name = "lblTransponder";
+            this.lblTransponder.Size = new System.Drawing.Size(125, 13);
+            this.lblTransponder.TabIndex = 4;
+            this.lblTransponder.Text = "Transponder Number: 13";
+            this.lblTransponder.Click += new System.EventHandler(this.lblTransponder_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 476);
+            this.ClientSize = new System.Drawing.Size(922, 591);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnExit);
             this.Name = "frmMain";
@@ -511,6 +596,10 @@
             this.tbPayments.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgPayments)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsPayment)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsSummaryMonth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsSummaryTransponder)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -564,6 +653,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn laneDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn plateNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn vehicleClassIdDataGridViewTextBoxColumn;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cmbSummaryMonth;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cmbSummaryTransponder;
+        private System.Windows.Forms.BindingSource bsSummaryMonth;
+        private System.Windows.Forms.BindingSource bsSummaryTransponder;
+        private System.Windows.Forms.Label lblTransponder;
     }
 }
 

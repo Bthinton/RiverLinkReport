@@ -10,6 +10,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq.Dynamic;
 
+//TODO Display transpondernumber, count of total crossings, calculated $ amount
+// Be able to drill down to that specific set of transactions
+// put grid in summary detail and display data that goes with it
+// add export button on dialog box 
+// add close button to bottom right
+// add button main form "refresh data" add checkbox that says "show browser" to hide or display browser while getting data
+
 namespace RiverLink
 {
     public partial class frmMain : Form
@@ -64,31 +71,10 @@ namespace RiverLink
             //Clears all existing data sources
             bsYear.DataSource = null;
             bsMonth.DataSource = null;
-            bsTransponderNumber.DataSource = null;
-            if (Year != "All")
-            {
-                RiverLinkReport.BAL.RiverLinkLogic.year = int.Parse(Year);
-            }
-            else
-            {
-                RiverLinkReport.BAL.RiverLinkLogic.year = 0;
-            }
-            if (Month != "All")
-            {
-                RiverLinkReport.BAL.RiverLinkLogic.month = int.Parse(Month);
-            }
-            else
-            {
-                RiverLinkReport.BAL.RiverLinkLogic.month = 0;
-            }
-            if (TransponderNumber != "All")
-            {
-                RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = int.Parse(TransponderNumber);
-            }
-            else
-            {
-                RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = 0;
-            }
+
+            RiverLinkReport.BAL.RiverLinkLogic.year = ParseSelectedValue(Year);
+            RiverLinkReport.BAL.RiverLinkLogic.month = ParseSelectedValue(Month);
+            RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = ParseSelectedValue(TransponderNumber);
 
             //Populate Year Data source
             List<string> Years = RiverLinkReport.BAL.RiverLinkLogic.GetYears();
@@ -117,6 +103,18 @@ namespace RiverLink
             shouldFireYear = true;
             shouldFireMonth = true;
             shouldFireTransponderNumber = true;
+        }
+
+        private int ParseSelectedValue(string valueToParse)
+        {
+            if (valueToParse == "All")
+            {
+                return 0;
+            }
+            else
+            {
+                return int.Parse(valueToParse);
+            }
         }
 
         private void LoadGridData()
@@ -185,6 +183,15 @@ namespace RiverLink
             {
                 filter();
             }
+        }
+
+        private void lblTransponder_Click(object sender, EventArgs e)
+        {
+            FrmSummaryDetail frm = new FrmSummaryDetail();
+            frm.Year = 2000;
+            frm.Month = 11;
+            frm.TransponderNumber = 13;
+            frm.ShowDialog();
         }
     }
 }
