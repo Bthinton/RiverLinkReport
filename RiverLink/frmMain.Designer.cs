@@ -78,9 +78,16 @@
             this.transactionDescriptionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsPayment = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblTransponder = new System.Windows.Forms.Label();
-            this.lblTotalCrossings = new System.Windows.Forms.Label();
             this.lblCalcCost = new System.Windows.Forms.Label();
+            this.lblTotalCrossings = new System.Windows.Forms.Label();
+            this.lblTransponder = new System.Windows.Forms.Label();
+            this.btnRefreshData = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).BeginInit();
@@ -129,6 +136,7 @@
             // tbTolls
             // 
             this.tbTolls.AccessibleName = "";
+            this.tbTolls.Controls.Add(this.btnRefreshData);
             this.tbTolls.Controls.Add(this.cmbYear);
             this.tbTolls.Controls.Add(this.label1);
             this.tbTolls.Controls.Add(this.dgTransactions);
@@ -493,6 +501,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.comboBox3);
+            this.groupBox1.Controls.Add(this.comboBox2);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.lblCalcCost);
             this.groupBox1.Controls.Add(this.lblTotalCrossings);
             this.groupBox1.Controls.Add(this.lblTransponder);
@@ -503,17 +517,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Summary";
             // 
-            // lblTransponder
+            // lblCalcCost
             // 
-            this.lblTransponder.AutoSize = true;
-            this.lblTransponder.BackColor = System.Drawing.SystemColors.Control;
-            this.lblTransponder.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTransponder.ForeColor = System.Drawing.Color.Black;
-            this.lblTransponder.Location = new System.Drawing.Point(19, 41);
-            this.lblTransponder.Name = "lblTransponder";
-            this.lblTransponder.Size = new System.Drawing.Size(203, 24);
-            this.lblTransponder.TabIndex = 4;
-            this.lblTransponder.Text = "Transponder Number: ";
+            this.lblCalcCost.AutoSize = true;
+            this.lblCalcCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCalcCost.ForeColor = System.Drawing.Color.Black;
+            this.lblCalcCost.Location = new System.Drawing.Point(623, 41);
+            this.lblCalcCost.Name = "lblCalcCost";
+            this.lblCalcCost.Size = new System.Drawing.Size(180, 24);
+            this.lblCalcCost.TabIndex = 6;
+            this.lblCalcCost.Text = "Calculated Cost: $76";
             // 
             // lblTotalCrossings
             // 
@@ -526,16 +539,82 @@
             this.lblTotalCrossings.TabIndex = 5;
             this.lblTotalCrossings.Text = "Total Crossings: ";
             // 
-            // lblCalcCost
+            // lblTransponder
             // 
-            this.lblCalcCost.AutoSize = true;
-            this.lblCalcCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCalcCost.ForeColor = System.Drawing.Color.Black;
-            this.lblCalcCost.Location = new System.Drawing.Point(623, 41);
-            this.lblCalcCost.Name = "lblCalcCost";
-            this.lblCalcCost.Size = new System.Drawing.Size(180, 24);
-            this.lblCalcCost.TabIndex = 6;
-            this.lblCalcCost.Text = "Calculated Cost: $76";
+            this.lblTransponder.AutoSize = true;
+            this.lblTransponder.BackColor = System.Drawing.SystemColors.Control;
+            this.lblTransponder.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTransponder.ForeColor = System.Drawing.Color.Black;
+            this.lblTransponder.Location = new System.Drawing.Point(19, 41);
+            this.lblTransponder.Name = "lblTransponder";
+            this.lblTransponder.Size = new System.Drawing.Size(203, 24);
+            this.lblTransponder.TabIndex = 4;
+            this.lblTransponder.Text = "Transponder Number: ";
+            this.lblTransponder.Click += new System.EventHandler(this.lblTransponder_Click);
+            // 
+            // btnRefreshData
+            // 
+            this.btnRefreshData.Location = new System.Drawing.Point(726, 28);
+            this.btnRefreshData.Name = "btnRefreshData";
+            this.btnRefreshData.Size = new System.Drawing.Size(107, 23);
+            this.btnRefreshData.TabIndex = 11;
+            this.btnRefreshData.Text = "Refresh Data";
+            this.btnRefreshData.UseVisualStyleBackColor = true;
+            this.btnRefreshData.Click += new System.EventHandler(this.btnRefreshData_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(20, 68);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Transponder";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DataSource = this.bsTransponderNumber;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(93, 65);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 12;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(493, 68);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(29, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Year";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(273, 68);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(37, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Month";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DataSource = this.bsYear;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(528, 65);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 12;
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.DataSource = this.bsMonth;
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(316, 65);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 21);
+            this.comboBox3.TabIndex = 12;
             // 
             // frmMain
             // 
@@ -622,6 +701,13 @@
         private System.Windows.Forms.Label lblTransponder;
         private System.Windows.Forms.Label lblCalcCost;
         private System.Windows.Forms.Label lblTotalCrossings;
+        private System.Windows.Forms.Button btnRefreshData;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label4;
     }
 }
 

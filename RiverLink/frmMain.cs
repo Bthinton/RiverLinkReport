@@ -207,7 +207,19 @@ namespace RiverLink
                 sum += Convert.ToInt32(dgTransactions.Rows[i].Cells[8].Value);
             }
 
+            if (cmbYear.SelectedIndex != 0 && cmbMonth.SelectedIndex != 0 && cmbTransponder.SelectedIndex != 0)
+            {
+                if (dgTransactions.Rows.Count > 40)
+                {
+                    return sum - dgTransactions.Rows.Count;
+                }
+            }
             return sum;
+        }
+
+        private void btnRefreshData_Click(object sender, EventArgs e)
+        {
+            filter();
         }
     }
 }
