@@ -61,6 +61,12 @@ namespace RiverLink
                 TransponderNumber = cmbTransponder.SelectedItem.ToString();
             }
             SetDataSources(Month, Year, TransponderNumber);
+            lblTransponder.Text = "Transponder Number: ";
+            lblTransponder.Text = lblTransponder.Text + cmbTransponder.SelectedItem;
+            lblTotalCrossings.Text = "Total Crossings: ";
+            lblTotalCrossings.Text = lblTotalCrossings.Text + dgTransactions.Rows.Count;
+            lblCalcCost.Text = "Calculated Cost: $";
+            lblCalcCost.Text = lblCalcCost.Text + calculateTotalCost();
         }
 
         private void SetDataSources(string Month, string Year, string TransponderNumber)
@@ -188,10 +194,20 @@ namespace RiverLink
         private void lblTransponder_Click(object sender, EventArgs e)
         {
             FrmSummaryDetail frm = new FrmSummaryDetail();
-            frm.Year = 2000;
-            frm.Month = 11;
-            frm.TransponderNumber = 13;
+            frm.Year = cmbYear.SelectedItem.ToString();
+            frm.Month = cmbMonth.SelectedItem.ToString();
+            frm.TransponderNumber = cmbTransponder.SelectedItem.ToString();
             frm.ShowDialog();
+        }
+
+        private int calculateTotalCost(int sum = 0)
+        {            
+            for (int i = 0; i < dgTransactions.Rows.Count; ++i)
+            {
+                sum += Convert.ToInt32(dgTransactions.Rows[i].Cells[8].Value);
+            }
+
+            return sum;
         }
     }
 }

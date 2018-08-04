@@ -12,9 +12,9 @@ namespace RiverLink
 {
     public partial class FrmSummaryDetail : Form
     {
-        public int TransponderNumber { get; set; }
-        public int Month { get; set; }
-        public int Year { get; set; }
+        public string TransponderNumber { get; set; }
+        public string Month { get; set; }
+        public string Year { get; set; }
 
         public FrmSummaryDetail()
         {
@@ -23,8 +23,13 @@ namespace RiverLink
 
         private void FrmSummaryDetail_Load(object sender, EventArgs e)
         {
-            string Message = $"Viewing Transponder Number: {TransponderNumber} For {Month} {Year}.";
+            string Message = $"Viewing Transponder Number: {TransponderNumber} For {Month}, {Year}.";
             lblSummaryText.Text = Message;
+        }
+
+        private void btnSummaryClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

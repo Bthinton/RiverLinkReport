@@ -78,13 +78,9 @@
             this.transactionDescriptionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsPayment = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cmbSummaryMonth = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cmbSummaryTransponder = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.bsSummaryMonth = new System.Windows.Forms.BindingSource(this.components);
-            this.bsSummaryTransponder = new System.Windows.Forms.BindingSource(this.components);
             this.lblTransponder = new System.Windows.Forms.Label();
+            this.lblTotalCrossings = new System.Windows.Forms.Label();
+            this.lblCalcCost = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).BeginInit();
@@ -99,8 +95,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgPayments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsPayment)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsSummaryMonth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsSummaryTransponder)).BeginInit();
             this.SuspendLayout();
             // 
             // btnExit
@@ -499,11 +493,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblCalcCost);
+            this.groupBox1.Controls.Add(this.lblTotalCrossings);
             this.groupBox1.Controls.Add(this.lblTransponder);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.cmbSummaryTransponder);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.cmbSummaryMonth);
             this.groupBox1.Location = new System.Drawing.Point(30, 31);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(856, 100);
@@ -511,64 +503,39 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Summary";
             // 
-            // cmbSummaryMonth
-            // 
-            this.cmbSummaryMonth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbSummaryMonth.FormattingEnabled = true;
-            this.cmbSummaryMonth.Location = new System.Drawing.Point(712, 19);
-            this.cmbSummaryMonth.Name = "cmbSummaryMonth";
-            this.cmbSummaryMonth.Size = new System.Drawing.Size(121, 21);
-            this.cmbSummaryMonth.TabIndex = 0;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(669, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Month";
-            // 
-            // cmbSummaryTransponder
-            // 
-            this.cmbSummaryTransponder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbSummaryTransponder.FormattingEnabled = true;
-            this.cmbSummaryTransponder.Location = new System.Drawing.Point(544, 19);
-            this.cmbSummaryTransponder.Name = "cmbSummaryTransponder";
-            this.cmbSummaryTransponder.Size = new System.Drawing.Size(121, 21);
-            this.cmbSummaryTransponder.TabIndex = 2;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(471, 22);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(67, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Transponder";
-            // 
-            // bsSummaryMonth
-            // 
-            this.bsSummaryMonth.DataSource = typeof(RiverLink.Models.Transaction);
-            // 
-            // bsSummaryTransponder
-            // 
-            this.bsSummaryTransponder.DataSource = typeof(RiverLink.Models.Transaction);
-            // 
             // lblTransponder
             // 
             this.lblTransponder.AutoSize = true;
             this.lblTransponder.BackColor = System.Drawing.SystemColors.Control;
-            this.lblTransponder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTransponder.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lblTransponder.Location = new System.Drawing.Point(22, 26);
+            this.lblTransponder.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTransponder.ForeColor = System.Drawing.Color.Black;
+            this.lblTransponder.Location = new System.Drawing.Point(19, 41);
             this.lblTransponder.Name = "lblTransponder";
-            this.lblTransponder.Size = new System.Drawing.Size(125, 13);
+            this.lblTransponder.Size = new System.Drawing.Size(203, 24);
             this.lblTransponder.TabIndex = 4;
-            this.lblTransponder.Text = "Transponder Number: 13";
-            this.lblTransponder.Click += new System.EventHandler(this.lblTransponder_Click);
+            this.lblTransponder.Text = "Transponder Number: ";
+            // 
+            // lblTotalCrossings
+            // 
+            this.lblTotalCrossings.AutoSize = true;
+            this.lblTotalCrossings.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalCrossings.ForeColor = System.Drawing.Color.Black;
+            this.lblTotalCrossings.Location = new System.Drawing.Point(342, 41);
+            this.lblTotalCrossings.Name = "lblTotalCrossings";
+            this.lblTotalCrossings.Size = new System.Drawing.Size(149, 24);
+            this.lblTotalCrossings.TabIndex = 5;
+            this.lblTotalCrossings.Text = "Total Crossings: ";
+            // 
+            // lblCalcCost
+            // 
+            this.lblCalcCost.AutoSize = true;
+            this.lblCalcCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCalcCost.ForeColor = System.Drawing.Color.Black;
+            this.lblCalcCost.Location = new System.Drawing.Point(623, 41);
+            this.lblCalcCost.Name = "lblCalcCost";
+            this.lblCalcCost.Size = new System.Drawing.Size(180, 24);
+            this.lblCalcCost.TabIndex = 6;
+            this.lblCalcCost.Text = "Calculated Cost: $76";
             // 
             // frmMain
             // 
@@ -598,8 +565,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bsPayment)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsSummaryMonth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsSummaryTransponder)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -654,13 +619,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn plateNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn vehicleClassIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cmbSummaryMonth;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cmbSummaryTransponder;
-        private System.Windows.Forms.BindingSource bsSummaryMonth;
-        private System.Windows.Forms.BindingSource bsSummaryTransponder;
         private System.Windows.Forms.Label lblTransponder;
+        private System.Windows.Forms.Label lblCalcCost;
+        private System.Windows.Forms.Label lblTotalCrossings;
     }
 }
 
