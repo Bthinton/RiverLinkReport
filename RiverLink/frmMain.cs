@@ -193,33 +193,34 @@ namespace RiverLink
 
         private void lblTransponder_Click(object sender, EventArgs e)
         {
-            FrmSummaryDetail frm = new FrmSummaryDetail();
+            FrmSummaryDetail frm = new FrmSummaryDetail(dgTransactions.DataSource);
             frm.Year = cmbYear.SelectedItem.ToString();
             frm.Month = cmbMonth.SelectedItem.ToString();
             frm.TransponderNumber = cmbTransponder.SelectedItem.ToString();
             frm.ShowDialog();
+
         }
 
-        private int calculateTotalCost(int sum = 0)
+        private double calculateTotalCost(double sum = 0)
         {            
             for (int i = 0; i < dgTransactions.Rows.Count; ++i)
             {
-                sum += Convert.ToInt32(dgTransactions.Rows[i].Cells[8].Value);
+                sum += Convert.ToDouble(dgTransactions.Rows[i].Cells[8].Value);
             }
-
+            sum = Math.Round(sum, 2);
             if (cmbYear.SelectedIndex != 0 && cmbMonth.SelectedIndex != 0 && cmbTransponder.SelectedIndex != 0)
             {
-                if (dgTransactions.Rows.Count > 40)
+                if (dgTransactions.Rows.Count >= 40)
                 {
                     return sum - dgTransactions.Rows.Count;
                 }
-            }
+            }       
             return sum;
         }
 
         private void btnRefreshData_Click(object sender, EventArgs e)
         {
-            filter();
+            dgTransactions.Refresh();
         }
     }
 }
