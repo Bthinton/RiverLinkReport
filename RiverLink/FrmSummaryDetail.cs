@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClosedXML.Excel;
+using RiverLink.Models;
 
+//TODO Choose excel or csv for export
 
 namespace RiverLink
 {
     public partial class FrmSummaryDetail : Form
     {
+        bool sortAscending;
         public string TransponderNumber { get; set; }
         public string Month { get; set; }
         public string Year { get; set; }
@@ -52,7 +55,7 @@ namespace RiverLink
                 var worksheet = workbook.Worksheets.Add(this.Text);
                 for (int i = 0; i < dataGridView1.Columns.Count; i++)
                 {
-                    worksheet.Cell(1, i + 1).Value = dataGridView1.Columns[i].Name;                    
+                    worksheet.Cell(1, i + 1).Value = dataGridView1.Columns[i].HeaderText;                    
                 }
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {

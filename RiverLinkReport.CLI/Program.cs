@@ -14,7 +14,7 @@ using RiverLink.Automation;
 
 namespace RiverLinkReport.CLI
 {
-    class Program
+    public class Program
     {
         private readonly static Logger nlogger = NLog.LogManager.GetCurrentClassLogger();
         private readonly static string AppName = "RiverLinkReportCli";
@@ -26,7 +26,7 @@ namespace RiverLinkReport.CLI
         private static string _username = string.Empty;
         private static string _password = string.Empty;
 
-        static void Main(string[] Args)
+        public static void Main(string[] Args)
         {
             if (Args.Any())
             {

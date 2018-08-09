@@ -33,6 +33,7 @@
             this.btnSummaryClose = new System.Windows.Forms.Button();
             this.bsSummaryData = new System.Windows.Forms.BindingSource(this.components);
             this.dgSummaryDetail = new System.Windows.Forms.DataGridView();
+            this.btnExport = new System.Windows.Forms.Button();
             this.transactionNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.transactionDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.transactionStatusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,7 +46,6 @@
             this.laneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plateNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vehicleClassIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.bsSummaryData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSummaryDetail)).BeginInit();
             this.SuspendLayout();
@@ -105,24 +105,35 @@
             this.dgSummaryDetail.Size = new System.Drawing.Size(772, 338);
             this.dgSummaryDetail.TabIndex = 7;
             // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExport.Location = new System.Drawing.Point(713, 23);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.TabIndex = 8;
+            this.btnExport.Text = "Export Data";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // transactionNumberDataGridViewTextBoxColumn
             // 
             this.transactionNumberDataGridViewTextBoxColumn.DataPropertyName = "TransactionNumber";
-            this.transactionNumberDataGridViewTextBoxColumn.HeaderText = "TransactionNumber";
+            this.transactionNumberDataGridViewTextBoxColumn.HeaderText = "Transaction Number";
             this.transactionNumberDataGridViewTextBoxColumn.Name = "transactionNumberDataGridViewTextBoxColumn";
             this.transactionNumberDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // transactionDateDataGridViewTextBoxColumn
             // 
             this.transactionDateDataGridViewTextBoxColumn.DataPropertyName = "TransactionDate";
-            this.transactionDateDataGridViewTextBoxColumn.HeaderText = "TransactionDate";
+            this.transactionDateDataGridViewTextBoxColumn.HeaderText = "Transaction Date";
             this.transactionDateDataGridViewTextBoxColumn.Name = "transactionDateDataGridViewTextBoxColumn";
             this.transactionDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // transactionStatusDataGridViewTextBoxColumn
             // 
             this.transactionStatusDataGridViewTextBoxColumn.DataPropertyName = "TransactionStatus";
-            this.transactionStatusDataGridViewTextBoxColumn.HeaderText = "TransactionStatus";
+            this.transactionStatusDataGridViewTextBoxColumn.HeaderText = "Transaction Status";
             this.transactionStatusDataGridViewTextBoxColumn.Name = "transactionStatusDataGridViewTextBoxColumn";
             this.transactionStatusDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -136,21 +147,21 @@
             // journalIdDataGridViewTextBoxColumn
             // 
             this.journalIdDataGridViewTextBoxColumn.DataPropertyName = "Journal_Id";
-            this.journalIdDataGridViewTextBoxColumn.HeaderText = "Journal_Id";
+            this.journalIdDataGridViewTextBoxColumn.HeaderText = "Journal Id";
             this.journalIdDataGridViewTextBoxColumn.Name = "journalIdDataGridViewTextBoxColumn";
             this.journalIdDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // transponderNumberDataGridViewTextBoxColumn
             // 
             this.transponderNumberDataGridViewTextBoxColumn.DataPropertyName = "TransponderNumber";
-            this.transponderNumberDataGridViewTextBoxColumn.HeaderText = "TransponderNumber";
+            this.transponderNumberDataGridViewTextBoxColumn.HeaderText = "Transponder Number";
             this.transponderNumberDataGridViewTextBoxColumn.Name = "transponderNumberDataGridViewTextBoxColumn";
             this.transponderNumberDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // transactionTypeDataGridViewTextBoxColumn
             // 
             this.transactionTypeDataGridViewTextBoxColumn.DataPropertyName = "TransactionType";
-            this.transactionTypeDataGridViewTextBoxColumn.HeaderText = "TransactionType";
+            this.transactionTypeDataGridViewTextBoxColumn.HeaderText = "Transaction Type";
             this.transactionTypeDataGridViewTextBoxColumn.Name = "transactionTypeDataGridViewTextBoxColumn";
             this.transactionTypeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -164,7 +175,7 @@
             // transactionDescriptionDataGridViewTextBoxColumn
             // 
             this.transactionDescriptionDataGridViewTextBoxColumn.DataPropertyName = "TransactionDescription";
-            this.transactionDescriptionDataGridViewTextBoxColumn.HeaderText = "TransactionDescription";
+            this.transactionDescriptionDataGridViewTextBoxColumn.HeaderText = "Transaction Description";
             this.transactionDescriptionDataGridViewTextBoxColumn.Name = "transactionDescriptionDataGridViewTextBoxColumn";
             this.transactionDescriptionDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -178,26 +189,16 @@
             // plateNumberDataGridViewTextBoxColumn
             // 
             this.plateNumberDataGridViewTextBoxColumn.DataPropertyName = "PlateNumber";
-            this.plateNumberDataGridViewTextBoxColumn.HeaderText = "PlateNumber";
+            this.plateNumberDataGridViewTextBoxColumn.HeaderText = "Plate Number";
             this.plateNumberDataGridViewTextBoxColumn.Name = "plateNumberDataGridViewTextBoxColumn";
             this.plateNumberDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // vehicleClassIdDataGridViewTextBoxColumn
             // 
             this.vehicleClassIdDataGridViewTextBoxColumn.DataPropertyName = "VehicleClass_Id";
-            this.vehicleClassIdDataGridViewTextBoxColumn.HeaderText = "VehicleClass_Id";
+            this.vehicleClassIdDataGridViewTextBoxColumn.HeaderText = "VehicleClass Id";
             this.vehicleClassIdDataGridViewTextBoxColumn.Name = "vehicleClassIdDataGridViewTextBoxColumn";
             this.vehicleClassIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(713, 23);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
-            this.btnExport.TabIndex = 8;
-            this.btnExport.Text = "Export Data";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // FrmSummaryDetail
             // 
@@ -225,6 +226,7 @@
         private System.Windows.Forms.Button btnSummaryClose;
         private System.Windows.Forms.BindingSource bsSummaryData;
         private System.Windows.Forms.DataGridView dgSummaryDetail;
+        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.DataGridViewTextBoxColumn transactionNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn transactionDateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn transactionStatusDataGridViewTextBoxColumn;
@@ -237,6 +239,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn laneDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn plateNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn vehicleClassIdDataGridViewTextBoxColumn;
-        private System.Windows.Forms.Button btnExport;
     }
 }

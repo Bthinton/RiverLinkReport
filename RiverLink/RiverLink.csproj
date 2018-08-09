@@ -95,6 +95,12 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProgress.Designer.cs">
+      <DependentUpon>frmProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmSummaryDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +111,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProgress.resx">
+      <DependentUpon>frmProgress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSummaryDetail.resx">
       <DependentUpon>FrmSummaryDetail.cs</DependentUpon>
@@ -158,6 +167,10 @@
     <ProjectReference Include="..\RiverLinkReport.BAL\RiverLinkReport.BAL.csproj">
       <Project>{3ac43186-7889-443d-820d-21f0d84d262f}</Project>
       <Name>RiverLinkReport.BAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RiverLinkReport.CLI\RiverLinkReport.CLI.csproj">
+      <Project>{0ef8744c-3e99-47f7-bdd8-0a285199c2ea}</Project>
+      <Name>RiverLinkReport.CLI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

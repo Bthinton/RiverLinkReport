@@ -36,6 +36,7 @@
             this.bsTransaction = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbTolls = new System.Windows.Forms.TabPage();
+            this.btnRefreshData = new System.Windows.Forms.Button();
             this.cmbYear = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dgTransactions = new System.Windows.Forms.DataGridView();
@@ -78,16 +79,16 @@
             this.transactionDescriptionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsPayment = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.lblCalcCost = new System.Windows.Forms.Label();
             this.lblTotalCrossings = new System.Windows.Forms.Label();
             this.lblTransponder = new System.Windows.Forms.Label();
-            this.btnRefreshData = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cbHeadless = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).BeginInit();
@@ -136,7 +137,6 @@
             // tbTolls
             // 
             this.tbTolls.AccessibleName = "";
-            this.tbTolls.Controls.Add(this.btnRefreshData);
             this.tbTolls.Controls.Add(this.cmbYear);
             this.tbTolls.Controls.Add(this.label1);
             this.tbTolls.Controls.Add(this.dgTransactions);
@@ -151,6 +151,16 @@
             this.tbTolls.TabIndex = 0;
             this.tbTolls.Text = "Tolls";
             this.tbTolls.UseVisualStyleBackColor = true;
+            // 
+            // btnRefreshData
+            // 
+            this.btnRefreshData.Location = new System.Drawing.Point(26, 556);
+            this.btnRefreshData.Name = "btnRefreshData";
+            this.btnRefreshData.Size = new System.Drawing.Size(107, 23);
+            this.btnRefreshData.TabIndex = 11;
+            this.btnRefreshData.Text = "Refresh Data";
+            this.btnRefreshData.UseVisualStyleBackColor = true;
+            this.btnRefreshData.Click += new System.EventHandler(this.btnRefreshData_Click);
             // 
             // cmbYear
             // 
@@ -517,6 +527,60 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Summary";
             // 
+            // comboBox3
+            // 
+            this.comboBox3.DataSource = this.bsMonth;
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(316, 65);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 21);
+            this.comboBox3.TabIndex = 12;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DataSource = this.bsYear;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(528, 65);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 12;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(273, 68);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(37, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Month";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(493, 68);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(29, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Year";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DataSource = this.bsTransponderNumber;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(93, 65);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 12;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(20, 68);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Transponder";
+            // 
             // lblCalcCost
             // 
             this.lblCalcCost.AutoSize = true;
@@ -524,9 +588,9 @@
             this.lblCalcCost.ForeColor = System.Drawing.Color.Black;
             this.lblCalcCost.Location = new System.Drawing.Point(623, 41);
             this.lblCalcCost.Name = "lblCalcCost";
-            this.lblCalcCost.Size = new System.Drawing.Size(180, 24);
+            this.lblCalcCost.Size = new System.Drawing.Size(150, 24);
             this.lblCalcCost.TabIndex = 6;
-            this.lblCalcCost.Text = "Calculated Cost: $76";
+            this.lblCalcCost.Text = "Calculated Cost: ";
             // 
             // lblTotalCrossings
             // 
@@ -552,75 +616,23 @@
             this.lblTransponder.Text = "Transponder Number: ";
             this.lblTransponder.Click += new System.EventHandler(this.lblTransponder_Click);
             // 
-            // btnRefreshData
+            // cbHeadless
             // 
-            this.btnRefreshData.Location = new System.Drawing.Point(726, 28);
-            this.btnRefreshData.Name = "btnRefreshData";
-            this.btnRefreshData.Size = new System.Drawing.Size(107, 23);
-            this.btnRefreshData.TabIndex = 11;
-            this.btnRefreshData.Text = "Refresh Data";
-            this.btnRefreshData.UseVisualStyleBackColor = true;
-            this.btnRefreshData.Click += new System.EventHandler(this.btnRefreshData_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 68);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Transponder";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DataSource = this.bsTransponderNumber;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(93, 65);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 12;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(493, 68);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 13);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Year";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(273, 68);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(37, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Month";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DataSource = this.bsYear;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(528, 65);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 12;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.DataSource = this.bsMonth;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(316, 65);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 12;
+            this.cbHeadless.AutoSize = true;
+            this.cbHeadless.Location = new System.Drawing.Point(140, 561);
+            this.cbHeadless.Name = "cbHeadless";
+            this.cbHeadless.Size = new System.Drawing.Size(70, 17);
+            this.cbHeadless.TabIndex = 12;
+            this.cbHeadless.Text = "Headless";
+            this.cbHeadless.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(922, 591);
+            this.Controls.Add(this.cbHeadless);
+            this.Controls.Add(this.btnRefreshData);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnExit);
@@ -645,6 +657,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -708,6 +721,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox cbHeadless;
     }
 }
 

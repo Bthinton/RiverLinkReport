@@ -10,12 +10,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq.Dynamic;
 
-//TODO Display transpondernumber, count of total crossings, calculated $ amount
-// Be able to drill down to that specific set of transactions
-// put grid in summary detail and display data that goes with it
-// add export button on dialog box 
-// add close button to bottom right
-// add button main form "refresh data" add checkbox that says "show browser" to hide or display browser while getting data
+//TODO Move summary into DGV change color and format
+//Figure out if chrome is installed on system(prompt install, close application if chrome not installed)
+//Look into headless chrome(selenium)
 
 namespace RiverLink
 {
@@ -212,7 +209,7 @@ namespace RiverLink
             {
                 if (dgTransactions.Rows.Count >= 40)
                 {
-                    return sum - dgTransactions.Rows.Count;
+                    return sum / 2;
                 }
             }       
             return sum;
@@ -220,7 +217,15 @@ namespace RiverLink
 
         private void btnRefreshData_Click(object sender, EventArgs e)
         {
-            dgTransactions.Refresh();
+            frmProgress frm = new frmProgress();
+            if (frm.ShowDialog() == DialogResult.Cancel)
+            {
+                MessageBox.Show("User Cancelled");            
+            }
+            else
+            {
+                MessageBox.Show("Completed");
+            }
         }
     }
 }
