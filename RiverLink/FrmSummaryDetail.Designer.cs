@@ -34,18 +34,18 @@
             this.bsSummaryData = new System.Windows.Forms.BindingSource(this.components);
             this.dgSummaryDetail = new System.Windows.Forms.DataGridView();
             this.btnExport = new System.Windows.Forms.Button();
-            this.transactionNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transactionDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transactionStatusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.plazaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.journalIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transponderNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transactionTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.amountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transactionDescriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.laneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.plateNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vehicleClassIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Transaction_Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Transaction_Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Transaction_Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Plaza = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Journal_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Transponder_Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Transaction_Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Transaction_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Lane = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Plate_Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VehicleClass_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.bsSummaryData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSummaryDetail)).BeginInit();
             this.SuspendLayout();
@@ -86,18 +86,18 @@
             this.dgSummaryDetail.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgSummaryDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgSummaryDetail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.transactionNumberDataGridViewTextBoxColumn,
-            this.transactionDateDataGridViewTextBoxColumn,
-            this.transactionStatusDataGridViewTextBoxColumn,
-            this.plazaDataGridViewTextBoxColumn,
-            this.journalIdDataGridViewTextBoxColumn,
-            this.transponderNumberDataGridViewTextBoxColumn,
-            this.transactionTypeDataGridViewTextBoxColumn,
-            this.amountDataGridViewTextBoxColumn,
-            this.transactionDescriptionDataGridViewTextBoxColumn,
-            this.laneDataGridViewTextBoxColumn,
-            this.plateNumberDataGridViewTextBoxColumn,
-            this.vehicleClassIdDataGridViewTextBoxColumn});
+            this.Transaction_Number,
+            this.Transaction_Date,
+            this.Transaction_Status,
+            this.Plaza,
+            this.Journal_Id,
+            this.Transponder_Number,
+            this.Transaction_Type,
+            this.Amount,
+            this.Transaction_Description,
+            this.Lane,
+            this.Plate_Number,
+            this.VehicleClass_Id});
             this.dgSummaryDetail.DataSource = this.bsSummaryData;
             this.dgSummaryDetail.Location = new System.Drawing.Point(16, 60);
             this.dgSummaryDetail.Name = "dgSummaryDetail";
@@ -116,89 +116,89 @@
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
-            // transactionNumberDataGridViewTextBoxColumn
+            // Transaction_Number
             // 
-            this.transactionNumberDataGridViewTextBoxColumn.DataPropertyName = "TransactionNumber";
-            this.transactionNumberDataGridViewTextBoxColumn.HeaderText = "Transaction Number";
-            this.transactionNumberDataGridViewTextBoxColumn.Name = "transactionNumberDataGridViewTextBoxColumn";
-            this.transactionNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Transaction_Number.DataPropertyName = "TransactionNumber";
+            this.Transaction_Number.HeaderText = "Transaction Number";
+            this.Transaction_Number.Name = "Transaction_Number";
+            this.Transaction_Number.ReadOnly = true;
             // 
-            // transactionDateDataGridViewTextBoxColumn
+            // Transaction_Date
             // 
-            this.transactionDateDataGridViewTextBoxColumn.DataPropertyName = "TransactionDate";
-            this.transactionDateDataGridViewTextBoxColumn.HeaderText = "Transaction Date";
-            this.transactionDateDataGridViewTextBoxColumn.Name = "transactionDateDataGridViewTextBoxColumn";
-            this.transactionDateDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Transaction_Date.DataPropertyName = "TransactionDate";
+            this.Transaction_Date.HeaderText = "Transaction Date";
+            this.Transaction_Date.Name = "Transaction_Date";
+            this.Transaction_Date.ReadOnly = true;
             // 
-            // transactionStatusDataGridViewTextBoxColumn
+            // Transaction_Status
             // 
-            this.transactionStatusDataGridViewTextBoxColumn.DataPropertyName = "TransactionStatus";
-            this.transactionStatusDataGridViewTextBoxColumn.HeaderText = "Transaction Status";
-            this.transactionStatusDataGridViewTextBoxColumn.Name = "transactionStatusDataGridViewTextBoxColumn";
-            this.transactionStatusDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Transaction_Status.DataPropertyName = "TransactionStatus";
+            this.Transaction_Status.HeaderText = "Transaction Status";
+            this.Transaction_Status.Name = "Transaction_Status";
+            this.Transaction_Status.ReadOnly = true;
             // 
-            // plazaDataGridViewTextBoxColumn
+            // Plaza
             // 
-            this.plazaDataGridViewTextBoxColumn.DataPropertyName = "Plaza";
-            this.plazaDataGridViewTextBoxColumn.HeaderText = "Plaza";
-            this.plazaDataGridViewTextBoxColumn.Name = "plazaDataGridViewTextBoxColumn";
-            this.plazaDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Plaza.DataPropertyName = "Plaza";
+            this.Plaza.HeaderText = "Plaza";
+            this.Plaza.Name = "Plaza";
+            this.Plaza.ReadOnly = true;
             // 
-            // journalIdDataGridViewTextBoxColumn
+            // Journal_Id
             // 
-            this.journalIdDataGridViewTextBoxColumn.DataPropertyName = "Journal_Id";
-            this.journalIdDataGridViewTextBoxColumn.HeaderText = "Journal Id";
-            this.journalIdDataGridViewTextBoxColumn.Name = "journalIdDataGridViewTextBoxColumn";
-            this.journalIdDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Journal_Id.DataPropertyName = "Journal_Id";
+            this.Journal_Id.HeaderText = "Journal Id";
+            this.Journal_Id.Name = "Journal_Id";
+            this.Journal_Id.ReadOnly = true;
             // 
-            // transponderNumberDataGridViewTextBoxColumn
+            // Transponder_Number
             // 
-            this.transponderNumberDataGridViewTextBoxColumn.DataPropertyName = "TransponderNumber";
-            this.transponderNumberDataGridViewTextBoxColumn.HeaderText = "Transponder Number";
-            this.transponderNumberDataGridViewTextBoxColumn.Name = "transponderNumberDataGridViewTextBoxColumn";
-            this.transponderNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Transponder_Number.DataPropertyName = "TransponderNumber";
+            this.Transponder_Number.HeaderText = "Transponder Number";
+            this.Transponder_Number.Name = "Transponder_Number";
+            this.Transponder_Number.ReadOnly = true;
             // 
-            // transactionTypeDataGridViewTextBoxColumn
+            // Transaction_Type
             // 
-            this.transactionTypeDataGridViewTextBoxColumn.DataPropertyName = "TransactionType";
-            this.transactionTypeDataGridViewTextBoxColumn.HeaderText = "Transaction Type";
-            this.transactionTypeDataGridViewTextBoxColumn.Name = "transactionTypeDataGridViewTextBoxColumn";
-            this.transactionTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Transaction_Type.DataPropertyName = "TransactionType";
+            this.Transaction_Type.HeaderText = "Transaction Type";
+            this.Transaction_Type.Name = "Transaction_Type";
+            this.Transaction_Type.ReadOnly = true;
             // 
-            // amountDataGridViewTextBoxColumn
+            // Amount
             // 
-            this.amountDataGridViewTextBoxColumn.DataPropertyName = "Amount";
-            this.amountDataGridViewTextBoxColumn.HeaderText = "Amount";
-            this.amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
-            this.amountDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Amount.DataPropertyName = "Amount";
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            this.Amount.ReadOnly = true;
             // 
-            // transactionDescriptionDataGridViewTextBoxColumn
+            // Transaction_Description
             // 
-            this.transactionDescriptionDataGridViewTextBoxColumn.DataPropertyName = "TransactionDescription";
-            this.transactionDescriptionDataGridViewTextBoxColumn.HeaderText = "Transaction Description";
-            this.transactionDescriptionDataGridViewTextBoxColumn.Name = "transactionDescriptionDataGridViewTextBoxColumn";
-            this.transactionDescriptionDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Transaction_Description.DataPropertyName = "TransactionDescription";
+            this.Transaction_Description.HeaderText = "Transaction Description";
+            this.Transaction_Description.Name = "Transaction_Description";
+            this.Transaction_Description.ReadOnly = true;
             // 
-            // laneDataGridViewTextBoxColumn
+            // Lane
             // 
-            this.laneDataGridViewTextBoxColumn.DataPropertyName = "Lane";
-            this.laneDataGridViewTextBoxColumn.HeaderText = "Lane";
-            this.laneDataGridViewTextBoxColumn.Name = "laneDataGridViewTextBoxColumn";
-            this.laneDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Lane.DataPropertyName = "Lane";
+            this.Lane.HeaderText = "Lane";
+            this.Lane.Name = "Lane";
+            this.Lane.ReadOnly = true;
             // 
-            // plateNumberDataGridViewTextBoxColumn
+            // Plate_Number
             // 
-            this.plateNumberDataGridViewTextBoxColumn.DataPropertyName = "PlateNumber";
-            this.plateNumberDataGridViewTextBoxColumn.HeaderText = "Plate Number";
-            this.plateNumberDataGridViewTextBoxColumn.Name = "plateNumberDataGridViewTextBoxColumn";
-            this.plateNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Plate_Number.DataPropertyName = "PlateNumber";
+            this.Plate_Number.HeaderText = "Plate Number";
+            this.Plate_Number.Name = "Plate_Number";
+            this.Plate_Number.ReadOnly = true;
             // 
-            // vehicleClassIdDataGridViewTextBoxColumn
+            // VehicleClass_Id
             // 
-            this.vehicleClassIdDataGridViewTextBoxColumn.DataPropertyName = "VehicleClass_Id";
-            this.vehicleClassIdDataGridViewTextBoxColumn.HeaderText = "VehicleClass Id";
-            this.vehicleClassIdDataGridViewTextBoxColumn.Name = "vehicleClassIdDataGridViewTextBoxColumn";
-            this.vehicleClassIdDataGridViewTextBoxColumn.ReadOnly = true;
+            this.VehicleClass_Id.DataPropertyName = "VehicleClass_Id";
+            this.VehicleClass_Id.HeaderText = "VehicleClass Id";
+            this.VehicleClass_Id.Name = "VehicleClass_Id";
+            this.VehicleClass_Id.ReadOnly = true;
             // 
             // FrmSummaryDetail
             // 
@@ -227,17 +227,17 @@
         private System.Windows.Forms.BindingSource bsSummaryData;
         private System.Windows.Forms.DataGridView dgSummaryDetail;
         private System.Windows.Forms.Button btnExport;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionNumberDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionDateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionStatusDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn plazaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn journalIdDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transponderNumberDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionTypeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn amountDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionDescriptionDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn laneDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn plateNumberDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vehicleClassIdDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Transaction_Number;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Transaction_Date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Transaction_Status;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Plaza;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Journal_Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Transponder_Number;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Transaction_Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Transaction_Description;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Lane;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Plate_Number;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VehicleClass_Id;
     }
 }
