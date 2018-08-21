@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FileHelpers;
 using System.ComponentModel.DataAnnotations;
-using FileHelpers;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RiverLink.Models

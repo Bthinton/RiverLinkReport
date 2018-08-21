@@ -1,15 +1,13 @@
 ﻿using NLog;
 using OpenQA.Selenium;
+using RiverLink.Automation;
 using RiverLink.CLI;
 using RiverLinkReport.BAL;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Threading;
 using System.Windows.Forms;
-using RiverLink.Automation;
 
 
 namespace RiverLinkReport.CLI
@@ -117,7 +115,7 @@ namespace RiverLinkReport.CLI
             }
         }
 
-        private static bool TestUsernameAndPassword(string Username, string Password)
+        public static bool TestUsernameAndPassword(string Username, string Password)
         {
             bool returnValue = false;
             if (Username == string.Empty && Password == string.Empty)
@@ -143,6 +141,11 @@ namespace RiverLinkReport.CLI
         private static void Worker_StatusChanged(string Message)
         {
             Console.WriteLine(Message);
+        }
+
+        public static void TestUsernameAndPassword(string v1, object username, string v2, object password)
+        {
+            throw new NotImplementedException();
         }
     }
 }

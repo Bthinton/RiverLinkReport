@@ -1,8 +1,7 @@
-﻿using System;
+﻿using FileHelpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using FileHelpers;
 
 //Sort same as transaction file
 //"attach" any real 

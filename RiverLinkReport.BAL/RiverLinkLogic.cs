@@ -2,15 +2,14 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using RiverLink.Automation;
+using RiverLink.DAL;
 using RiverLink.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using RiverLink.DAL;
-using System.Data.Entity;
-using System.Collections;
 using System.Text.RegularExpressions;
 
 namespace RiverLinkReport.BAL
@@ -29,6 +28,7 @@ namespace RiverLinkReport.BAL
         public static int month;
         public static int year;
         public static int transponderNumber;
+        public static bool runHeadless;
 
         private Automate Worker;
         #endregion Fields
@@ -542,13 +542,6 @@ namespace RiverLinkReport.BAL
             {
                 return false;
             }
-            ///Log in 
-            ///Get vehicle data if not gotten
-            ///Goto transaction page
-            ///Set page record size max(1000) and verify 
-            ///Count number of pages
-            ///Goto each page and grab data
-            ///insert data into database
 
             return returnValue;
         }
@@ -583,7 +576,10 @@ namespace RiverLinkReport.BAL
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--disable-extensions --disable-accelerated-video-decode");
-
+            if (runHeadless == true)
+            {
+                options.AddArgument("--headless");
+            }
             Process[] before = Process.GetProcessesByName("chrome");
             IWebDriver driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();

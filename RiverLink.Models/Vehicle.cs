@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FileHelpers;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using FileHelpers;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RiverLink.Models
@@ -8,7 +8,7 @@ namespace RiverLink.Models
     /// <value>
     /// Defines status of the Vehicle
     /// </value>
-    
+
     public enum VehicleStatuses
     {
         Active,

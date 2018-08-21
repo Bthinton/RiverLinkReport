@@ -1,14 +1,10 @@
 ﻿using RiverLink.Models;
+using RiverLinkReport.BAL;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Linq.Dynamic;
+using System.Windows.Forms;
 
 //TODO Move summary into DGV change color and format
 //Figure out if chrome is installed on system(prompt install, close application if chrome not installed)
@@ -75,26 +71,26 @@ namespace RiverLink
             bsYear.DataSource = null;
             bsMonth.DataSource = null;
 
-            RiverLinkReport.BAL.RiverLinkLogic.year = ParseSelectedValue(Year);
-            RiverLinkReport.BAL.RiverLinkLogic.month = ParseSelectedValue(Month);
-            RiverLinkReport.BAL.RiverLinkLogic.transponderNumber = ParseSelectedValue(TransponderNumber);
+            RiverLinkLogic.year = ParseSelectedValue(Year);
+            RiverLinkLogic.month = ParseSelectedValue(Month);
+            RiverLinkLogic.transponderNumber = ParseSelectedValue(TransponderNumber);
 
             //Populate Year Data source
-            List<string> Years = RiverLinkReport.BAL.RiverLinkLogic.GetYears();
+            List<string> Years = RiverLinkLogic.GetYears();
             bsYear.DataSource = Years;
 
             //Reset the selected Year inside combobox          
             cmbYear.SelectedIndex = Years.IndexOf(Year);
 
             //Populate Month data source
-            List<string> Months = RiverLinkReport.BAL.RiverLinkLogic.GetMonths();
+            List<string> Months = RiverLinkLogic.GetMonths();
             bsMonth.DataSource = Months;
 
             //Reset the selected Month inside combobox            
             cmbMonth.SelectedIndex = Months.IndexOf(Month);
 
             //Populate Transpondernumber data source
-            List<string> TransponderNumbers = RiverLinkReport.BAL.RiverLinkLogic.GetTransponderNumbers();
+            List<string> TransponderNumbers = RiverLinkLogic.GetTransponderNumbers();
             bsTransponderNumber.DataSource = TransponderNumbers;
 
             //Reset the selected Transponder inside combobox
@@ -122,21 +118,21 @@ namespace RiverLink
 
         private void LoadGridData()
         {
-            List<Transaction> Transactions = RiverLinkReport.BAL.RiverLinkLogic.GetTransactions();
+            List<Transaction> Transactions = RiverLinkLogic.GetTransactions();
             bsTransaction.DataSource = Transactions;
         }
 
         private void LoadVehiclePaymentGrid()
         {
-            List<Transaction> Payments = RiverLinkReport.BAL.RiverLinkLogic.GetPayments();
+            List<Transaction> Payments = RiverLinkLogic.GetPayments();
             bsPayment.DataSource = Payments;
-            List<Vehicle> Vehicles = RiverLinkReport.BAL.RiverLinkLogic.GetVehicles();
+            List<Vehicle> Vehicles = RiverLinkLogic.GetVehicles();
             bsVehicle.DataSource = Vehicles;
         }
 
         private void dgTransactions_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            List<Transaction> Transactions = RiverLinkReport.BAL.RiverLinkLogic.GetTransactions();
+            List<Transaction> Transactions = RiverLinkLogic.GetTransactions();
             if (sortAscending)
                 dgTransactions.DataSource = Transactions.OrderBy(dgTransactions.Columns[e.ColumnIndex].DataPropertyName).ToList();
             else
@@ -146,7 +142,7 @@ namespace RiverLink
 
         private void dgPayments_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            List<Transaction> Payments = RiverLinkReport.BAL.RiverLinkLogic.GetPayments();
+            List<Transaction> Payments = RiverLinkLogic.GetPayments();
             if (sortAscending)
                 dgPayments.DataSource = Payments.OrderBy(dgPayments.Columns[e.ColumnIndex].DataPropertyName).ToList();
             else
@@ -156,7 +152,7 @@ namespace RiverLink
 
         private void dgVehicles_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            List<Vehicle> Vehicles = RiverLinkReport.BAL.RiverLinkLogic.GetVehicles();
+            List<Vehicle> Vehicles = RiverLinkLogic.GetVehicles();
             if (sortAscending)
                 dgVehicles.DataSource = Vehicles.OrderBy(dgVehicles.Columns[e.ColumnIndex].DataPropertyName).ToList();
             else
@@ -217,10 +213,15 @@ namespace RiverLink
 
         private void btnRefreshData_Click(object sender, EventArgs e)
         {
+            if (cbHeadless.Checked)
+            {
+                RiverLinkLogic.runHeadless = true;
+            }
+
             frmProgress frm = new frmProgress();
             if (frm.ShowDialog() == DialogResult.Cancel)
             {
-                MessageBox.Show("User Cancelled");            
+                MessageBox.Show("User Cancelled");
             }
             else
             {

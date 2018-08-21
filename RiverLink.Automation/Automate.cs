@@ -6,22 +6,18 @@ console.exe args
 Install 2012 SQL Server (SSMS)
 */
 
+using FileHelpers;
 using HtmlAgilityPack;
 using OpenQA.Selenium;
 using RiverLink.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
-using FileHelpers;
-using System.IO;
-using OpenQA.Selenium.Support.UI;
-using RiverLink.DAL;
 
 namespace RiverLink.Automation
 {
