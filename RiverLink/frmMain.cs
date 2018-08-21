@@ -1,7 +1,9 @@
-﻿using RiverLink.Models;
+﻿using Microsoft.Win32;
+using RiverLink.Models;
 using RiverLinkReport.BAL;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Windows.Forms;
@@ -22,7 +24,8 @@ namespace RiverLink
 
         public frmMain()
         {
-            InitializeComponent();
+            InitializeComponent();   
+            checkChrome();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -226,6 +229,18 @@ namespace RiverLink
             else
             {
                 MessageBox.Show("Completed");
+            }
+        }
+
+        static void checkChrome()
+        {
+            object path;
+            path = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);        
+            path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
+            if (path == null)
+            {
+                Process.Start("http://dl.google.com/chrome/install/375.126/chrome_installer.exe");                
+                Process.Start(@"C:\Users\" + Environment.UserName + @"\Downloads\ChromeSetup.exe");
             }
         }
     }
