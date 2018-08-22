@@ -21,10 +21,15 @@ namespace RiverLink
         bool shouldFireTransponderNumber = true;
         bool shouldFireFormLoad;
         bool sortAscending;
+        object path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
 
         public frmMain()
         {
-            InitializeComponent();   
+            if (path == null)
+            {
+                Application.Exit();
+            }
+            InitializeComponent();
             checkChrome();
         }
 
@@ -232,11 +237,10 @@ namespace RiverLink
             }
         }
 
-        static void checkChrome()
+        public void checkChrome()
         {
-            object path;
-            path = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);        
-            path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
+            //path = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);        
+            //path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
             if (path == null)
             {
                 Process.Start("http://dl.google.com/chrome/install/375.126/chrome_installer.exe");                
