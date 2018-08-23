@@ -23,6 +23,7 @@ namespace RiverLinkReport.CLI
         public static List<int> DriverProcessIds { get; set; }
         private static string _username = string.Empty;
         private static string _password = string.Empty;
+        private Automate auto;
 
         public static void Main(string[] Args)
         {
@@ -128,7 +129,7 @@ namespace RiverLinkReport.CLI
 
             RiverLinkLogic worker = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
             worker.StatusChanged += Worker_StatusChanged;
-            if (worker.Login())
+            if (worker.Login("ericallenpaul@hotmail.com", "!Sttng0812"))
             {
                 Console.WriteLine("Operation Successful");
             } else
@@ -141,11 +142,6 @@ namespace RiverLinkReport.CLI
         private static void Worker_StatusChanged(string Message)
         {
             Console.WriteLine(Message);
-        }
-
-        public static void TestUsernameAndPassword(string v1, object username, string v2, object password)
-        {
-            throw new NotImplementedException();
         }
     }
 }

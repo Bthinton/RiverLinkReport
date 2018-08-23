@@ -8,9 +8,12 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Windows.Forms;
 
-//TODO Move summary into DGV change color and format
-//Figure out if chrome is installed on system(prompt install, close application if chrome not installed)
-//Look into headless chrome(selenium)
+//TODO Fix Headless version 
+//Fix code so can count number of steps on progress bar
+//Create settings form for entering username and password
+//store username and password and encrypt both(symmetrical encryption)
+//
+
 
 namespace RiverLink
 {
@@ -23,14 +26,12 @@ namespace RiverLink
         bool sortAscending;
         object path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
 
+
+
         public frmMain()
         {
-            if (path == null)
-            {
-                Application.Exit();
-            }
-            InitializeComponent();
-            checkChrome();
+            //Properties.Settings.Default.Username
+            InitializeComponent();           
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -221,12 +222,30 @@ namespace RiverLink
 
         private void btnRefreshData_Click(object sender, EventArgs e)
         {
+            if (path == null)
+            {
+                frmChrome frmC = new frmChrome();
+                if (frmC.ShowDialog() == DialogResult.Cancel)
+                {
+                    Application.Exit();
+                }
+                else
+                {
+                    checkChrome();
+                }
+            }
+
             if (cbHeadless.Checked)
             {
                 RiverLinkLogic.runHeadless = true;
             }
-
+            else
+            {
+                RiverLinkLogic.runHeadless = false;
+            }
+            
             frmProgress frm = new frmProgress();
+            frm.action = "GetData";
             if (frm.ShowDialog() == DialogResult.Cancel)
             {
                 MessageBox.Show("User Cancelled");
@@ -246,6 +265,7 @@ namespace RiverLink
                 Process.Start("http://dl.google.com/chrome/install/375.126/chrome_installer.exe");                
                 Process.Start(@"C:\Users\" + Environment.UserName + @"\Downloads\ChromeSetup.exe");
             }
+            path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
         }
     }
 }

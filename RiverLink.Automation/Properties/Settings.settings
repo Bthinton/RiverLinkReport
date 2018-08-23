@@ -74,5 +74,11 @@
     <Setting Name="X_TransactionStatus" Type="System.String" Scope="User">
       <Value Profile="(Default)">//*[@id="MainContent_lblTransactionStatus"]</Value>
     </Setting>
+    <Setting Name="X_Video" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="autoplay-policy"]/div/div[2]/div/select</Value>
+    </Setting>
+    <Setting Name="X_VideoDisable" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//*[@id="autoplay-policy"]/div/div[2]/div/select/option[2]</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

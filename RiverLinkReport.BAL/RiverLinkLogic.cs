@@ -546,7 +546,7 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
-        public bool Login()
+        public bool Login(string username, string password)
         {
             bool returnValue = true;
             string Success = string.Empty;
@@ -561,6 +561,8 @@ namespace RiverLinkReport.BAL
             {
                 return false;
             }
+            Automate.username = username;
+            Automate.password = password;
             Success = Worker.Login(string.Empty);
             if (Success != "Success")
             {
@@ -575,14 +577,17 @@ namespace RiverLinkReport.BAL
         private IWebDriver GetNewDriver()
         {
             ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--disable-extensions --disable-accelerated-video-decode");
-            if (runHeadless == true)
+            if (runHeadless == false)
             {
-                options.AddArgument("--headless");
+                options.AddArgument("--disable-extensions --disable-accelerated-video-decode");
             }
+            else
+            {
+                options.AddArgument("--disable-extensions --disable-accelerated-video-decode --headless");
+            }            
             Process[] before = Process.GetProcessesByName("chrome");
             IWebDriver driver = new ChromeDriver(options);
-            driver.Manage().Window.Maximize();
+            driver.Manage().Window.Maximize();        
             Process[] after = Process.GetProcessesByName("chrome");
             List<int> beforeIds = before.Select(x => x.Id)?.ToList();
             List<int> afterIds = after.Select(x => x.Id)?.ToList();

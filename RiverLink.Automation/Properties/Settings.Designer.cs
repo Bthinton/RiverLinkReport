@@ -310,5 +310,29 @@ namespace RiverLink.Automation.Properties {
                 this["X_TransactionStatus"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"autoplay-policy\"]/div/div[2]/div/select")]
+        public string X_Video {
+            get {
+                return ((string)(this["X_Video"]));
+            }
+            set {
+                this["X_Video"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\"autoplay-policy\"]/div/div[2]/div/select/option[2]")]
+        public string X_VideoDisable {
+            get {
+                return ((string)(this["X_VideoDisable"]));
+            }
+            set {
+                this["X_VideoDisable"] = value;
+            }
+        }
     }
 }

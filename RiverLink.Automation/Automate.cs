@@ -105,7 +105,7 @@ namespace RiverLink.Automation
         /// <returns>If failed or succeeded</returns>
         /// 
         public string GoToHomePage(string Success)
-        {
+        {            
             if (!Directory.Exists(dataDirectory))
             {
                 Directory.CreateDirectory(dataDirectory);
