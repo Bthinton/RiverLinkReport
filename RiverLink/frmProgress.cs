@@ -39,7 +39,7 @@ namespace RiverLink
             if (action == "GetData")
             {
                 RiverLinkReport.BAL.RiverLinkLogic Logic = new RiverLinkReport.BAL.RiverLinkLogic("https://riverlink.com/", 2000, 1000);
-                Logic.Login("Ericallenpaul@hotmail.com", "!Sttng0812");
+                Logic.Login("username", "password");
             }
             //for (int i = 1; i <= 50; i++)
             //{

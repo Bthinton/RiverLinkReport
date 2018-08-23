@@ -28,7 +28,7 @@ namespace RiverLinkReport.BAL
         public static int month;
         public static int year;
         public static int transponderNumber;
-        public static bool runHeadless;
+        public static bool runHeadless = true;
 
         private Automate Worker;
         #endregion Fields
@@ -583,7 +583,7 @@ namespace RiverLinkReport.BAL
             }
             else
             {
-                options.AddArgument("--disable-extensions --disable-accelerated-video-decode --headless");
+                options.AddArgument("--disable-extensions --disable-accelerated-video-decode --headless --disable-gpu");
             }            
             Process[] before = Process.GetProcessesByName("chrome");
             IWebDriver driver = new ChromeDriver(options);
