@@ -543,6 +543,8 @@ namespace RiverLinkReport.BAL
                 return false;
             }
 
+            InsertData();
+
             return returnValue;
         }
 
@@ -579,11 +581,16 @@ namespace RiverLinkReport.BAL
             ChromeOptions options = new ChromeOptions();
             if (runHeadless == false)
             {
-                options.AddArgument("--disable-extensions --disable-accelerated-video-decode");
+                options.AddArgument("--disable-extensions");
+                options.AddArgument("--disable-accelerated-video-decode");
             }
             else
             {
-                options.AddArgument("--disable-extensions --disable-accelerated-video-decode --headless --disable-gpu");
+                options.AddArgument("--disable-extensions");
+                options.AddArgument("--disable-accelerated-video-decode");
+                options.AddArgument("--headless");
+                options.AddArgument("--disable-gpu");
+                options.AddArgument("--enable-logging");
             }            
             Process[] before = Process.GetProcessesByName("chrome");
             IWebDriver driver = new ChromeDriver(options);

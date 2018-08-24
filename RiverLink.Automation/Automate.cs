@@ -433,11 +433,6 @@ namespace RiverLink.Automation
                         ReturnValue.Add(v);
                         engine.HeaderText = engine.GetFileHeader();
                         engine.WriteFile($"{dataDirectory}Vehicles-{timeStamp}.Txt", ReturnValue);
-                        //create transponder file
-                        //create transponders list
-                        //loop through list of vehicles to extract transponders
-                        //save and write transponder list
-                        //add transponderdata class
                     }
                 }
                 else
@@ -569,7 +564,6 @@ namespace RiverLink.Automation
                             var cells = rowDoc.DocumentNode.SelectNodes("//td/span");
                             t.TransactionType = cells[0].InnerHtml;
                             t.Amount = GetTransactionAmount(cells[1].InnerHtml);
-
                             t.TransactionDate = GetTransactionDate(cells[2].InnerHtml);                           
                             if (t.TransactionDate == LatestDate)
                             {

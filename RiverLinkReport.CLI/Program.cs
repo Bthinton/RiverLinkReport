@@ -21,8 +21,6 @@ namespace RiverLinkReport.CLI
         private delegate void DisplayDelegate(string text);
         public static IWebDriver driver;
         public static List<int> DriverProcessIds { get; set; }
-        private static string _username = string.Empty;
-        private static string _password = string.Empty;
         private Automate auto;
 
         public static void Main(string[] Args)
@@ -49,12 +47,13 @@ namespace RiverLinkReport.CLI
                             return;
                     }
                 }
-                TestUsernameAndPassword(Automate.username, Automate.password);
+                Program Test = new Program();
+                Test.TestUsernameAndPassword(Automate.username, Automate.password);
                 RiverLinkLogic.InsertData();
                 Application.Exit();
             }
             else
-            {
+            {              
                 DisplayMenu();
             }
         }
@@ -116,7 +115,7 @@ namespace RiverLinkReport.CLI
             }
         }
 
-        public static bool TestUsernameAndPassword(string Username, string Password)
+        public bool TestUsernameAndPassword(string Username, string Password)
         {
             bool returnValue = false;
             if (Username == string.Empty && Password == string.Empty)
@@ -129,7 +128,7 @@ namespace RiverLinkReport.CLI
 
             RiverLinkLogic worker = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
             worker.StatusChanged += Worker_StatusChanged;
-            if (worker.Login("ericallenpaul@hotmail.com", "!Sttng0812"))
+            if (worker.Login("username", "password"))
             {
                 Console.WriteLine("Operation Successful");
             } else

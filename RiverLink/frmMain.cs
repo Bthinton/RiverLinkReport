@@ -25,6 +25,7 @@ namespace RiverLink
         bool shouldFireFormLoad;
         bool sortAscending;
         object path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
+        public bool headless = RiverLinkLogic.runHeadless;
 
 
 
@@ -222,6 +223,15 @@ namespace RiverLink
 
         private void btnRefreshData_Click(object sender, EventArgs e)
         {
+            if (cbHeadless.Checked)
+            {
+                RiverLinkLogic.runHeadless = true;
+            }
+            else
+            {
+                RiverLinkLogic.runHeadless = false;
+            }
+
             if (path == null)
             {
                 frmChrome frmC = new frmChrome();
@@ -234,16 +244,7 @@ namespace RiverLink
                     checkChrome();
                 }
             }
-
-            if (cbHeadless.Checked)
-            {
-                RiverLinkLogic.runHeadless = true;
-            }
-            else
-            {
-                RiverLinkLogic.runHeadless = false;
-            }
-            
+         
             frmProgress frm = new frmProgress();
             frm.action = "GetData";
             if (frm.ShowDialog() == DialogResult.Cancel)
