@@ -14,10 +14,10 @@ namespace RiverLinkReport.CLI
 {
     public class Program
     {
-        private readonly static Logger nlogger = NLog.LogManager.GetCurrentClassLogger();
-        private readonly static string AppName = "RiverLinkReportCli";
-        private readonly static int MillisecondsBetweenTransactions = 2000;
-        private readonly static int TimeBetweenErrors = 2000;
+        private static readonly Logger nlogger = LogManager.GetCurrentClassLogger();
+        private static readonly string AppName = "RiverLinkReportCli";
+        private static readonly int MillisecondsBetweenTransactions = 2000;
+        private static readonly int TimeBetweenErrors = 2000;
         private delegate void DisplayDelegate(string text);
         public static IWebDriver driver;
         public static List<int> DriverProcessIds { get; set; }
@@ -29,7 +29,7 @@ namespace RiverLinkReport.CLI
             {
                 int option = 0;
                 Console.WriteLine("Execute Automated");
-                System.Threading.Thread.Sleep(1000);
+                Thread.Sleep(1000);
                 while ((option = GetOpt.GetOptions(Args, "u:p:o")) != -1)
                 {
                     switch ((char)option)
@@ -47,9 +47,13 @@ namespace RiverLinkReport.CLI
                             return;
                     }
                 }
-                Program Test = new Program();
-                Test.TestUsernameAndPassword(Automate.username, Automate.password);
-                RiverLinkLogic.InsertData();
+                //Program Test = new Program();
+                //Test.TestUsernameAndPassword(Automate.username, Automate.password);
+                //RiverLinkLogic.InsertData();
+                RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
+                Logic.Login(Automate.username, Automate.password);
+                Logic.GetData();
+                Logic.InsertData();
                 Application.Exit();
             }
             else
@@ -128,10 +132,11 @@ namespace RiverLinkReport.CLI
 
             RiverLinkLogic worker = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
             worker.StatusChanged += Worker_StatusChanged;
-            if (worker.Login("username", "password"))
+            if (worker.Login(Automate.username, Automate.password))
             {
                 Console.WriteLine("Operation Successful");
-            } else
+            }
+            else
             {
                 Console.WriteLine("Operation failed");
             }

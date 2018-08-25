@@ -28,7 +28,7 @@ namespace RiverLinkReport.BAL
         public static int month;
         public static int year;
         public static int transponderNumber;
-        public static bool runHeadless = true;
+        public static bool runHeadless;
 
         private Automate Worker;
         #endregion Fields
@@ -56,7 +56,9 @@ namespace RiverLinkReport.BAL
         protected virtual void OnStatusChanged(string Message)
         {
             if (StatusChanged != null)
+            {
                 StatusChanged(Message);
+            }
         }
         #endregion Events
 
@@ -447,7 +449,7 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
-        public static bool InsertData()
+        public bool InsertData()
         {
             bool returnValue = false;
             string dataDirectory = $@"{AppDomain.CurrentDomain.BaseDirectory}\Data\";
@@ -571,8 +573,6 @@ namespace RiverLinkReport.BAL
                 return false;
             }
 
-            GetData();
-
             return returnValue;
         }
 
@@ -581,16 +581,11 @@ namespace RiverLinkReport.BAL
             ChromeOptions options = new ChromeOptions();
             if (runHeadless == false)
             {
-                options.AddArgument("--disable-extensions");
-                options.AddArgument("--disable-accelerated-video-decode");
+                options.AddArgument("--disable-extensions --disable-accelerated-video-decode");
             }
             else
             {
-                options.AddArgument("--disable-extensions");
-                options.AddArgument("--disable-accelerated-video-decode");
-                options.AddArgument("--headless");
-                options.AddArgument("--disable-gpu");
-                options.AddArgument("--enable-logging");
+                options.AddArgument("--disable-extensions --disable-accelerated-video-decode --headless");
             }            
             Process[] before = Process.GetProcessesByName("chrome");
             IWebDriver driver = new ChromeDriver(options);

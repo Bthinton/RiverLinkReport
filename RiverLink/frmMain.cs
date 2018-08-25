@@ -12,7 +12,6 @@ using System.Windows.Forms;
 //Fix code so can count number of steps on progress bar
 //Create settings form for entering username and password
 //store username and password and encrypt both(symmetrical encryption)
-//
 
 
 namespace RiverLink
@@ -25,7 +24,6 @@ namespace RiverLink
         bool shouldFireFormLoad;
         bool sortAscending;
         object path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
-        public bool headless = RiverLinkLogic.runHeadless;
 
 
 

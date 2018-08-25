@@ -1,11 +1,3 @@
-/*
-Rewrite transaction data getter to stop once newest date found
-Pass parameters to CLI to launch fully automated data getter 
-console.exe args
-
-Install 2012 SQL Server (SSMS)
-*/
-
 using FileHelpers;
 using HtmlAgilityPack;
 using OpenQA.Selenium;
@@ -34,7 +26,7 @@ namespace RiverLink.Automation
         private static int WebDriverWaitSeconds = Convert.ToInt32(ConfigurationManager.AppSettings["WebDriverWaitSeconds"]);
         private static double ExplicitWaitSeconds = Convert.ToDouble(ConfigurationManager.AppSettings["PageLoadWaitSeconds"]);
         private IWebDriver driver { get; set; }
-        private string StatusMessage = "";
+        public string StatusMessage = "";
         private delegate bool PageCheckDelegate(IWebDriver driver);
         private delegate bool PageCheckDelegateNumber(IWebDriver driver, int PageNumber);
         private string BaseURL = string.Empty;
@@ -43,7 +35,6 @@ namespace RiverLink.Automation
         private static string path = AppDomain.CurrentDomain.BaseDirectory;
         private static string dataDirectory = $"{path}Data\\";
         private static string timeStamp = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}";
-        private static List<VehicleClass> VehicleClasses = new List<VehicleClass>();
         public static DateTime LatestDate { get; set; }
         public static string username { get; set; }
         public static string password { get; set; }
@@ -114,7 +105,7 @@ namespace RiverLink.Automation
             try
             {
                 StatusMessage = $"Going To {BaseURL}...";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
                 driver.Url = BaseURL;
                 Thread.Sleep(ShortWait);
                 if (IsHomePage(driver))

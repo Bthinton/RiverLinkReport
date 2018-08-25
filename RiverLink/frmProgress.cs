@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using RiverLinkReport.CLI;
+
+
 
 namespace RiverLink
 {
@@ -40,14 +34,11 @@ namespace RiverLink
         {
             if (action == "GetData")
             {
-                ProcessStartInfo startInfo = new ProcessStartInfo(@"C:\Users\" + Environment.UserName + @"\source\repos\RiverLinkReport\RiverLinkReport.CLI\bin\Debug\RiverLinkReport.CLI.exe");
-                startInfo.WindowStyle = ProcessWindowStyle.Minimized;
-
-                startInfo.Arguments = "u:p:o";
-
-                Process.Start(startInfo);
-                //RiverLinkReport.BAL.RiverLinkLogic Logic = new RiverLinkReport.BAL.RiverLinkLogic("https://riverlink.com/", 2000, 1000);
-                //Logic.Login("Username", "Password");
+                RiverLinkReport.BAL.RiverLinkLogic Logic = new RiverLinkReport.BAL.RiverLinkLogic("https://riverlink.com/", 2000, 1000);
+                Logic.Login("username", "password");
+                Logic.GetData();
+                Logic.InsertData();
+                this.Close();
             }
             //for (int i = 1; i <= 50; i++)
             //{
