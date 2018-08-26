@@ -112,23 +112,23 @@ namespace RiverLink.Automation
                 {
                     returnValue = "Success";
                     StatusMessage = $"Home Page Loaded...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     StatusMessage = $"Page Verified...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                 }
                 else
                 {
                     StatusMessage = $"Home Page Not Loaded";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     StatusMessage = $"Page could not be verified";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                 }
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
             }
             return returnValue;
         }
@@ -145,30 +145,30 @@ namespace RiverLink.Automation
             try
             {
                 StatusMessage = $"Going To {BaseURL}{Properties.Settings.Default.U_Login}...";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
                 driver.Url = $"{BaseURL}{Properties.Settings.Default.U_Login}";
                 Thread.Sleep(ShortWait);
                 if (IsLoginPage(driver))
                 {
                     returnValue = "Success";
                     StatusMessage = $"Login Page Loaded...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     StatusMessage = $"Page Verified...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                 }
                 else
                 {
                     StatusMessage = $"Login Page Not Loaded";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     StatusMessage = $"Page could not be verified";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                 }
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
             }
             return returnValue;
         }
@@ -186,43 +186,43 @@ namespace RiverLink.Automation
             try
             {
                 StatusMessage = $"Going To {BaseURL}{Properties.Settings.Default.U_Transaction}...";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
                 driver.Url = $"{BaseURL}{Properties.Settings.Default.U_Transaction}";
                 Thread.Sleep(ShortWait);
                 if (IsTransactionHistory(driver))
                 {
                     returnValue = "Success";
                     StatusMessage = $"Transaction History Loaded...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     StatusMessage = $"Page Verified...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                 }
                 else
                 {
                     StatusMessage = $"Transaction History Not Loaded";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     StatusMessage = $"Page could not be verified";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                 }
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
             }
 
             if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_ResultsPerPageBTN)))
             {
                 StatusMessage = $"Switching to largest result per page.";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
 
                 driver.FindElement(By.XPath(Properties.Settings.Default.X_ResultsPerPageBTN)).Click();
                 System.Threading.Thread.Sleep(2000);
                 driver.FindElement(By.XPath(Properties.Settings.Default.X_MaxPerPage)).Click();
 
                 StatusMessage = $"Filter option changed.";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
             }
             else
             {
@@ -244,15 +244,15 @@ namespace RiverLink.Automation
             if (IsElementDisplayed(driver, By.XPath(detailBTNX_Path)))
             {
                 StatusMessage = $"Navigating To Detail Page...";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
                 driver.FindElement(By.XPath(detailBTNX_Path)).Click();
                 if (IsDetailPage(driver))
                 {
                     returnValue = "Success";
                     StatusMessage = $"Detail Page Loaded...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     StatusMessage = $"Page Verified...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                 }
             }
             return returnValue;
@@ -273,18 +273,18 @@ namespace RiverLink.Automation
             if (x >= 1000)
             {
                 StatusMessage = $"Next button verified...";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
                 StatusMessage = $"Navigating To Next Transaction Page...";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
                 driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionNextBTN)).Click();
                 GetTransactionData(out string success);
                 if (IsTransactionHistory(driver))
                 {
                     returnValue = "Success";
                     StatusMessage = $"Next Transaction Page Loaded...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     StatusMessage = $"Page Verified...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                 }
             }
             return returnValue;
@@ -308,11 +308,11 @@ namespace RiverLink.Automation
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_UserField)))
                 {
                     StatusMessage = "Selecting Username Field...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     driver.FindElement(By.XPath(Properties.Settings.Default.X_UserField)).Clear();
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys(username);
                 }
                 else
@@ -322,12 +322,12 @@ namespace RiverLink.Automation
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_PassField)))
                 {
                     StatusMessage = "Selecting Password Field...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
 
                     driver.FindElement(By.XPath(Properties.Settings.Default.X_PassField)).Clear();
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys(password);
                 }
                 else
@@ -337,7 +337,7 @@ namespace RiverLink.Automation
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_LoginBTN)))
                 {
                     StatusMessage = "Logging In...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
 
                     driver.FindElement(By.XPath(Properties.Settings.Default.X_LoginBTN)).Click();
                     System.Threading.Thread.Sleep(3000);
@@ -350,9 +350,9 @@ namespace RiverLink.Automation
                 {
                     returnValue = "Success";
                     StatusMessage = $"Overview Page Loaded...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     StatusMessage = $"Page Verified...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                 }
                 else
                 {
@@ -363,7 +363,7 @@ namespace RiverLink.Automation
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
             }
             return returnValue;
         }
@@ -382,16 +382,12 @@ namespace RiverLink.Automation
             if (IsAccountOverview(driver))
             {
                 Success = "Success";
-                StatusMessage = $"Overview Page Loaded...";
-                OnStatusChanged(StatusMessage);
-                StatusMessage = $"Page Verified...";
-                OnStatusChanged(StatusMessage);
                 StatusMessage = "Verifying Vehicle Table...";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_VehicleTable)))
                 {
                     StatusMessage = "Vehicle Table Verified...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     string html = driver.PageSource;
                     HtmlDocument doc = new HtmlDocument();
                     doc.LoadHtml(html);
@@ -447,15 +443,15 @@ namespace RiverLink.Automation
             {
                 Success = "Success";
                 StatusMessage = $"Overview Page Loaded...";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
                 StatusMessage = $"Page Verified...";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
                 StatusMessage = "Verifying Vehicle Table...";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_VehicleTable)))
                 {
                     StatusMessage = "Vehicle Table Verified...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     string html = driver.PageSource;
                     HtmlDocument doc = new HtmlDocument();
                     doc.LoadHtml(html);
@@ -534,14 +530,14 @@ namespace RiverLink.Automation
                 {
                     Success = "Success";
                     StatusMessage = $"Transaction History Loaded...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     StatusMessage = $"Page Verified...";
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
 
                     if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_TransactionTable)))
                     {
                         StatusMessage = $"Transaction Table Verified...";
-                        OnStatusChanged(StatusMessage);
+                        Console.WriteLine(StatusMessage);
                         var engine = new FileHelperEngine<TransactionData>();
                         string html = driver.PageSource;
                         HtmlDocument doc = new HtmlDocument();
@@ -559,7 +555,7 @@ namespace RiverLink.Automation
                             if (t.TransactionDate == LatestDate)
                             {
                                 StatusMessage = $"Transaction Already Recorded";
-                                OnStatusChanged(StatusMessage);
+                                Console.WriteLine(StatusMessage);
                                 if (System.IO.File.Exists($"{dataDirectory}Transactions-{timeStamp}.Txt"))
                                 {
                                     engine.AppendToFile($"{dataDirectory}Transactions-{timeStamp}.Txt", ReturnValue);
@@ -592,9 +588,9 @@ namespace RiverLink.Automation
                             if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_DetailPageTable)))
                             {
                                 StatusMessage = $"Detail Page Table Verified...";
-                                OnStatusChanged(StatusMessage);
+                                Console.WriteLine(StatusMessage);
                                 StatusMessage = $"Pulling Related Transactions...";
-                                OnStatusChanged(StatusMessage);
+                                Console.WriteLine(StatusMessage);
                                 string html2 = driver.PageSource;
                                 HtmlDocument doc2 = new HtmlDocument();
                                 doc2.LoadHtml(html2);
@@ -616,7 +612,7 @@ namespace RiverLink.Automation
                             else
                             {
                                 StatusMessage = $"No Detail Page Table Available...";
-                                OnStatusChanged(StatusMessage);
+                                Console.WriteLine(StatusMessage);
                             }
                             driver.Navigate().Back();                                
                             
@@ -652,7 +648,7 @@ namespace RiverLink.Automation
             catch (Exception ex)
             {
                 StatusMessage = $"{method} Error: Unexpected Error {ex}";
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
             }
             return ReturnValue;
         }
@@ -1243,20 +1239,20 @@ namespace RiverLink.Automation
                 if (pcd(driver))
                 {
                     StatusMessage = String.Format("{0} Page Loaded.", PageName);
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     returnValue = true;
                     break;
                 }
 
                 StatusMessage = String.Format("{0} Page doesn't seem to be loaded yet, wait 2 seconds and check again.", PageName);
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
 
                 //sleep for 2 seconds then check the page again
                 System.Threading.Thread.Sleep(2000);
                 MaxPageLoadWait--;
 
                 StatusMessage = String.Format("Checking {0} Page again, {1} attempts remaining.", PageName, MaxPageLoadWait);
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
             }
 
             return returnValue;
@@ -1273,20 +1269,20 @@ namespace RiverLink.Automation
                 if (pcd(driver, PageNumber))
                 {
                     StatusMessage = String.Format("{0} Page Loaded.", PageName);
-                    OnStatusChanged(StatusMessage);
+                    Console.WriteLine(StatusMessage);
                     returnValue = true;
                     break;
                 }
 
                 StatusMessage = String.Format("{0} Page doesn't seem to be loaded yet, wait 2 seconds and check again.", PageName);
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
 
                 //sleep for 2 seconds then check the page again
                 System.Threading.Thread.Sleep(2000);
                 MaxPageLoadWait--;
 
                 StatusMessage = String.Format("Checking {0} Page again, {1} attempts remaining.", PageName, MaxPageLoadWait);
-                OnStatusChanged(StatusMessage);
+                Console.WriteLine(StatusMessage);
             }
 
             return returnValue;

@@ -579,22 +579,24 @@ namespace RiverLinkReport.BAL
         private IWebDriver GetNewDriver()
         {
             ChromeOptions options = new ChromeOptions();
+            ChromeDriverService service = ChromeDriverService.CreateDefaultService();
+            service.HideCommandPromptWindow = false;
             if (runHeadless == false)
             {
                 options.AddArgument("--disable-extensions --disable-accelerated-video-decode");
             }
             else
             {
+                service.HideCommandPromptWindow = true;
                 options.AddArgument("--disable-extensions --disable-accelerated-video-decode --headless");
             }            
             Process[] before = Process.GetProcessesByName("chrome");
-            IWebDriver driver = new ChromeDriver(options);
+            IWebDriver driver = new ChromeDriver(service, options);
             driver.Manage().Window.Maximize();        
             Process[] after = Process.GetProcessesByName("chrome");
             List<int> beforeIds = before.Select(x => x.Id)?.ToList();
             List<int> afterIds = after.Select(x => x.Id)?.ToList();
             DriverProcessIds = afterIds.Except(beforeIds).ToList();
-
             return driver;
         }
 

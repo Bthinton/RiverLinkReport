@@ -1,7 +1,8 @@
-﻿using System;
+﻿using OpenQA.Selenium.Chrome;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-
+using RiverLinkReport.BAL;
 
 
 namespace RiverLink
@@ -34,7 +35,12 @@ namespace RiverLink
         {
             if (action == "GetData")
             {
-                RiverLinkReport.BAL.RiverLinkLogic Logic = new RiverLinkReport.BAL.RiverLinkLogic("https://riverlink.com/", 2000, 1000);
+                if (RiverLinkLogic.runHeadless == false)
+                {
+                    Program.showConsole = true;
+                    Program.Console();
+                }
+                RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
                 Logic.Login("username", "password");
                 Logic.GetData();
                 Logic.InsertData();

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Windows.Forms;
 
-//TODO Fix Headless version 
+//TODO
 //Fix code so can count number of steps on progress bar
 //Create settings form for entering username and password
 //store username and password and encrypt both(symmetrical encryption)
@@ -194,7 +194,7 @@ namespace RiverLink
 
         private void lblTransponder_Click(object sender, EventArgs e)
         {
-            FrmSummaryDetail frm = new FrmSummaryDetail(dgTransactions.DataSource);
+            frmSummaryDetail frm = new frmSummaryDetail(dgTransactions.DataSource);
             frm.Year = cmbYear.SelectedItem.ToString();
             frm.Month = cmbMonth.SelectedItem.ToString();
             frm.TransponderNumber = cmbTransponder.SelectedItem.ToString();
@@ -265,6 +265,12 @@ namespace RiverLink
                 Process.Start(@"C:\Users\" + Environment.UserName + @"\Downloads\ChromeSetup.exe");
             }
             path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmSettings settings = new frmSettings();
+            settings.ShowDialog();
         }
     }
 }

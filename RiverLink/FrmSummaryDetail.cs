@@ -6,14 +6,14 @@ using System.Windows.Forms;
 
 namespace RiverLink
 {
-    public partial class FrmSummaryDetail : Form
+    public partial class frmSummaryDetail : Form
     {
         bool sortAscending;
         public string TransponderNumber { get; set; }
         public string Month { get; set; }
         public string Year { get; set; }
 
-        public FrmSummaryDetail(object dataSource)
+        public frmSummaryDetail(object dataSource)
         {
             InitializeComponent();
 

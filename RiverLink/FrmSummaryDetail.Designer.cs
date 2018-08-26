@@ -1,6 +1,6 @@
 ﻿namespace RiverLink
 {
-    partial class FrmSummaryDetail
+    partial class frmSummaryDetail
     {
         /// <summary>
         /// Required designer variable.
