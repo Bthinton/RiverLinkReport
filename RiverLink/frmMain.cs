@@ -10,8 +10,6 @@ using System.Windows.Forms;
 
 //TODO
 //Fix code so can count number of steps on progress bar
-//Create settings form for entering username and password
-//store username and password and encrypt both(symmetrical encryption)
 
 
 namespace RiverLink
@@ -25,11 +23,8 @@ namespace RiverLink
         bool sortAscending;
         object path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
 
-
-
         public frmMain()
         {
-            //Properties.Settings.Default.Username
             InitializeComponent();           
         }
 

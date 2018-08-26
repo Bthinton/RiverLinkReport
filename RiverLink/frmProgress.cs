@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using RiverLinkReport.BAL;
-
+using System.Security.Cryptography;
 
 namespace RiverLink
 {
@@ -33,6 +33,8 @@ namespace RiverLink
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
+            string decryptedUsername = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Username, "username", "salt");
+            string decryptedPassword = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Password, "password", "salt");
             if (action == "GetData")
             {
                 if (RiverLinkLogic.runHeadless == false)
@@ -41,7 +43,7 @@ namespace RiverLink
                     Program.Console();
                 }
                 RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
-                Logic.Login("username", "password");
+                Logic.Login(decryptedUsername, decryptedPassword);
                 Logic.GetData();
                 Logic.InsertData();
                 this.Close();
