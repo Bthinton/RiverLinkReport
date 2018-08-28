@@ -16,6 +16,8 @@ namespace RiverLink
         public delegate void ProgressEvent(object sender, ProgressEventArgs e);
         private event ProgressEvent onProgressEvent;
         public string action;
+        private readonly string decryptedUsername = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Username, "username", "salt");
+        private readonly string decryptedPassword = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Password, "password", "salt");
 
         public void SetProgressEvent(object sender, ProgressEventArgs e)
         {
@@ -33,33 +35,30 @@ namespace RiverLink
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            string decryptedUsername = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Username, "username", "salt");
-            string decryptedPassword = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Password, "password", "salt");
-            if (action == "GetData")
+            if (RiverLinkLogic.runHeadless == false)
             {
-                if (RiverLinkLogic.runHeadless == false)
-                {
-                    Program.showConsole = true;
-                    Program.Console();
-                }
-                RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
-                Logic.Login(decryptedUsername, decryptedPassword);
-                Logic.GetData();
-                Logic.InsertData();
-                this.Close();
+                Program.showConsole = true;
+                Program.Console();
             }
-            //for (int i = 1; i <= 50; i++)
-            //{
-            //    System.Threading.Thread.Sleep(200);
-            //    backgroundWorker1.ReportProgress(i * 2);
-            //    if (onProgressEvent != null)
-            //    {
-            //        for (int j = 1; j <= 100; j++)
-            //        {
-            //            onProgressEvent(this, new ProgressEventArgs($"Working on item {i}", $"Working on sub item {j}"));                       
-            //        }
-            //    }
-            //}
+            for (int i = 1; i <= 50; i++)
+            {
+                if (action == "GetData")
+                { 
+                    RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
+                    Logic.Login(decryptedUsername, decryptedPassword);
+                    Logic.GetData();
+                    Logic.InsertData();
+                }
+                System.Threading.Thread.Sleep(200);
+                backgroundWorker1.ReportProgress(i * 2);
+                if (onProgressEvent != null)
+                {
+                    for (int j = 1; j <= 100; j++)
+                    {
+                        onProgressEvent(this, new ProgressEventArgs($"Working on item {i}", $"Working on sub item {j}"));
+                    }
+                }
+            }
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
