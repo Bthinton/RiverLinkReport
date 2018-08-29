@@ -35,5 +35,17 @@ namespace RiverLink
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+        private void cbPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbPassword.Checked)
+            {
+                tboxPassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                tboxPassword.UseSystemPasswordChar = true;
+            }
+        }
     }
 }

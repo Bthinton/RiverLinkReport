@@ -35,6 +35,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbPassword = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblUsername
@@ -59,15 +60,16 @@
             // 
             this.tboxUsername.Location = new System.Drawing.Point(78, 56);
             this.tboxUsername.Name = "tboxUsername";
-            this.tboxUsername.Size = new System.Drawing.Size(230, 20);
+            this.tboxUsername.Size = new System.Drawing.Size(209, 20);
             this.tboxUsername.TabIndex = 2;
             // 
             // tboxPassword
             // 
             this.tboxPassword.Location = new System.Drawing.Point(78, 98);
             this.tboxPassword.Name = "tboxPassword";
-            this.tboxPassword.Size = new System.Drawing.Size(230, 20);
+            this.tboxPassword.Size = new System.Drawing.Size(209, 20);
             this.tboxPassword.TabIndex = 3;
+            this.tboxPassword.UseSystemPasswordChar = true;
             // 
             // btnCancel
             // 
@@ -98,11 +100,23 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Enter your RiverLink Username and Password.";
             // 
+            // cbPassword
+            // 
+            this.cbPassword.AutoSize = true;
+            this.cbPassword.Location = new System.Drawing.Point(78, 130);
+            this.cbPassword.Name = "cbPassword";
+            this.cbPassword.Size = new System.Drawing.Size(102, 17);
+            this.cbPassword.TabIndex = 7;
+            this.cbPassword.Text = "Show Password";
+            this.cbPassword.UseVisualStyleBackColor = true;
+            this.cbPassword.CheckedChanged += new System.EventHandler(this.cbPassword_CheckedChanged);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(313, 159);
+            this.Controls.Add(this.cbPassword);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
@@ -127,5 +141,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox cbPassword;
     }
 }

@@ -15,7 +15,6 @@ namespace RiverLink
         }
         public delegate void ProgressEvent(object sender, ProgressEventArgs e);
         private event ProgressEvent onProgressEvent;
-        public string action;
         private readonly string decryptedUsername = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Username, "username", "salt");
         private readonly string decryptedPassword = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Password, "password", "salt");
 
@@ -40,22 +39,37 @@ namespace RiverLink
                 Program.showConsole = true;
                 Program.Console();
             }
+            RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
             for (int i = 1; i <= 50; i++)
             {
-                if (action == "GetData")
-                { 
-                    RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
-                    Logic.Login(decryptedUsername, decryptedPassword);
-                    Logic.GetData();
-                    Logic.InsertData();
-                }
                 System.Threading.Thread.Sleep(200);
-                backgroundWorker1.ReportProgress(i * 2);
                 if (onProgressEvent != null)
                 {
                     for (int j = 1; j <= 100; j++)
                     {
-                        onProgressEvent(this, new ProgressEventArgs($"Working on item {i}", $"Working on sub item {j}"));
+                        switch (j)
+                        {
+                            case 1:
+                                onProgressEvent(this, new ProgressEventArgs($"Working on item {i}", $"Working on sub item {j}"));
+                                Logic.Login(decryptedUsername, decryptedPassword);
+                                backgroundWorker1.ReportProgress(25);
+                                break;
+                            case 2:
+                                onProgressEvent(this, new ProgressEventArgs($"Working on item {i}", $"Working on sub item {j}"));
+                                Logic.GetData();
+                                backgroundWorker1.ReportProgress(75);
+                                break;
+                            case 3:
+                                onProgressEvent(this, new ProgressEventArgs($"Working on item {i}", $"Working on sub item {j}"));
+                                Logic.InsertData();
+                                backgroundWorker1.ReportProgress(100);
+                                System.Threading.Thread.Sleep(3000);
+                                break;
+                            case 4:
+                                break;
+                            default:
+                                return;
+                        }                       
                     }
                 }
             }

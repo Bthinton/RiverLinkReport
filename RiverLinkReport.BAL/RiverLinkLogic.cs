@@ -544,9 +544,6 @@ namespace RiverLinkReport.BAL
             {
                 return false;
             }
-
-            InsertData();
-
             return returnValue;
         }
 

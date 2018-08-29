@@ -25,7 +25,7 @@ namespace RiverLink
 
         public frmMain()
         {
-            InitializeComponent();           
+            InitializeComponent();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -37,6 +37,11 @@ namespace RiverLink
         {
             filter();
             LoadVehiclePaymentGrid();
+            if (Properties.Settings.Default.Username == "" || Properties.Settings.Default.Password == "")
+            {
+                frmSettings settings = new frmSettings();
+                settings.ShowDialog();
+            }
         }
 
         internal void filter()
@@ -239,7 +244,6 @@ namespace RiverLink
             }
          
             frmProgress frm = new frmProgress();
-            frm.action = "GetData";
             if (frm.ShowDialog() == DialogResult.Cancel)
             {
                 MessageBox.Show("User Cancelled");
