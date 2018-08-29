@@ -92,6 +92,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enterUsernamePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetUsernamePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).BeginInit();
@@ -650,10 +652,26 @@
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enterUsernamePasswordToolStripMenuItem,
+            this.resetUsernamePasswordToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // enterUsernamePasswordToolStripMenuItem
+            // 
+            this.enterUsernamePasswordToolStripMenuItem.Name = "enterUsernamePasswordToolStripMenuItem";
+            this.enterUsernamePasswordToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.enterUsernamePasswordToolStripMenuItem.Text = "Enter Username/Password";
+            this.enterUsernamePasswordToolStripMenuItem.Click += new System.EventHandler(this.enterUsernamePasswordToolStripMenuItem_Click);
+            // 
+            // resetUsernamePasswordToolStripMenuItem
+            // 
+            this.resetUsernamePasswordToolStripMenuItem.Name = "resetUsernamePasswordToolStripMenuItem";
+            this.resetUsernamePasswordToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.resetUsernamePasswordToolStripMenuItem.Text = "Reset Username/Password";
+            this.resetUsernamePasswordToolStripMenuItem.Click += new System.EventHandler(this.resetUsernamePasswordToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -758,6 +776,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enterUsernamePasswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetUsernamePasswordToolStripMenuItem;
     }
 }
 

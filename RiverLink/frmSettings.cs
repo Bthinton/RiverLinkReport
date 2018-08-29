@@ -26,7 +26,6 @@ namespace RiverLink
             Properties.Settings.Default.Username = encryptedUsername;
             Properties.Settings.Default.Password = encryptedPassword;
             Properties.Settings.Default.Save();
-            this.DialogResult = DialogResult.Yes;
             this.Close();
         }
 

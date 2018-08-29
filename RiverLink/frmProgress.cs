@@ -42,7 +42,6 @@ namespace RiverLink
             RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
             for (int i = 1; i <= 50; i++)
             {
-                System.Threading.Thread.Sleep(200);
                 if (onProgressEvent != null)
                 {
                     for (int j = 1; j <= 100; j++)

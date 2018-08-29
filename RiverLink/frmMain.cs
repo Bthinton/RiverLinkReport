@@ -37,11 +37,6 @@ namespace RiverLink
         {
             filter();
             LoadVehiclePaymentGrid();
-            if (Properties.Settings.Default.Username == "" || Properties.Settings.Default.Password == "")
-            {
-                frmSettings settings = new frmSettings();
-                settings.ShowDialog();
-            }
         }
 
         internal void filter()
@@ -221,6 +216,12 @@ namespace RiverLink
 
         private void btnRefreshData_Click(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.Username == "" || Properties.Settings.Default.Password == "")
+            {
+                frmSettings settings = new frmSettings();
+                settings.ShowDialog();
+            }
+
             if (cbHeadless.Checked)
             {
                 RiverLinkLogic.runHeadless = true;
@@ -266,10 +267,27 @@ namespace RiverLink
             path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
         }
 
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void enterUsernamePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSettings settings = new frmSettings();
             settings.ShowDialog();
+        }
+
+        private void resetUsernamePasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Would you like to reset your default password?", "Reset Username/Password", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Properties.Settings.Default.Reset();
+                if (Properties.Settings.Default.Username == "" || Properties.Settings.Default.Password == "")
+                {
+                    MessageBox.Show("You have successfully reset your default Username and Password.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }                             
+            }
+            else
+            {
+                MessageBox.Show("You have not reset your default Username and Password.", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
     }
 }

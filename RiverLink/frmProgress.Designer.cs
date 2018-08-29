@@ -51,18 +51,18 @@
             this.lblPrimary.AutoSize = true;
             this.lblPrimary.Location = new System.Drawing.Point(12, 9);
             this.lblPrimary.Name = "lblPrimary";
-            this.lblPrimary.Size = new System.Drawing.Size(35, 13);
+            this.lblPrimary.Size = new System.Drawing.Size(56, 13);
             this.lblPrimary.TabIndex = 1;
-            this.lblPrimary.Text = "label1";
+            this.lblPrimary.Text = "Working...";
             // 
             // lblSecondary
             // 
             this.lblSecondary.AutoSize = true;
             this.lblSecondary.Location = new System.Drawing.Point(12, 51);
             this.lblSecondary.Name = "lblSecondary";
-            this.lblSecondary.Size = new System.Drawing.Size(35, 13);
+            this.lblSecondary.Size = new System.Drawing.Size(56, 13);
             this.lblSecondary.TabIndex = 2;
-            this.lblSecondary.Text = "label2";
+            this.lblSecondary.Text = "Working...";
             // 
             // progressBar1
             // 
