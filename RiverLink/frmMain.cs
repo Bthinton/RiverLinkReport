@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 
 //TODO
 //Fix code so can count number of steps on progress bar
@@ -187,16 +188,6 @@ namespace RiverLink
             }
         }
 
-        private void lblTransponder_Click(object sender, EventArgs e)
-        {
-            frmSummaryDetail frm = new frmSummaryDetail(dgTransactions.DataSource);
-            frm.Year = cmbYear.SelectedItem.ToString();
-            frm.Month = cmbMonth.SelectedItem.ToString();
-            frm.TransponderNumber = cmbTransponder.SelectedItem.ToString();
-            frm.ShowDialog();
-
-        }
-
         private double calculateTotalCost(double sum = 0)
         {            
             for (int i = 0; i < dgTransactions.Rows.Count; ++i)
@@ -292,6 +283,95 @@ namespace RiverLink
             {
                 MessageBox.Show("You have not reset your default Username and Password.", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            ExportWithFormatting(dgTransactions);
+        }
+
+        public void ExportWithFormatting(DataGridView dataGridView1)
+        {
+
+            var saveFileDialog1 = new SaveFileDialog
+            {
+                Filter = "xls files (*.xlsx)|*.xlsx|All files (*.*)|*.*|csv files (*.csv)|*.csv",
+                Title = "To Excel",
+                FileName = this.Text + " (" + DateTime.Now.ToString("yyyy-MM-dd") + ")"
+            };
+            if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
+            if (saveFileDialog1.FilterIndex == 3)
+            {
+                int columnCount = dgTransactions.ColumnCount;
+                string columnNames = "";
+                string[] output = new string[dgTransactions.RowCount + 1];
+                for (int i = 0; i < columnCount; i++)
+                {
+                    columnNames += dgTransactions.Columns[i].Name.ToString() + ",";
+                }
+                output[0] += columnNames;
+                for (int i = 1; (i - 1) < dgTransactions.RowCount; i++)
+                {
+                    for (int j = 0; j < columnCount; j++)
+                    {
+                        output[i] += dgTransactions.Rows[i - 1].Cells[j].Value.ToString() + ",";
+                    }
+                }
+                System.IO.File.WriteAllLines(saveFileDialog1.FileName, output, System.Text.Encoding.UTF8);
+            }
+            else
+            {
+                string fileName = saveFileDialog1.FileName;
+                XLWorkbook workbook = new XLWorkbook();
+                IXLWorksheet worksheet = workbook.Worksheets.Add(this.Text);
+                for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                {
+                    worksheet.Cell(1, i + 1).Value = dataGridView1.Columns[i].HeaderText;
+                }
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                    {
+                        worksheet.Cell(i + 2, j + 1).Value = dataGridView1.Rows[i].Cells[j].Value.ToString();
+                        if (worksheet.Cell(i + 2, j + 1).Value.ToString().Length > 0)
+                        {
+                            XLAlignmentHorizontalValues align;
+                            switch (dataGridView1.Rows[i].Cells[j].Style.Alignment)
+                            {
+                                case DataGridViewContentAlignment.BottomRight:
+                                    align = XLAlignmentHorizontalValues.Right;
+                                    break;
+                                case DataGridViewContentAlignment.MiddleRight:
+                                    align = XLAlignmentHorizontalValues.Right;
+                                    break;
+                                case DataGridViewContentAlignment.TopRight:
+                                    align = XLAlignmentHorizontalValues.Right;
+                                    break;
+                                case DataGridViewContentAlignment.BottomCenter:
+                                    align = XLAlignmentHorizontalValues.Center;
+                                    break;
+                                case DataGridViewContentAlignment.MiddleCenter:
+                                    align = XLAlignmentHorizontalValues.Center;
+                                    break;
+                                case DataGridViewContentAlignment.TopCenter:
+                                    align = XLAlignmentHorizontalValues.Center;
+                                    break;
+                                default:
+                                    align = XLAlignmentHorizontalValues.Left;
+                                    break;
+                            }
+                            worksheet.Cell(i + 2, j + 1).Style.Alignment.Horizontal = align;
+                            XLColor xlColor = XLColor.FromColor(dataGridView1.Rows[i].Cells[j].Style.SelectionBackColor);
+                            worksheet.Cell(i + 2, j + 1).AddConditionalFormat().WhenLessThan(1).Fill.SetBackgroundColor(xlColor);
+                            worksheet.Cell(i + 2, j + 1).Style.Font.FontName = dataGridView1.Font.Name;
+                            worksheet.Cell(i + 2, j + 1).Style.Font.FontSize = dataGridView1.Font.Size;
+                        }
+                    }
+                }
+                worksheet.Columns().AdjustToContents();
+                workbook.SaveAs(fileName);
+            }
+            MessageBox.Show("Export Successful!");
         }
     }
 }

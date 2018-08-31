@@ -13,7 +13,7 @@ using System.Web;
 
 
 //TODO Apply status messages in place of console.writeline
-//Fix progress bar to should status messages(use invoke for different thread)
+//Fix progress bar to show status messages(use invoke for different thread)
 //On settings form add Test Password with checkbox
 
 namespace RiverLink.Automation
