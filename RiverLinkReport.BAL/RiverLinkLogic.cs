@@ -19,7 +19,7 @@ namespace RiverLinkReport.BAL
         #region Fields
         private string StatusMessage = string.Empty;
         public IWebDriver driver;
-        public List<int> DriverProcessIds { get; set; }
+        public static List<int> DriverProcessIds { get; set; }
         private string BaseURL = string.Empty;
         private int ShortWait = 1000;
         private int LongWait = 2000;
@@ -29,14 +29,17 @@ namespace RiverLinkReport.BAL
         public static int year;
         public static int transponderNumber;
         public static bool runHeadless;
+        public delegate void StatusChangedEventHandler(string Message);
+        public event StatusChangedEventHandler PrimaryStatusChanged;
+        public event StatusChangedEventHandler SecondaryStatusChanged;
 
         private Automate Worker;
         #endregion Fields
 
         #region Constructors
-        public RiverLinkLogic(string URL, int LWait, int SWait)
+        public RiverLinkLogic(string URL, int LWait, int SWait, IWebDriver chromeDriver)
         {
-            driver = GetNewDriver();
+            driver = chromeDriver;
             BaseURL = URL;
             LongWait = LWait;
             ShortWait = SWait;
@@ -44,18 +47,50 @@ namespace RiverLinkReport.BAL
             List<VehicleClass> VehicleClasses = context.VehicleClasses.ToList();
             List<Transponder> TransponderList = context.Transponders.ToList();
             Worker = new Automate(driver, BaseURL, LongWait, ShortWait, VehicleClasses, TransponderList);
-            Worker.StatusChanged += Worker_StatusChanged;
+            Worker.OnPrimaryStatusChanged += Worker_OnPrimaryStatusChanged;
+            Worker.OnSecondaryStatusChanged += Worker_OnSecondaryStatusChanged;
+            Worker.OnErrorStatusChanged += Worker_OnErrorStatusChanged;
+        }
+
+        private void Worker_OnErrorStatusChanged(string Message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(Message);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        private void Worker_OnPrimaryStatusChanged(string Message)
+        {
+            if (PrimaryStatusChanged != null)
+            {
+                PrimaryStatusChanged(Message);
+            }
+        }
+
+        private void Worker_OnSecondaryStatusChanged(string Message)
+        {
+            if (SecondaryStatusChanged != null)
+            {
+                SecondaryStatusChanged(Message);
+            }
         }
 
         #endregion Constructors
 
         #region Events
-        public delegate void StatusChangedEventHandler(string Message);
 
         public event StatusChangedEventHandler StatusChanged;
-        protected virtual void OnStatusChanged(string Message)
+        protected virtual void OnPrimaryStatusChanged(string Message)
         {
-            if (StatusChanged != null)
+            if (PrimaryStatusChanged != null)
+            {
+                StatusChanged(Message);
+            }
+        }
+
+        protected virtual void OnSecondaryStatusChanged(string Message)
+        {
+            if (SecondaryStatusChanged != null)
             {
                 StatusChanged(Message);
             }
@@ -573,7 +608,7 @@ namespace RiverLinkReport.BAL
             return returnValue;
         }
 
-        private IWebDriver GetNewDriver()
+        public static IWebDriver GetNewDriver()
         {
             ChromeOptions options = new ChromeOptions();
             ChromeDriverService service = ChromeDriverService.CreateDefaultService();
@@ -609,12 +644,6 @@ namespace RiverLinkReport.BAL
             if (process != null && !process.HasExited)
                 process.Kill();
         }
-
-        private void Worker_StatusChanged(string Message)
-        {
-            OnStatusChanged(Message);
-        }
-
     }
 
     public class CustomComparer : IComparer<string>

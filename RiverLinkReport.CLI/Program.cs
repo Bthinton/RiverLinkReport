@@ -47,14 +47,8 @@ namespace RiverLinkReport.CLI
                             return;
                     }
                 }
-                //Program Test = new Program();
-                //Test.TestUsernameAndPassword(Automate.username, Automate.password);
-                //RiverLinkLogic.InsertData();
-                RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
-                Logic.Login(Automate.username, Automate.password);
-                Logic.GetData();
-                Logic.InsertData();
-                Application.Exit();
+                driver = RiverLinkLogic.GetNewDriver();
+                runProgram();
             }
             else
             {              
@@ -75,6 +69,58 @@ namespace RiverLinkReport.CLI
             Console.WriteLine("7. Exit");
             var result = Console.ReadLine();
             return Convert.ToInt32(GetNumbers(result));
+        }
+
+        private static void runProgram()
+        {
+            try
+            {
+                RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000, driver);
+                Logic.PrimaryStatusChanged += Logic_PrimaryStatusChanged;
+                Logic.SecondaryStatusChanged += Logic_SecondaryStatusChanged;
+                Logic.Login(Automate.username, Automate.password);
+                Logic.GetData();
+                Logic.InsertData();
+                driver.Close();
+                appExit();
+            }
+            catch (Exception)
+            {
+                closeBrowser();
+                
+                throw;
+            }
+            finally
+            {
+                closeBrowser();
+            }        
+        }
+
+        private static void Logic_PrimaryStatusChanged(string Message)
+        {
+            Console.WriteLine(Message);
+        }
+
+        private static void Logic_SecondaryStatusChanged(string Message)
+        {
+            Console.WriteLine(Message);
+        }
+
+        private static void closeBrowser()
+        {
+            if (driver != null)
+            {
+                driver.Close();
+            }
+            foreach (var process in RiverLinkLogic.DriverProcessIds)
+            {
+                RiverLinkLogic.KillById(process);
+            }
+        }
+
+        private static void appExit()
+        {
+            Application.Exit();
         }
 
         private static string GetNumbers(string input)
@@ -129,8 +175,8 @@ namespace RiverLinkReport.CLI
                 Console.Write("Please enter your password: ");
                 Password = Console.ReadLine();
             }
-
-            RiverLinkLogic worker = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
+            
+            RiverLinkLogic worker = new RiverLinkLogic("https://riverlink.com/", 2000, 1000, driver);
             worker.StatusChanged += Worker_StatusChanged;
             if (worker.Login(Automate.username, Automate.password))
             {

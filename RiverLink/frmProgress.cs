@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using RiverLinkReport.BAL;
 using System.Security.Cryptography;
+using OpenQA.Selenium;
 
 namespace RiverLink
 {
@@ -17,6 +18,7 @@ namespace RiverLink
         private event ProgressEvent onProgressEvent;
         private readonly string decryptedUsername = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Username, "username", "salt");
         private readonly string decryptedPassword = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Password, "password", "salt");
+        public IWebDriver driver;
 
         public void SetProgressEvent(object sender, ProgressEventArgs e)
         {
@@ -34,44 +36,23 @@ namespace RiverLink
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (RiverLinkLogic.runHeadless == false)
+            driver = RiverLinkLogic.GetNewDriver();
+            RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000, driver);
+            if (onProgressEvent != null)
             {
-                Program.showConsole = true;
-                Program.Console();
-            }
-            RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000);
-            for (int i = 1; i <= 50; i++)
-            {
-                if (onProgressEvent != null)
-                {
-                    for (int j = 1; j <= 100; j++)
-                    {
-                        switch (j)
-                        {
-                            case 1:
-                                onProgressEvent(this, new ProgressEventArgs($"Working on item {i}", $"Working on sub item {j}"));
-                                Logic.Login(decryptedUsername, decryptedPassword);
-                                backgroundWorker1.ReportProgress(25);
-                                break;
-                            case 2:
-                                onProgressEvent(this, new ProgressEventArgs($"Working on item {i}", $"Working on sub item {j}"));
-                                Logic.GetData();
-                                backgroundWorker1.ReportProgress(75);
-                                break;
-                            case 3:
-                                onProgressEvent(this, new ProgressEventArgs($"Working on item {i}", $"Working on sub item {j}"));
-                                Logic.InsertData();
-                                backgroundWorker1.ReportProgress(100);
-                                System.Threading.Thread.Sleep(3000);
-                                break;
-                            case 4:
-                                break;
-                            default:
-                                return;
-                        }                       
-                    }
-                }
-            }
+                onProgressEvent(this, new ProgressEventArgs($"Working on item 1", $"Working on sub item 1"));
+                Logic.Login(decryptedUsername, decryptedPassword);
+                backgroundWorker1.ReportProgress(25);
+
+                onProgressEvent(this, new ProgressEventArgs($"Working on item 2", $"Working on sub item 1"));
+                Logic.GetData();
+                backgroundWorker1.ReportProgress(75);
+
+                onProgressEvent(this, new ProgressEventArgs($"Working on item 3", $"Working on sub item 1"));
+                Logic.InsertData();
+                backgroundWorker1.ReportProgress(100);
+                System.Threading.Thread.Sleep(1000);               
+            }           
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -98,6 +79,7 @@ namespace RiverLink
             this.Close();
         }
     }
+
     public class ProgressEventArgs : EventArgs
     {
         public ProgressEventArgs(string PrimaryT, string SecondaryT)

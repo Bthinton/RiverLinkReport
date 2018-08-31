@@ -11,6 +11,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 
+
+//TODO Apply status messages in place of console.writeline
+//Fix progress bar to should status messages(use invoke for different thread)
+//On settings form add Test Password with checkbox
+
 namespace RiverLink.Automation
 {
     /// <summary>
@@ -53,17 +58,32 @@ namespace RiverLink.Automation
         /// <summary>
         /// Defines event name for console messages
         /// </summary>
-        public event StatusChangedEventHandler StatusChanged;
+        public event StatusChangedEventHandler OnPrimaryStatusChanged;
+
+        public event StatusChangedEventHandler OnSecondaryStatusChanged;
+
+        public event StatusChangedEventHandler OnErrorStatusChanged;
         /// <summary>
         /// Performs the writing of messages to the console
         /// </summary>
         /// <param name="Message">
         /// The text that will be written to the console
         /// </param>
-        protected virtual void OnStatusChanged(string Message)
+        protected virtual void PrimaryStatusChanged(string Message)
         {
-            StatusChanged?.Invoke(Message);
+            OnPrimaryStatusChanged(Message);
         }
+
+        protected virtual void SecondaryStatusChanged(string Message)
+        {
+            OnSecondaryStatusChanged(Message);
+        }
+
+        protected virtual void ErrorStatusChanged(string Message)
+        {
+            OnErrorStatusChanged(Message);
+        }
+
         #endregion Events
 
         #region Constructors
@@ -105,30 +125,23 @@ namespace RiverLink.Automation
             try
             {
                 StatusMessage = $"Going To {BaseURL}...";
-                Console.WriteLine(StatusMessage);
+                OnPrimaryStatusChanged(StatusMessage);
                 driver.Url = BaseURL;
                 Thread.Sleep(ShortWait);
                 if (IsHomePage(driver))
                 {
                     returnValue = "Success";
                     StatusMessage = $"Home Page Loaded...";
-                    Console.WriteLine(StatusMessage);
+                    OnSecondaryStatusChanged(StatusMessage);
                     StatusMessage = $"Page Verified...";
-                    Console.WriteLine(StatusMessage);
-                }
-                else
-                {
-                    StatusMessage = $"Home Page Not Loaded";
-                    Console.WriteLine(StatusMessage);
-                    StatusMessage = $"Page could not be verified";
-                    Console.WriteLine(StatusMessage);
+                    OnSecondaryStatusChanged(StatusMessage);
                 }
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
-                Console.WriteLine(StatusMessage);
+                OnErrorStatusChanged(StatusMessage);
             }
             return returnValue;
         }
@@ -145,30 +158,23 @@ namespace RiverLink.Automation
             try
             {
                 StatusMessage = $"Going To {BaseURL}{Properties.Settings.Default.U_Login}...";
-                Console.WriteLine(StatusMessage);
+                OnPrimaryStatusChanged(StatusMessage);
                 driver.Url = $"{BaseURL}{Properties.Settings.Default.U_Login}";
                 Thread.Sleep(ShortWait);
                 if (IsLoginPage(driver))
                 {
                     returnValue = "Success";
                     StatusMessage = $"Login Page Loaded...";
-                    Console.WriteLine(StatusMessage);
+                    OnSecondaryStatusChanged(StatusMessage);
                     StatusMessage = $"Page Verified...";
-                    Console.WriteLine(StatusMessage);
-                }
-                else
-                {
-                    StatusMessage = $"Login Page Not Loaded";
-                    Console.WriteLine(StatusMessage);
-                    StatusMessage = $"Page could not be verified";
-                    Console.WriteLine(StatusMessage);
+                    OnSecondaryStatusChanged(StatusMessage);
                 }
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
-                Console.WriteLine(StatusMessage);
+                OnErrorStatusChanged(StatusMessage);
             }
             return returnValue;
         }
@@ -305,14 +311,16 @@ namespace RiverLink.Automation
             string returnValue = "Failed";
             try
             {
+                StatusMessage = "Logging In...";
+                OnPrimaryStatusChanged(StatusMessage);
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_UserField)))
                 {
                     StatusMessage = "Selecting Username Field...";
-                    Console.WriteLine(StatusMessage);
+                    OnSecondaryStatusChanged(StatusMessage);
                     driver.FindElement(By.XPath(Properties.Settings.Default.X_UserField)).Clear();
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Username...";
-                    Console.WriteLine(StatusMessage);
+                    OnSecondaryStatusChanged(StatusMessage);
                     driver.FindElement(By.XPath("//*[@id=\"txtUserName\"]")).SendKeys(username);
                 }
                 else
@@ -322,12 +330,12 @@ namespace RiverLink.Automation
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_PassField)))
                 {
                     StatusMessage = "Selecting Password Field...";
-                    Console.WriteLine(StatusMessage);
+                    OnSecondaryStatusChanged(StatusMessage);
 
                     driver.FindElement(By.XPath(Properties.Settings.Default.X_PassField)).Clear();
                     System.Threading.Thread.Sleep(3000);
                     StatusMessage = $"Entering Password...";
-                    Console.WriteLine(StatusMessage);
+                    OnSecondaryStatusChanged(StatusMessage);
                     driver.FindElement(By.XPath("//*[@id=\"txtPassword\"]")).SendKeys(password);
                 }
                 else
@@ -336,9 +344,6 @@ namespace RiverLink.Automation
                 }
                 if (IsElementDisplayed(driver, By.XPath(Properties.Settings.Default.X_LoginBTN)))
                 {
-                    StatusMessage = "Logging In...";
-                    Console.WriteLine(StatusMessage);
-
                     driver.FindElement(By.XPath(Properties.Settings.Default.X_LoginBTN)).Click();
                     System.Threading.Thread.Sleep(3000);
                 }
@@ -350,9 +355,9 @@ namespace RiverLink.Automation
                 {
                     returnValue = "Success";
                     StatusMessage = $"Overview Page Loaded...";
-                    Console.WriteLine(StatusMessage);
+                    OnSecondaryStatusChanged(StatusMessage);
                     StatusMessage = $"Page Verified...";
-                    Console.WriteLine(StatusMessage);
+                    OnSecondaryStatusChanged(StatusMessage);
                 }
                 else
                 {
@@ -363,7 +368,7 @@ namespace RiverLink.Automation
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 StatusMessage = $"{methodName} Error: Unexpected Error {ex}";
-                Console.WriteLine(StatusMessage);
+                OnErrorStatusChanged(StatusMessage);
             }
             return returnValue;
         }

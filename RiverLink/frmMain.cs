@@ -220,6 +220,10 @@ namespace RiverLink
             {
                 frmSettings settings = new frmSettings();
                 settings.ShowDialog();
+                if (settings.DialogResult == DialogResult.Cancel)
+                {
+                    return;
+                }
             }
 
             if (cbHeadless.Checked)
