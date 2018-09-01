@@ -9,7 +9,7 @@
       <Value Profile="(Default)">/RiverLink.External/Login</Value>
     </Setting>
     <Setting Name="V_LoginPage" Type="System.String" Scope="User">
-      <Value Profile="(Default)">RiverLink Account Login</Value>
+      <Value Profile="(Default)">Register as a New User</Value>
     </Setting>
     <Setting Name="V_AccountOverview" Type="System.String" Scope="User">
       <Value Profile="(Default)">Account Number</Value>
