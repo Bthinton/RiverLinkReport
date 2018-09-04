@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using CommandLine;
+using NLog;
 using OpenQA.Selenium;
 using RiverLink.Automation;
 using RiverLink.CLI;
@@ -22,37 +23,48 @@ namespace RiverLinkReport.CLI
         public static IWebDriver driver;
         public static List<int> DriverProcessIds { get; set; }
         public static bool test;
+        public static string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
 
-        public static void Main(string[] Args)
+        public static void Main(string[] args)
         {
-            if (Args.Any())
+            try
             {
-                int option = 0;
-                Console.WriteLine("Execute Automated");
-                Thread.Sleep(1000);
-                while ((option = GetOpt.GetOptions(Args, "u:p:o")) != -1)
+                if (args.Any())
                 {
-                    switch ((char)option)
-                    {
-                        case 'u':
-                            Automate.username = GetOpt.Text;
-                            break;
-                        case 'p':
-                            Automate.password = GetOpt.Text;                          
-                            break;
-                        case 'o':
-
-                            break;
-                        default:
-                            return;
-                    }
+                    var cmdOptions = Parser.Default.ParseArguments<ProgramOptions>(args);
+                    cmdOptions.WithParsed(
+                        options => {
+                            HandleCommandLine(options);
+                        });
                 }
+                else
+                {
+                    DisplayMenu();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{methodName} unexpected error: {e}");
+                throw new Exception($"{methodName} unexpected error: {e}");
+            }
+        }
+
+        private static void HandleCommandLine(ProgramOptions options)
+        {
+            if (options.Username != null)
+            {
+                Automate.username = options.Username;
+            }
+
+            if (options.Password != null)
+            {
+                Automate.password = options.Password;
+            }
+
+            if (options.Operation != null)
+            {
                 driver = RiverLinkLogic.GetNewDriver();
                 runProgram();
-            }
-            else
-            {              
-                DisplayMenu();
             }
         }
 
