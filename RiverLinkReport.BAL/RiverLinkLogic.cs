@@ -612,14 +612,13 @@ namespace RiverLinkReport.BAL
         {
             ChromeOptions options = new ChromeOptions();
             ChromeDriverService service = ChromeDriverService.CreateDefaultService();
-            service.HideCommandPromptWindow = false;
+            service.HideCommandPromptWindow = true;
             if (runHeadless == false)
             {
                 options.AddArgument("--disable-extensions --disable-accelerated-video-decode");
             }
             else
             {
-                service.HideCommandPromptWindow = true;
                 options.AddArgument("--disable-extensions --disable-accelerated-video-decode --headless");
             }            
             Process[] before = Process.GetProcessesByName("chrome");

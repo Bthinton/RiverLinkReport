@@ -14,11 +14,11 @@ namespace RiverLinkReport.CLI
         public string Operation { get; set; }
 
         [Option('u', "username",
-            HelpText = "The service name as it appears in the barracuda")]
+            HelpText = "This is the RiverLink account login")]
         public string Username { get; set; }
 
         [Option('p', "password",
-            HelpText = "The service name as it appears in the barracuda")]
+            HelpText = "This is the RiverLink account password")]
         public string Password { get; set; }
     }
 }

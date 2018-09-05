@@ -24,8 +24,8 @@ namespace RiverLink
         {
             if (lblPrimary.InvokeRequired)
             {
-                ProgressEvent d = new ProgressEvent(SetProgressEvent);
-                this.Invoke(d, new object[] { sender, e });
+                Logic_PrimaryStatusChanged(Automation.Automate.StatusMessage);
+                Logic_SecondaryStatusChanged(Automation.Automate.StatusMessage);
             }
             else
             {
@@ -34,10 +34,22 @@ namespace RiverLink
             }
         }
 
+        public void Logic_PrimaryStatusChanged(string Message)
+        {
+            lblPrimary.Invoke((MethodInvoker)(() => lblPrimary.Text = Message));
+        }
+
+        public void Logic_SecondaryStatusChanged(string Message)
+        {
+            lblSecondary.Invoke((MethodInvoker)(() => lblSecondary.Text = Message));
+        }
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             driver = RiverLinkLogic.GetNewDriver();
             RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000, driver);
+            Logic.PrimaryStatusChanged += Logic_PrimaryStatusChanged;
+            Logic.SecondaryStatusChanged += Logic_SecondaryStatusChanged;
             if (onProgressEvent != null)
             {
                 onProgressEvent(this, new ProgressEventArgs($"Working on item 1", $"Working on sub item 1"));

@@ -30,7 +30,7 @@ namespace RiverLink.Automation
         private static int WebDriverWaitSeconds = Convert.ToInt32(ConfigurationManager.AppSettings["WebDriverWaitSeconds"]);
         private static double ExplicitWaitSeconds = Convert.ToDouble(ConfigurationManager.AppSettings["PageLoadWaitSeconds"]);
         private IWebDriver driver { get; set; }
-        public string StatusMessage = "";
+        public static string StatusMessage = "";
         private delegate bool PageCheckDelegate(IWebDriver driver);
         private delegate bool PageCheckDelegateNumber(IWebDriver driver, int PageNumber);
         private string BaseURL = string.Empty;
