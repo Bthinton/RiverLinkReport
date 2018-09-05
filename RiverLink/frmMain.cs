@@ -38,6 +38,7 @@ namespace RiverLink
         {
             filter();
             LoadVehiclePaymentGrid();
+            ttMain.SetToolTip(btnExport, "Use this button to export data.");
         }
 
         internal void filter()
@@ -207,7 +208,7 @@ namespace RiverLink
 
         private void btnRefreshData_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.Username == "" || Properties.Settings.Default.Password == "")
+            if (Properties.Settings.Default.Username == string.Empty || Properties.Settings.Default.Password == string.Empty)
             {
                 frmSettings settings = new frmSettings();
                 settings.ShowDialog();

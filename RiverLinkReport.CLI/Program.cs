@@ -2,7 +2,6 @@
 using NLog;
 using OpenQA.Selenium;
 using RiverLink.Automation;
-using RiverLink.CLI;
 using RiverLinkReport.BAL;
 using System;
 using System.Collections.Generic;
@@ -36,6 +35,7 @@ namespace RiverLinkReport.CLI
                         options => {
                             HandleCommandLine(options);
                         });
+                    Console.ReadLine();
                 }
                 else
                 {
@@ -61,11 +61,16 @@ namespace RiverLinkReport.CLI
                 Automate.password = options.Password;
             }
 
-            if (options.Operation != null)
+            if (options.Headless != null)
+            {
+                RiverLinkLogic.runHeadless = true;
+            }
+
+            if (options.Operation == "run")
             {
                 driver = RiverLinkLogic.GetNewDriver();
                 runProgram();
-            }
+            }        
         }
 
         public static int DisplayMenu()
@@ -73,12 +78,9 @@ namespace RiverLinkReport.CLI
             Console.WriteLine("Report Data Manager");
             Console.WriteLine();
             Console.WriteLine("1. Test Password");
-            Console.WriteLine("2. Send Email Alert");
-            Console.WriteLine("3. Send SMS Alert");
-            Console.WriteLine("4. Send Debug Package");
-            Console.WriteLine("5. Import Vehicle Data");
-            Console.WriteLine("6. Import Transaction Data");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("2. Get Data");
+            Console.WriteLine("3. Insert Data");
+            Console.WriteLine("4. Exit");
             var result = Console.ReadLine();
             return Convert.ToInt32(GetNumbers(result));
         }

@@ -9,16 +9,20 @@ namespace RiverLinkReport.CLI
 {
     public class ProgramOptions
     {
-        [Option('o', "operation", 
-            HelpText = "Will Login, Get Data, and Insert data to database")]
+        [Option('o', "run", Required = true,
+            HelpText = "Login, Get Data, and Insert data to database")]
         public string Operation { get; set; }
 
         [Option('u', "username",
-            HelpText = "This is the RiverLink account login")]
+            HelpText = "This is your RiverLink account login")]
         public string Username { get; set; }
 
         [Option('p', "password",
-            HelpText = "This is the RiverLink account password")]
+            HelpText = "This is your RiverLink account password")]
         public string Password { get; set; }
+
+        [Option('d', "headless",
+            HelpText = "Hides browser from view")]
+        public string Headless { get; set; }
     }
 }

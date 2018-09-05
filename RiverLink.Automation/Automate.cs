@@ -11,10 +11,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 
-
-//TODO
-//Fix progress bar to show status messages(use invoke for different thread)
-
 namespace RiverLink.Automation
 {
     /// <summary>
@@ -536,6 +532,8 @@ namespace RiverLink.Automation
                         doc.LoadHtml(html);
                         for (int i = 1; i < doc.DocumentNode.SelectNodes(Properties.Settings.Default.X_TransactionTable).Count; i++)
                         {
+                            StatusMessage = $"Processing item number {i}...";
+                            OnSecondaryStatusChanged(StatusMessage);
                             string detailBTNX_Path = string.Format(Properties.Settings.Default.X_TransactionDetailBTN, i - 1);
                             TransactionData t = new TransactionData();
                             HtmlDocument rowDoc = new HtmlDocument();
@@ -573,6 +571,8 @@ namespace RiverLink.Automation
                                 throw new Exception($"Error {method}: Could not navigate to detail page");
                             }
                             t.TransactionNumber = GetTransactionId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionIdField)).Text);
+                            StatusMessage = $"Got Transaction {t.TransactionNumber}...";
+                            OnSecondaryStatusChanged(StatusMessage);
                             t.Journal_Id = GetJournalId(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionJournalId)).Text);
                             t.PostedDate = GetPostedDate(driver.FindElement(By.XPath(Properties.Settings.Default.X_PostedDate)).Text);
                             t.TransactionStatus = GetTransactionStatus(driver.FindElement(By.XPath(Properties.Settings.Default.X_TransactionStatus)).Text);

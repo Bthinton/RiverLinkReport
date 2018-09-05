@@ -8,6 +8,15 @@ using OpenQA.Selenium;
 
 namespace RiverLink
 {
+
+    //TODO Bring window to front after launch
+    //Add lbl for testing password on settings page remove checkbox
+    //New form for entering bank data for payment verification display via grid, allow user input via separate window
+    //add button tooltips to helpify the app
+    //Make cli menu work
+    //Extra credit: Data variance display via pdf
+    //display how much charged, how much they recorded charged, how much was actually taken out of the bank
+
     public partial class frmProgress : Form
     {
         public frmProgress()
@@ -22,26 +31,31 @@ namespace RiverLink
 
         public void SetProgressEvent(object sender, ProgressEventArgs e)
         {
-            if (lblPrimary.InvokeRequired)
-            {
-                Logic_PrimaryStatusChanged(Automation.Automate.StatusMessage);
-                Logic_SecondaryStatusChanged(Automation.Automate.StatusMessage);
-            }
-            else
-            {
-                lblPrimary.Text = e.PrimaryText;
-                lblSecondary.Text = e.SecondaryText;                
-            }
         }
 
         public void Logic_PrimaryStatusChanged(string Message)
         {
-            lblPrimary.Invoke((MethodInvoker)(() => lblPrimary.Text = Message));
+            if (lblPrimary.InvokeRequired)
+            {
+                lblPrimary.Invoke((MethodInvoker)(() => lblPrimary.Text = Message));
+            }
+            else
+            {
+                lblPrimary.Text = Message;
+            }
         }
 
         public void Logic_SecondaryStatusChanged(string Message)
         {
-            lblSecondary.Invoke((MethodInvoker)(() => lblSecondary.Text = Message));
+            if (lblSecondary.InvokeRequired)
+            {
+                lblSecondary.Invoke((MethodInvoker)(() => lblSecondary.Text = Message));
+            }
+            else
+            {
+                lblSecondary.Text = Message;
+            }
+            
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)

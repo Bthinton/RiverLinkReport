@@ -89,6 +89,7 @@
             this.enterUsernamePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetUsernamePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnExport = new System.Windows.Forms.Button();
+            this.ttMain = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).BeginInit();
@@ -719,6 +720,7 @@
         private System.Windows.Forms.ToolStripMenuItem enterUsernamePasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetUsernamePasswordToolStripMenuItem;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.ToolTip ttMain;
     }
 }
 
