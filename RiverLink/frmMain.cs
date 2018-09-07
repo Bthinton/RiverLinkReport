@@ -38,7 +38,11 @@ namespace RiverLink
         {
             filter();
             LoadVehiclePaymentGrid();
-            ttMain.SetToolTip(btnExport, "Use this button to export data.");
+            ttMain.SetToolTip(btnExport, "Use this button to export data from the transaction grid.");
+            ttMain.SetToolTip(btnBankTrans, "Use this button to enter in your bank transactions for comparison.");
+            ttMain.SetToolTip(btnExit, "Use this button to exit the application.");
+            ttMain.SetToolTip(btnRefreshData, "Use this button to gather all Vehicle, Transponder, and Transaction data.");
+            ttMain.SetToolTip(cbHeadless, "Checking this box will make 'Refresh Data' run in the background.");
         }
 
         internal void filter()

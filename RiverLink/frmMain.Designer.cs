@@ -90,6 +90,7 @@
             this.resetUsernamePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnExport = new System.Windows.Forms.Button();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
+            this.btnBankTrans = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.bsYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransponderNumber)).BeginInit();
@@ -619,11 +620,21 @@
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
+            // btnBankTrans
+            // 
+            this.btnBankTrans.Location = new System.Drawing.Point(336, 557);
+            this.btnBankTrans.Name = "btnBankTrans";
+            this.btnBankTrans.Size = new System.Drawing.Size(105, 23);
+            this.btnBankTrans.TabIndex = 14;
+            this.btnBankTrans.Text = "Bank Transactions";
+            this.btnBankTrans.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(922, 591);
+            this.Controls.Add(this.btnBankTrans);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.cbHeadless);
             this.Controls.Add(this.btnRefreshData);
@@ -721,6 +732,7 @@
         private System.Windows.Forms.ToolStripMenuItem resetUsernamePasswordToolStripMenuItem;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.ToolTip ttMain;
+        private System.Windows.Forms.Button btnBankTrans;
     }
 }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.tboxUsername = new System.Windows.Forms.TextBox();
@@ -36,7 +37,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cbPassword = new System.Windows.Forms.CheckBox();
-            this.cbTestPW = new System.Windows.Forms.CheckBox();
+            this.lblTest = new System.Windows.Forms.Label();
+            this.ttSettings = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // lblUsername
@@ -112,22 +114,20 @@
             this.cbPassword.UseVisualStyleBackColor = true;
             this.cbPassword.CheckedChanged += new System.EventHandler(this.cbPassword_CheckedChanged);
             // 
-            // cbTestPW
+            // lblTest
             // 
-            this.cbTestPW.AutoSize = true;
-            this.cbTestPW.Location = new System.Drawing.Point(206, 101);
-            this.cbTestPW.Name = "cbTestPW";
-            this.cbTestPW.Size = new System.Drawing.Size(96, 17);
-            this.cbTestPW.TabIndex = 8;
-            this.cbTestPW.Text = "Test Password";
-            this.cbTestPW.UseVisualStyleBackColor = true;
+            this.lblTest.AutoSize = true;
+            this.lblTest.Location = new System.Drawing.Point(206, 101);
+            this.lblTest.Name = "lblTest";
+            this.lblTest.Size = new System.Drawing.Size(0, 13);
+            this.lblTest.TabIndex = 8;
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(313, 159);
-            this.Controls.Add(this.cbTestPW);
+            this.Controls.Add(this.lblTest);
             this.Controls.Add(this.cbPassword);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
@@ -154,6 +154,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox cbPassword;
-        private System.Windows.Forms.CheckBox cbTestPW;
+        private System.Windows.Forms.Label lblTest;
+        private System.Windows.Forms.ToolTip ttSettings;
     }
 }

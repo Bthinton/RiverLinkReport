@@ -466,7 +466,7 @@ namespace RiverLinkReport.BAL
                 var ExistingTransactions = context.Transactions.ToList();
                 foreach (var t in Transactions)
                 {
-                    var ExistingTransaction = ExistingTransactions.SingleOrDefault(x => x.Journal_Id == t.Journal_Id);
+                    Transaction ExistingTransaction = ExistingTransactions.FirstOrDefault(x => x.Journal_Id == t.Journal_Id);
                     if (ExistingTransaction == null)
                     {
                         if (t.Transponder != null)

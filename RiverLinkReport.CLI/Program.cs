@@ -6,6 +6,7 @@ using RiverLinkReport.BAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -28,6 +29,7 @@ namespace RiverLinkReport.CLI
         {
             try
             {
+                int userInput = 0;
                 if (args.Any())
                 {
                     var cmdOptions = Parser.Default.ParseArguments<ProgramOptions>(args);
@@ -39,8 +41,42 @@ namespace RiverLinkReport.CLI
                 }
                 else
                 {
-                    DisplayMenu();
-                }
+                    do
+                    {                        
+                        userInput = DisplayMenu();
+                        switch (userInput)
+                        {
+                            case 1:
+                                TestUsernameAndPassword(string.Empty, string.Empty);
+                                break;
+                            case 2:
+                                Console.WriteLine("Would you like to run chrome in headless mode Y/N?");
+                                if (Console.ReadLine().ToLower() == "y")
+                                {
+                                    RiverLinkLogic.runHeadless = true;
+                                }
+                                if (Properties.Settings.Default.Username != "" || Properties.Settings.Default.Password != "")
+                                {
+                                    driver = RiverLinkLogic.GetNewDriver();
+                                    RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000, driver);                                    
+                                    Logic.Login(RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Username, "username", "salt"), RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Password, "password", "salt"));
+                                    Logic.GetData();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Please run option 1 to set and test your username and password first.");
+                                }
+                                break;
+                            case 3:
+                                RiverLinkLogic Insert = new RiverLinkLogic("https://riverlink.com/", 2000, 1000, driver);
+                                Insert.InsertData();
+                                break;
+                            case 4:
+                                Application.Exit();
+                                break;
+                        }
+                    } while (userInput != 4);
+                } 
             }
             catch (Exception e)
             {
@@ -82,8 +118,11 @@ namespace RiverLinkReport.CLI
             Console.WriteLine("3. Insert Data");
             Console.WriteLine("4. Exit");
             var result = Console.ReadLine();
+
             return Convert.ToInt32(GetNumbers(result));
         }
+
+
 
         private static void runProgram()
         {
@@ -185,22 +224,28 @@ namespace RiverLinkReport.CLI
             if (Username == string.Empty && Password == string.Empty)
             {
                 Console.Write("Please enter your username: ");
-                Username = Console.ReadLine();
+                Username = RijndaelSimple.Encrypt<RijndaelManaged>(Console.ReadLine(), "username", "salt");
                 Console.Write("Please enter your password: ");
-                Password = Console.ReadLine();
+                Password = RijndaelSimple.Encrypt<RijndaelManaged>(Console.ReadLine(), "password", "salt");
+                Properties.Settings.Default.Username = Username;
+                Properties.Settings.Default.Password = Password;
+                Properties.Settings.Default.Save();
             }
             driver = RiverLinkLogic.GetNewDriver();
             RiverLinkLogic worker = new RiverLinkLogic("https://riverlink.com/", 2000, 1000, driver);
             worker.StatusChanged += Worker_StatusChanged;
-            if (worker.Login(Username, Password))
+
+            if (worker.Login(RijndaelSimple.Decrypt<RijndaelManaged>(Username, "username", "salt"), RijndaelSimple.Decrypt<RijndaelManaged>(Password, "password", "salt")))
             {
                 Console.WriteLine("Operation Successful");
                 test = true;
+                driver.Close();
             }
             else
             {
                 Console.WriteLine("Operation failed");
                 test = false;
+                driver.Close();
             }
             return returnValue;
         }

@@ -9,13 +9,10 @@ using OpenQA.Selenium;
 namespace RiverLink
 {
 
-    //TODO Bring window to front after launch
-    //Add lbl for testing password on settings page remove checkbox
+    //TODO
     //New form for entering bank data for payment verification display via grid, allow user input via separate window
-    //add button tooltips to helpify the app
-    //Make cli menu work
     //Extra credit: Data variance display via pdf
-    //display how much charged, how much they recorded charged, how much was actually taken out of the bank
+    //display how much charged, how much they(riverlink) recorded charged, how much was actually taken out of the bank
 
     public partial class frmProgress : Form
     {

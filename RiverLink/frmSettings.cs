@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RiverLinkReport.BAL;
 using RiverLinkReport.CLI;
+using System.Threading;
 
 namespace RiverLink
 {
@@ -18,6 +19,7 @@ namespace RiverLink
         public frmSettings()
         {
             InitializeComponent();
+            ttSettings.SetToolTip(btnSave, "Use this button to save your Username and Password as the default Username and Password.");
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -28,26 +30,20 @@ namespace RiverLink
             Properties.Settings.Default.Username = encryptedUsername;
             Properties.Settings.Default.Password = encryptedPassword;
             Properties.Settings.Default.Save();
-            if (cbTestPW.Checked)
+            RiverLinkLogic.runHeadless = true;
+            lblTest.Text = "Testing Password...";
+            lblTest.ForeColor = Color.Blue;
+            RiverLinkReport.CLI.Program.TestUsernameAndPassword(encryptedUsername, encryptedPassword);
+            if (RiverLinkReport.CLI.Program.test == true)
             {
-                string decryptedUsername = RijndaelSimple.Decrypt<RijndaelManaged>(encryptedUsername, "username", "salt");
-                string decryptedPassword = RijndaelSimple.Decrypt<RijndaelManaged>(encryptedPassword, "password", "salt");
-                RiverLinkLogic.runHeadless = true;
-                RiverLinkReport.CLI.Program.TestUsernameAndPassword(decryptedUsername, decryptedPassword);
-                if (RiverLinkReport.CLI.Program.test == true)
-                {
-                    MessageBox.Show("The test of your Username and Password was successful.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("The test of your Username and Password has failed.", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
+                lblTest.ForeColor = Color.Green;
+                lblTest.Text = "Successful";
             }
             else
             {
-                this.Close();
+                lblTest.ForeColor = Color.Red;
+                lblTest.Text = "Failed";
             }
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

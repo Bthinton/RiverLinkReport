@@ -40,6 +40,7 @@ public class RijndaelSimple
 
         byte[] rgbKey = rgb.GetBytes(algorithm.KeySize >> 3);
         byte[] rgbIV = rgb.GetBytes(algorithm.BlockSize >> 3);
+        
 
         ICryptoTransform transform = algorithm.CreateDecryptor(rgbKey, rgbIV);
 
