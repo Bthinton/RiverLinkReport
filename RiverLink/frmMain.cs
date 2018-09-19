@@ -9,10 +9,6 @@ using System.Linq.Dynamic;
 using System.Windows.Forms;
 using ClosedXML.Excel;
 
-//TODO
-//Fix code so can count number of steps on progress bar
-
-
 namespace RiverLink
 {
     public partial class frmMain : Form
@@ -23,6 +19,7 @@ namespace RiverLink
         bool shouldFireFormLoad;
         bool sortAscending;
         object path = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe", "", null);
+        public static int ID = 0;
 
         public frmMain()
         {
@@ -129,6 +126,8 @@ namespace RiverLink
         {
             List<Transaction> Transactions = RiverLinkLogic.GetTransactions();
             bsTransaction.DataSource = Transactions;
+            List<BankTransaction> bankTransactions = RiverLinkLogic.GetBankTransactions();
+            bsBankTransactions.DataSource = bankTransactions;
         }
 
         private void LoadVehiclePaymentGrid()
@@ -377,6 +376,20 @@ namespace RiverLink
                 workbook.SaveAs(fileName);
             }
             MessageBox.Show("Export Successful!");
+        }
+
+        private void btnBankTrans_Click(object sender, EventArgs e)
+        {
+            frmBank bank = new frmBank();
+            bank.ShowDialog();
+            bsBankTransactions.DataSource = null;
+            List<BankTransaction> bankTransactions = RiverLinkLogic.GetBankTransactions();
+            bsBankTransactions.DataSource = bankTransactions;           
+        }
+
+        private void dgBankTrans_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            ID = Convert.ToInt32(dgBankTrans.Rows[e.RowIndex].Cells[0].Value.ToString());
         }
     }
 }

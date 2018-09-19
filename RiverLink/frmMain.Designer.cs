@@ -77,6 +77,13 @@
             this.amountDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.transactionDescriptionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsPayment = new System.Windows.Forms.BindingSource(this.components);
+            this.tbBankTrans = new System.Windows.Forms.TabPage();
+            this.dgBankTrans = new System.Windows.Forms.DataGridView();
+            this.TransactionId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TransactionDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bsBankTransactions = new System.Windows.Forms.BindingSource(this.components);
             this.btnRefreshData = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblCalcCost = new System.Windows.Forms.Label();
@@ -104,6 +111,9 @@
             this.tbPayments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgPayments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsPayment)).BeginInit();
+            this.tbBankTrans.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgBankTrans)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsBankTransactions)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -131,6 +141,7 @@
             this.tabControl1.Controls.Add(this.tbTolls);
             this.tabControl1.Controls.Add(this.tbVehicles);
             this.tabControl1.Controls.Add(this.tbPayments);
+            this.tabControl1.Controls.Add(this.tbBankTrans);
             this.tabControl1.Location = new System.Drawing.Point(26, 142);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -177,7 +188,6 @@
             // dgTransactions
             // 
             this.dgTransactions.AllowUserToAddRows = false;
-            this.dgTransactions.AllowUserToDeleteRows = false;
             this.dgTransactions.AllowUserToOrderColumns = true;
             this.dgTransactions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -200,6 +210,7 @@
             this.plateNumberDataGridViewTextBoxColumn,
             this.vehicleClassIdDataGridViewTextBoxColumn});
             this.dgTransactions.DataSource = this.bsTransaction;
+            this.dgTransactions.Enabled = false;
             this.dgTransactions.Location = new System.Drawing.Point(22, 60);
             this.dgTransactions.Name = "dgTransactions";
             this.dgTransactions.ReadOnly = true;
@@ -365,6 +376,7 @@
             this.vehicleStatusDataGridViewTextBoxColumn,
             this.classificationDataGridViewTextBoxColumn});
             this.dgVehicles.DataSource = this.bsVehicle;
+            this.dgVehicles.Enabled = false;
             this.dgVehicles.Location = new System.Drawing.Point(19, 29);
             this.dgVehicles.Name = "dgVehicles";
             this.dgVehicles.Size = new System.Drawing.Size(819, 327);
@@ -450,6 +462,7 @@
             this.amountDataGridViewTextBoxColumn1,
             this.transactionDescriptionDataGridViewTextBoxColumn1});
             this.dgPayments.DataSource = this.bsPayment;
+            this.dgPayments.Enabled = false;
             this.dgPayments.Location = new System.Drawing.Point(19, 29);
             this.dgPayments.Name = "dgPayments";
             this.dgPayments.Size = new System.Drawing.Size(819, 327);
@@ -502,8 +515,64 @@
             // 
             this.bsPayment.DataSource = typeof(RiverLink.Models.Transaction);
             // 
+            // tbBankTrans
+            // 
+            this.tbBankTrans.Controls.Add(this.dgBankTrans);
+            this.tbBankTrans.Location = new System.Drawing.Point(4, 22);
+            this.tbBankTrans.Name = "tbBankTrans";
+            this.tbBankTrans.Padding = new System.Windows.Forms.Padding(3);
+            this.tbBankTrans.Size = new System.Drawing.Size(856, 370);
+            this.tbBankTrans.TabIndex = 3;
+            this.tbBankTrans.Text = "Bank Transactions";
+            this.tbBankTrans.UseVisualStyleBackColor = true;
+            // 
+            // dgBankTrans
+            // 
+            this.dgBankTrans.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgBankTrans.AutoGenerateColumns = false;
+            this.dgBankTrans.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgBankTrans.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgBankTrans.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TransactionId,
+            this.TransactionDate,
+            this.Amount,
+            this.Comment});
+            this.dgBankTrans.DataSource = this.bsBankTransactions;
+            this.dgBankTrans.Location = new System.Drawing.Point(23, 27);
+            this.dgBankTrans.Name = "dgBankTrans";
+            this.dgBankTrans.Size = new System.Drawing.Size(807, 325);
+            this.dgBankTrans.TabIndex = 0;
+            this.dgBankTrans.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgBankTrans_RowHeaderMouseClick);
+            // 
+            // TransactionId
+            // 
+            this.TransactionId.DataPropertyName = "Transaction_ID";
+            this.TransactionId.HeaderText = "ID";
+            this.TransactionId.Name = "TransactionId";
+            // 
+            // TransactionDate
+            // 
+            this.TransactionDate.DataPropertyName = "TransactionDate";
+            this.TransactionDate.HeaderText = "Transaction Date";
+            this.TransactionDate.Name = "TransactionDate";
+            // 
+            // Amount
+            // 
+            this.Amount.DataPropertyName = "Amount";
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            // 
+            // Comment
+            // 
+            this.Comment.DataPropertyName = "Comment";
+            this.Comment.HeaderText = "Comments";
+            this.Comment.Name = "Comment";
+            // 
             // btnRefreshData
             // 
+            this.btnRefreshData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRefreshData.Location = new System.Drawing.Point(26, 556);
             this.btnRefreshData.Name = "btnRefreshData";
             this.btnRefreshData.Size = new System.Drawing.Size(107, 23);
@@ -560,6 +629,7 @@
             // 
             // cbHeadless
             // 
+            this.cbHeadless.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbHeadless.AutoSize = true;
             this.cbHeadless.Location = new System.Drawing.Point(140, 561);
             this.cbHeadless.Name = "cbHeadless";
@@ -611,7 +681,7 @@
             // 
             // btnExport
             // 
-            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnExport.Location = new System.Drawing.Point(246, 557);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(75, 23);
@@ -622,12 +692,14 @@
             // 
             // btnBankTrans
             // 
+            this.btnBankTrans.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnBankTrans.Location = new System.Drawing.Point(336, 557);
             this.btnBankTrans.Name = "btnBankTrans";
             this.btnBankTrans.Size = new System.Drawing.Size(105, 23);
             this.btnBankTrans.TabIndex = 14;
             this.btnBankTrans.Text = "Bank Transactions";
             this.btnBankTrans.UseVisualStyleBackColor = true;
+            this.btnBankTrans.Click += new System.EventHandler(this.btnBankTrans_Click);
             // 
             // frmMain
             // 
@@ -661,6 +733,9 @@
             this.tbPayments.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgPayments)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsPayment)).EndInit();
+            this.tbBankTrans.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgBankTrans)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsBankTransactions)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -733,6 +808,13 @@
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.ToolTip ttMain;
         private System.Windows.Forms.Button btnBankTrans;
+        private System.Windows.Forms.TabPage tbBankTrans;
+        private System.Windows.Forms.DataGridView dgBankTrans;
+        private System.Windows.Forms.BindingSource bsBankTransactions;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TransactionId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TransactionDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Comment;
     }
 }
 

@@ -237,6 +237,27 @@ namespace RiverLinkReport.BAL
                 }
             return returnValue;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static List<BankTransaction> GetBankTransactions()
+        {
+            List<BankTransaction> returnValue = new List<BankTransaction>();
+            try
+            {
+                using (var context = new DB())
+                {
+                    var query = (from oData in context.BankTransactions select oData);
+                    returnValue = query.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return returnValue;
+        }
 
         public static List<Transaction> GetTransactions(int Year = 0, int Month = 0, int TransponderNumber = 0)
         {

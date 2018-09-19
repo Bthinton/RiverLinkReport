@@ -76,6 +76,18 @@
     <Compile Include="Migrations\201805151931026_ChangesToTransactionData.Designer.cs">
       <DependentUpon>201805151931026_ChangesToTransactionData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809182142452_add.cs" />
+    <Compile Include="Migrations\201809182142452_add.Designer.cs">
+      <DependentUpon>201809182142452_add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809182159133_add1.cs" />
+    <Compile Include="Migrations\201809182159133_add1.Designer.cs">
+      <DependentUpon>201809182159133_add1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809182201030_addd.cs" />
+    <Compile Include="Migrations\201809182201030_addd.Designer.cs">
+      <DependentUpon>201809182201030_addd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -109,6 +121,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805151931026_ChangesToTransactionData.resx">
       <DependentUpon>201805151931026_ChangesToTransactionData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809182142452_add.resx">
+      <DependentUpon>201809182142452_add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809182159133_add1.resx">
+      <DependentUpon>201809182159133_add1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809182201030_addd.resx">
+      <DependentUpon>201809182201030_addd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

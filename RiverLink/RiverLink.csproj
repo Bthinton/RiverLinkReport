@@ -92,6 +92,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmBank.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBank.Designer.cs">
+      <DependentUpon>frmBank.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmChrome.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +124,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmBank.resx">
+      <DependentUpon>frmBank.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmChrome.resx">
       <DependentUpon>frmChrome.cs</DependentUpon>
     </EmbeddedResource>
