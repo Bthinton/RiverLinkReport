@@ -57,10 +57,15 @@ namespace RiverLinkReport.CLI
                                 }
                                 if (Properties.Settings.Default.Username != "" || Properties.Settings.Default.Password != "")
                                 {
+                                    var spinner = new Spinner(10, 10);
+                                    spinner.Start();
+
                                     driver = RiverLinkLogic.GetNewDriver();
-                                    RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000, driver);                                    
+                                    RiverLinkLogic Logic = new RiverLinkLogic("https://riverlink.com/", 2000, 1000, driver);
                                     Logic.Login(RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Username, "username", "salt"), RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Password, "password", "salt"));
                                     Logic.GetData();
+
+                                    spinner.Stop();
                                 }
                                 else
                                 {
