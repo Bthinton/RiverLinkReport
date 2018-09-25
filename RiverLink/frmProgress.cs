@@ -11,9 +11,6 @@ namespace RiverLink
     //TODO
     //Add progress indicator to CLI(console spinner)
     //Show progress for test password
-    //break settings test password into background worker
-    //Extra credit: Data variance display via pdf
-    //display how much charged, how much they(riverlink) recorded charged, how much was actually taken out of the bank
 
     public partial class frmProgress : Form
     {
@@ -21,6 +18,7 @@ namespace RiverLink
         {
             InitializeComponent();
         }
+
         public delegate void ProgressEvent(object sender, ProgressEventArgs e);
         private event ProgressEvent onProgressEvent;
         private readonly string decryptedUsername = RijndaelSimple.Decrypt<RijndaelManaged>(Properties.Settings.Default.Username, "username", "salt");

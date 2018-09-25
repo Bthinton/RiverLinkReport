@@ -39,6 +39,7 @@
             this.cbPassword = new System.Windows.Forms.CheckBox();
             this.lblTest = new System.Windows.Forms.Label();
             this.ttSettings = new System.Windows.Forms.ToolTip(this.components);
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // lblUsername
@@ -158,5 +159,6 @@
         private System.Windows.Forms.CheckBox cbPassword;
         private System.Windows.Forms.Label lblTest;
         private System.Windows.Forms.ToolTip ttSettings;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

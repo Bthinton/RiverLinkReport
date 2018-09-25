@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using RiverLinkReport.BAL;
+using System;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using RiverLinkReport.BAL;
-using RiverLinkReport.CLI;
-using System.Threading;
 
 namespace RiverLink
 {
@@ -20,35 +13,60 @@ namespace RiverLink
         {
             InitializeComponent();
             ttSettings.SetToolTip(btnSave, "Use this button to save your Username and Password as the default Username and Password.");
+            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+        }
+
+        private void frmSettings_Load(object sender, EventArgs e)
+        {
+            lblTest.Text = "";
+            lblTest.Visible = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //Properties.Settings.Default.Reset();
             string encryptedUsername = RijndaelSimple.Encrypt<RijndaelManaged>(tboxUsername.Text, "username", "salt");
             string encryptedPassword = RijndaelSimple.Encrypt<RijndaelManaged>(tboxPassword.Text, "password", "salt");
-            Properties.Settings.Default.Username = encryptedUsername;
-            Properties.Settings.Default.Password = encryptedPassword;
-            Properties.Settings.Default.Save();
-            RiverLinkLogic.runHeadless = true;
-            lblTest.Text = "Testing Password...";
-            lblTest.ForeColor = Color.Blue;
-            lblTest.Visible = true;
-            RiverLinkReport.CLI.Program.TestUsernameAndPassword(encryptedUsername, encryptedPassword);
-            if (RiverLinkReport.CLI.Program.test == true)
+            if (encryptedUsername != Properties.Settings.Default.Username || encryptedPassword != Properties.Settings.Default.Password)
             {
-                lblTest.ForeColor = Color.Green;
-                lblTest.Text = "Successful";
+                Properties.Settings.Default.Username = encryptedUsername;
+                Properties.Settings.Default.Password = encryptedPassword;
+                Properties.Settings.Default.Save();
+                RiverLinkLogic.runHeadless = true;
+                lblTest.Text = "Testing Password...";
+                lblTest.ForeColor = Color.Blue;
+                lblTest.Visible = true;
+                backgroundWorker1.WorkerSupportsCancellation = true;
+                backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+                backgroundWorker1.RunWorkerAsync();
             }
-            else
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (backgroundWorker1.CancellationPending != true)
             {
-                lblTest.ForeColor = Color.Red;
-                lblTest.Text = "Failed";
+                RiverLinkReport.CLI.Program.TestUsernameAndPassword(Properties.Settings.Default.Username, Properties.Settings.Default.Password);
+                if (RiverLinkReport.CLI.Program.test == true)
+                {
+                    lblTest.Invoke((MethodInvoker)(() => lblTest.ForeColor = Color.Green));
+                    lblTest.Invoke((MethodInvoker)(() => lblTest.Text = "Successful"));
+                }
+                else
+                {
+                    lblTest.Invoke((MethodInvoker)(() => lblTest.ForeColor = Color.Red));
+                    lblTest.Invoke((MethodInvoker)(() => lblTest.Text = "Failed"));
+                }
+                backgroundWorker1.CancelAsync();
+            }
+            if (backgroundWorker1.CancellationPending == true)
+            {
+                e.Cancel = true;
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
@@ -62,12 +80,6 @@ namespace RiverLink
             {
                 tboxPassword.UseSystemPasswordChar = true;
             }
-        }
-
-        private void frmSettings_Load(object sender, EventArgs e)
-        {
-            lblTest.Text = "";
-            lblTest.Visible = false;
         }
     }
 }
