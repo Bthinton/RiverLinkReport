@@ -119,8 +119,9 @@
             this.lblTest.AutoSize = true;
             this.lblTest.Location = new System.Drawing.Point(206, 101);
             this.lblTest.Name = "lblTest";
-            this.lblTest.Size = new System.Drawing.Size(0, 13);
+            this.lblTest.Size = new System.Drawing.Size(29, 13);
             this.lblTest.TabIndex = 8;
+            this.lblTest.Text = "HEY";
             // 
             // frmSettings
             // 
@@ -139,6 +140,7 @@
             this.Name = "frmSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
+            this.Load += new System.EventHandler(this.frmSettings_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

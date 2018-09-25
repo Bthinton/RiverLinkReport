@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.Chrome;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using RiverLinkReport.BAL;
@@ -10,7 +9,9 @@ namespace RiverLink
 {
 
     //TODO
-    //New form for entering bank data for payment verification display via grid, allow user input via separate window
+    //Add progress indicator to CLI(console spinner)
+    //Show progress for test password
+    //break settings test password into background worker
     //Extra credit: Data variance display via pdf
     //display how much charged, how much they(riverlink) recorded charged, how much was actually taken out of the bank
 

@@ -692,7 +692,7 @@
             // 
             // btnBankTrans
             // 
-            this.btnBankTrans.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnBankTrans.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnBankTrans.Location = new System.Drawing.Point(336, 557);
             this.btnBankTrans.Name = "btnBankTrans";
             this.btnBankTrans.Size = new System.Drawing.Size(105, 23);

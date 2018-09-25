@@ -33,6 +33,7 @@ namespace RiverLink
             RiverLinkLogic.runHeadless = true;
             lblTest.Text = "Testing Password...";
             lblTest.ForeColor = Color.Blue;
+            lblTest.Visible = true;
             RiverLinkReport.CLI.Program.TestUsernameAndPassword(encryptedUsername, encryptedPassword);
             if (RiverLinkReport.CLI.Program.test == true)
             {
@@ -61,6 +62,12 @@ namespace RiverLink
             {
                 tboxPassword.UseSystemPasswordChar = true;
             }
+        }
+
+        private void frmSettings_Load(object sender, EventArgs e)
+        {
+            lblTest.Text = "";
+            lblTest.Visible = false;
         }
     }
 }

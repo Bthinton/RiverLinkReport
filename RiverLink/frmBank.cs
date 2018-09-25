@@ -13,7 +13,7 @@ namespace RiverLink
 {
     public partial class frmBank : Form
     {
-        SqlConnection con = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=C:\Users\Wurmskull\source\repos\RiverLinkReport\RiverLink.DAL\DB\RLinkData.mdf;Initial Catalog=RLinkDB;Integrated Security=True;Connection Timeout=5;");
+        SqlConnection con = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=C:\Users\Brad\source\repos\RiverLinkReport\RiverLink.DAL\DB\RLinkData.mdf;Initial Catalog=RLinkDB;Integrated Security=True;Connection Timeout=5;");
         int ID = frmMain.ID;
 
         public frmBank()
