@@ -18,8 +18,9 @@ namespace RiverLink
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
-            lblTest.Text = "";
-            lblTest.Visible = false;
+            backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+            
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -35,8 +36,6 @@ namespace RiverLink
                 lblTest.Text = "Testing Password...";
                 lblTest.ForeColor = Color.Blue;
                 lblTest.Visible = true;
-                backgroundWorker1.WorkerSupportsCancellation = true;
-                backgroundWorker1.DoWork += backgroundWorker1_DoWork;
                 backgroundWorker1.RunWorkerAsync();
             }
         }
@@ -45,6 +44,7 @@ namespace RiverLink
         {
             while (backgroundWorker1.CancellationPending != true)
             {
+                System.Threading.Thread.Sleep(1000);
                 RiverLinkReport.CLI.Program.TestUsernameAndPassword(Properties.Settings.Default.Username, Properties.Settings.Default.Password);
                 if (RiverLinkReport.CLI.Program.test == true)
                 {
@@ -66,6 +66,7 @@ namespace RiverLink
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            backgroundWorker1.CancelAsync();
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
