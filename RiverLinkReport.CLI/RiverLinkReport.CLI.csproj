@@ -119,16 +119,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RiverLink.Automation\RiverLink.Automation.csproj">
-      <Project>{6a994f0d-ebd1-42eb-ac01-f965fb2f4bca}</Project>
-      <Name>RiverLink.Automation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RiverLinkReport.BAL\RiverLinkReport.BAL.csproj">
-      <Project>{3AC43186-7889-443D-820D-21F0D84D262F}</Project>
-      <Name>RiverLinkReport.BAL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
@@ -139,6 +129,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RiverLink.Automation\RiverLink.Automation.csproj">
+      <Project>{6a994f0d-ebd1-42eb-ac01-f965fb2f4bca}</Project>
+      <Name>RiverLink.Automation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RiverLinkReport.BAL\RiverLinkReport.BAL.csproj">
+      <Project>{3ac43186-7889-443d-820d-21f0d84d262f}</Project>
+      <Name>RiverLinkReport.BAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Selenium.Chrome.WebDriver.2.37\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.2.37\build\Selenium.Chrome.WebDriver.targets')" />

@@ -79,12 +79,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RiverLink.DAL\RiverLink.DAL.csproj">
-      <Project>{68392BE8-864A-4177-A956-54F94650A705}</Project>
-      <Name>RiverLink.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RiverLink.Models\RiverLink.Models.csproj">
-      <Project>{3A46761F-12CF-49DF-8384-37E515D49D5A}</Project>
+      <Project>{3a46761f-12cf-49df-8384-37e515d49d5a}</Project>
       <Name>RiverLink.Models</Name>
     </ProjectReference>
   </ItemGroup>
